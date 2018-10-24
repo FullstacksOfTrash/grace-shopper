@@ -1,0 +1,43 @@
+{
+  "name": "grace-shopper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FullstacksOfTrash/grace-shopper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FullstacksOfTrash/grace-shopper/issues"
+  },
+  "homepage": "https://github.com/FullstacksOfTrash/grace-shopper#readme",
+  "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.2.0",
+    "express": "^4.16.4",
+    "mocha": "^5.2.0",
+    "pg": "^7.5.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^4.41.0",
+    "supertest": "^3.3.0",
+    "webpack": "^4.23.0",
+    "webpack-cli": "^3.1.2"
+  }
+}
