@@ -1,0 +1,1 @@
+// this file is used to destructure and export App.js
