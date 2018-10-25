@@ -1,4 +1,4 @@
-const conn = require('../db');
+const conn = require('../database');
 
 const Review = conn.define('review', {
   rating: {

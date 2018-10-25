@@ -1,4 +1,4 @@
-const conn = require('./db');
+const conn = require('./database');
 const Category = require('./models/Category');
 const LineItem = require('./models/LineItem');
 const Order = require('./models/Order');
