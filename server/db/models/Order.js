@@ -1,4 +1,4 @@
-const conn = require('../db');
+const conn = require('../conn');
 
 const Order = conn.define('order', {
   status: {
