@@ -1,4 +1,4 @@
-const conn = require('../db');
+const conn = require('../conn');
 
 const LineItem = conn.define('lineItem', {
   quantity: {
