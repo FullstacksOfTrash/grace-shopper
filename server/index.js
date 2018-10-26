@@ -1,5 +1,5 @@
-const app = require('./app')
-const syncAndSeed = require('./db/seed');
+const app = require('./app');
+const { syncAndSeed } = require('./db/');
 const PORT = process.env.PORT || 3000;
 
 const init = () => {
