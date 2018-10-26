@@ -7,10 +7,11 @@
 // const schoolRoutes = require('./schoolRoutes')
 // const studentRoutes = require('./studentRoutes')
 
-// router.use('/schools', schoolRoutes)
-// router.use('/students', studentRoutes)
+// router.use('/api/schools', schoolRoutes)
+// router.use('/api/students', studentRoutes)
 
 // module.exports = router;
+
 
 const express = require('express');
 const router = express.Router();
