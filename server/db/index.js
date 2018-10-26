@@ -140,15 +140,24 @@ const syncAndSeed = async () => {
     reviews: [scottReview, MikeReview],
   };
 };
-
 module.exports = {
   syncAndSeed,
-  models: {
-    Category,
-    LineItem,
-    Order,
-    Product,
-    Review,
-    User,
-  },
+  Category,
+  LineItem,
+  Order,
+  Product,
+  Review,
+  User,
 };
+
+// module.exports = {
+//   syncAndSeed,
+//   models: {
+//     Category,
+//     LineItem,
+//     Order,
+//     Product,
+//     Review,
+//     User,
+//   },
+// };
