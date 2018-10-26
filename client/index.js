@@ -1,2 +1,6 @@
-// base presentational component
-// redners App.js and used to wrap App.js with <Provider>, etc.
+import React from 'react'
+import { render } from 'react-dom'
+
+const app = document.getElementById('app')
+
+render(<hr />, app)
