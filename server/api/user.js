@@ -1,7 +1,6 @@
 const router = require('express').Router()
-const { User, Order, LineItem, Review } = require('../db')
 
-// route : /api/users
+const { User, Order, LineItem, Review } = require('../db')
 
 router.put('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {       //used to incrementing or decrementing lineItem
     LineItem.findById(req.params.lineItemId)
@@ -9,6 +8,7 @@ router.put('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {      
     .then(lineItem => res.send(lineItem))
     .catch(next)
 })
+
 
 router.delete('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it 
     LineItem.findOne({
@@ -21,6 +21,7 @@ router.delete('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {   
     .then(() => res.sendStatus(204))
     .catch(next)
 })
+
 
 router.post('/:userId/orders/:orderId/lineitems', (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
     LineItem.create({ productId: req.body.productId, orderId: req.params.orderId})
@@ -44,7 +45,7 @@ router.get('/:userId/orders', async(req, res, next) => {
             },
             include: [ { model:LineItem } ]
         })
-        console.log(orders)
+
         res.send(orders)
     } catch(err){
         next(err)

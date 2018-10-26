@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test:dev": "nodemon ./node_modules/mocha/bin/mocha server/**/*test.js",
+    "test:dev": "JWT_SECRET=foo DATABASE_URL=postgres://localhost/fullstacktrash_test PORT=3000 nodemon ./node_modules/mocha/bin/mocha server/**/*test.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "webpack:dev": "webpack --watch --mode=development",
     "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/fullstacktrash PORT=3000 nodemon server --ignore /dist /client",
@@ -32,6 +32,7 @@
     "babel-preset-react": "^6.24.1",
     "chai": "^4.2.0",
     "express": "^4.16.4",
+    "jwt-simple": "^0.5.5",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.5",
     "pg": "^7.5.0",
@@ -43,7 +44,6 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^4.41.0",
-    "supertest": "^3.3.0",
     "webpack": "^4.23.0",
     "webpack-cli": "^3.1.2"
   },
@@ -52,5 +52,8 @@
       "env",
       "react"
     ]
+  },
+  "devDependencies": {
+    "supertest": "^3.3.0"
   }
 }
