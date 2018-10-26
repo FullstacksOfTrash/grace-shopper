@@ -28,6 +28,13 @@ const syncAndSeed = async () => {
   await conn.sync({ force: true });
   const [Scott, Mikey] = await Promise.all([
     User.create({
+      firstName: 'Moe',
+      lastName: 'lastNamePlaceholder',
+      email: 'moe@moe.com',
+      password: 'MOE',
+      address: 'addressPlaceholder',
+    }),
+    User.create({
       firstName: 'Scott',
       lastName: 'McTrashy',
       email: 'scootmctrashy@gmail.com',

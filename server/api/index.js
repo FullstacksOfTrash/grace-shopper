@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { Product } = require('../db')
 
+router.use('/auth', require('./auth'));
+
 //finds product based on id
 router.get('/products/:id', (req, res, next) => {
   Product.findById(req.params.id)
