@@ -1,15 +1,32 @@
 const express = require('express');
+const jwt = require('jwt-simple')
 const app = express();
 const path = require('path')
 const api = require('./api')
 
-
-app.use(express.json());
-
 app.use(express.json())
 app.use('/dist', express.static(path.join(__dirname, '../dist')))
-
 app.use(express.static(path.join(__dirname, '..','public')))
+
+router.use((req, res, next)=> {     //checks for token
+  const token = req.headers.authorization;
+  if (!token) {
+    return next();
+  }
+  let id;
+  try {
+    id = jwt.decode(token, process.env.JWT_SECRET).id;
+    User.findById(id)
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(next);
+  }
+  catch(ex) {
+    return next({ status: 401 })
+  }
+});
 
 app.use('/api', api)
 
