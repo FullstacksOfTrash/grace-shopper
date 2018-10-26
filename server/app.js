@@ -6,6 +6,7 @@ const api = require('./api')
 
 module.exports = app;
 
+app.use(express.json())
 app.use('/dist', express.static(path.join(__dirname, '../dist')))
 app.use(express.static(path.join(__dirname, '..','public')))
 
@@ -15,3 +16,7 @@ app.get('/', (req, res, next) => {
   res.sendFile(index.html)
 })
 
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(err.status || 500).send({error : err.message})
+})
