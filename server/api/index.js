@@ -1,20 +1,6 @@
-// used as a hub from which to bundle and export routes
-// e.g., app.js might have middleware such as app.use('/api', api)
-// and this file would bring all the separate route files together
-// this is an example from my senior enrichment:const express = require('express')
-
-// const router = express.Router()
-// const schoolRoutes = require('./schoolRoutes')
-// const studentRoutes = require('./studentRoutes')
-
-// router.use('/api/schools', schoolRoutes)
-// router.use('/api/students', studentRoutes)
-
-// module.exports = router;
-
-
 const express = require('express');
 const router = express.Router();
+const { Product } = require('../db')
 
 //finds product based on id
 router.get('/products/:id', (req, res, next) => {
