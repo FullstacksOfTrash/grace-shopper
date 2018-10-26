@@ -7,20 +7,14 @@
 // const schoolRoutes = require('./schoolRoutes')
 // const studentRoutes = require('./studentRoutes')
 
-// router.use('/schools', schoolRoutes)
-// router.use('/students', studentRoutes)
+// router.use('/api/schools', schoolRoutes)
+// router.use('/api/students', studentRoutes)
 
 // module.exports = router;
 
+
 const express = require('express');
 const router = express.Router();
-
-//finds all products
-router.get('/products', (req, res, next) => {
-  Product.findAll()
-    .then(products => res.send(products))
-    .catch(next);
-});
 
 //finds product based on id
 router.get('/products/:id', (req, res, next) => {
@@ -37,6 +31,13 @@ router.put('/products/:id', (req, res, next) => {
   Product.findById(req.params.id)
     .then(product => product.update('quantity, etc...'))
     .then(updated => res.send(updated))
+    .catch(next);
+});
+
+//finds all products
+router.get('/products', (req, res, next) => {
+  Product.findAll()
+    .then(products => res.send(products))
     .catch(next);
 });
 
