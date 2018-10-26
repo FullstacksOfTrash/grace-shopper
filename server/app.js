@@ -8,7 +8,7 @@ app.use(express.json())
 app.use('/dist', express.static(path.join(__dirname, '../dist')))
 app.use(express.static(path.join(__dirname, '..','public')))
 
-router.use((req, res, next)=> {     //checks for token
+app.use((req, res, next)=> {     //checks for token
   const token = req.headers.authorization;
   if (!token) {
     return next();
