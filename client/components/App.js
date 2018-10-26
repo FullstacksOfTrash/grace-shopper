@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-
+import { HashRouter as Router, Route } from'react-router-dom'
 import { getProducts } from '../store'
-
+import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
 
@@ -16,13 +16,16 @@ class App extends Component {
   render() {
     return(
       <div>
-        <Products />
+				<Router>
+					<div>
+						<Route component={NavBar} />
+						<Route exact path='/products' component={ Products } />
+					</div>
+				</Router>
       </div>
     )
   }
 }
-
-const mapStateToProps = ({ products }) => ({ products })
 
 const mapDispatchToProps = dispatch => ({
   init: () => {
@@ -30,4 +33,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
