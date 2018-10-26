@@ -1,9 +1,18 @@
 import axios from 'axios'
 
+// action types
 const GET_PRODUCTS = 'GET_PRODUCTS'
 
+
+
+/// action creators
 const _getProducts = (products) => ({ type: GET_PRODUCTS, products })
 
+
+
+
+
+// thunks
 const getProducts = () => {
   return (dispatch) => {
     return axios.get('/api/products')

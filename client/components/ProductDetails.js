@@ -12,7 +12,7 @@ class ProductDetails extends Component {
         <ul>
           <li>Name: { name } </li>
           <li>ImageUrl: { imageUrl }</li>
-          <li>Price: { price } </li>
+          <li>Price: $ { price } </li>
           <li>Stock: { stock } </li>
           <li>Description: { description } </li>
         </ul>
