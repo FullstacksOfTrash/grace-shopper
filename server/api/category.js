@@ -12,10 +12,10 @@ router.post('/:id', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {        //finds specific category and includes products related to it
-    Category.findById(id, {
+    Category.findById(req.params.id, {
         include: [{
             model : Product, 
-            through: productTable               //potentially wrong, not sure if its the right command
+            through: 'productTable'               //potentially wrong, not sure if its the right command
         }]
     })
     .then(data => res.send(data))
@@ -34,3 +34,4 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+module.exports = router

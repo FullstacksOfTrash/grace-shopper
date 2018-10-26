@@ -1,16 +1,16 @@
 const router = require('express').Router()
-const { User, Order, LineItem } = require('../db')
+const { User, Order, LineItem, Review } = require('../db')
 
 // route : /api/users
 
-router.put('/:userId/orders/:orderId/lineitem/:id', (req, res, next) => {       //used to incrementing or decrementing lineItem
+router.put('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {       //used to incrementing or decrementing lineItem
     LineItem.findById(req.params.lineItemId)
     .then(lineItem => lineItem.update(req.body))
     .then(lineItem => res.send(lineItem))
     .catch(next)
 })
 
-router.destroy('/:userId/orders/:orderId/lineitem/:id', (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it 
+router.delete('/:userId/orders/:orderId/lineitems/:id', (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it 
     LineItem.findOne({
         where: {
             id: req.params.id,
@@ -22,7 +22,7 @@ router.destroy('/:userId/orders/:orderId/lineitem/:id', (req, res, next) => {   
     .catch(next)
 })
 
-router.post('/:userId/orders/:orderId/lineitem', (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
+router.post('/:userId/orders/:orderId/lineitems', (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
     LineItem.create({ productId: req.body.productId, orderId: req.params.orderId})
     .then(lineItem => res.send(lineItem))
     .catch(next)
@@ -34,14 +34,17 @@ router.get('/:userId/orders', async(req, res, next) => {
         status: 'CART'
     }
     try {
-        const cart =  await Order.findOne(temp)
+        const cart =  await Order.findOne({
+            where: temp
+        })
         if(!cart) await Order.create(temp)
         const orders = await Order.findAll({
             where: {
-                userId: req.body.id
+                userId: req.params.userId
             },
-            include: [ { model:lineItem } ]
+            include: [ { model:LineItem } ]
         })
+        console.log(orders)
         res.send(orders)
     } catch(err){
         next(err)
@@ -49,12 +52,13 @@ router.get('/:userId/orders', async(req, res, next) => {
 })
 
 router.get('/:userId/reviews', (req, res, next) => {
-    Reviews.findAll({
+    Review.findAll({
         where: {
             userId: req.params.userId
         }
     })
-    .then(Reviews)
+    .then(reviews => res.send(reviews))
+    .catch(next)
 })
 
 module.exports = router
