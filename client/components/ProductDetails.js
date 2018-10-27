@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProductReviews } from '../store/thunks'
+import { getProduct, getProductReviews } from '../store/utils'
 import Reviews from './Reviews'
 
 class ProductDetails extends Component {
@@ -35,8 +35,8 @@ class ProductDetails extends Component {
 
 const mapStateToProps = ({ products, reviews }, { id }) => {
   return {
-    product: products.filter( product => product.id === id*1)[0],
-    productReviews: reviews.filter(review => id*1 === review.productId)
+    product: getProduct(id,products),
+    productReviews: getProductReviews(id, reviews)
   }
 }
 
