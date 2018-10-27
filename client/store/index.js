@@ -1,7 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-// import { productReducer, getProducts, authReducer, reviewReducer, createReview, getAllReviews } from './reducers'
+
+import { productReduce, authReducer, reviewReducer } from './reducers';
 
 const reducer = combineReducers({
   products: productReducer,

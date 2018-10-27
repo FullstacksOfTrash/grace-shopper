@@ -1,4 +1,5 @@
 import { GET_PRODUCTS } from './actionTypes';
+import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 
 export const productReducer = (state = [], action) => {
   switch (action.type) {
@@ -18,4 +19,15 @@ export const reviewReducer = (state = [], action) => {
       return action.reviews
   }
   return state;
+}
+
+const authReducer = (state = { user: {} }, action) => {
+    switch(action.type){
+        case SET_AUTH:
+            return { user: action.user }
+        case LOGOUT:
+            return { user: {}}
+        default:
+            return state
+    }
 }
