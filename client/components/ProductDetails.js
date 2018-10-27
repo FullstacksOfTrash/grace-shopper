@@ -45,4 +45,10 @@ const mapStateToProps = ({ products, reviews }, { id }) => {
   }
 }
 
+const mapDispatchToProps = (dispatch)=> {
+  return {
+    
+  }
+}
+
 export default connect(mapStateToProps)(ProductDetails)
