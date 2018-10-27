@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const { Category, Product } = require('../db')
 
-// route : /api/category
+// route : /api/categories
 
 // adds a product to a category
-router.post('/:id', (req, res, next) => {      
+router.post('/:id', (req, res, next) => {
     Category.findById(req.params.id)
     .then( category => category.addProduct(req.body))   //assuming req.body is an object
     .then( updated => res.send(updated))        //assuming addProduct methods returns the updated category
@@ -13,10 +13,7 @@ router.post('/:id', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {        //finds specific category and includes products related to it
     Category.findById(req.params.id, {
-        include: [{
-            model : Product, 
-            through: 'productTable'               //potentially wrong, not sure if its the right command
-        }]
+        include: [Product]
     })
     .then(data => res.send(data))
     .catch(next)
