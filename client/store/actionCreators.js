@@ -23,4 +23,3 @@ export const _logOut = () => ({ type: LOGOUT })
 
 // Categories
 export const _getCategories = (categories) => ({ type: GET_CATEGORIES, categories })
-

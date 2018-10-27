@@ -47,9 +47,10 @@ const mapStateToProps = ({ products, reviews }, { id }) => {
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    increaseQuantity: ()=> {},
-    createLineItem: ()=> {},
-    decreaseQuantity: ()=> {},
+    addToCart: (cart, product, lineItem)=> {
+      
+    },
+    removeFromCart: ()=> {},
   }
 }
 

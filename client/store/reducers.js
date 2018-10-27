@@ -4,7 +4,6 @@ import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
-
 export const productReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
