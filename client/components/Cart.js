@@ -28,7 +28,9 @@ class Cart extends Component {
         <div>
           Total Cost: ${totalCost}
         </div>
-        <button>Continue to Checkout</button>
+        <div>
+          <button>Continue to Checkout</button>
+        </div>
       </div>
     )
   }
