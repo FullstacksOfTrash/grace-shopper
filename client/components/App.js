@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { getProducts, getAllReviews } from '../store'
+import { getProducts, getAllReviews } from '../store/thunks'
+
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
-import { exchangeTokenForAuth } from '../reducers/authReducer'
+import { exchangeTokenForAuth } from '../store/thunks'
 
 import NavBar from './NavBar'
 import Products from './Products'

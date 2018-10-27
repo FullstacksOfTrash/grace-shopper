@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProducts } from '../store'
+import { getProducts } from '../store/thunks'
 import ProductDetails from './ProductDetails'
 
 import { Link } from 'react-router-dom'

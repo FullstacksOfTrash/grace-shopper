@@ -1,5 +1,6 @@
-import { GET_PRODUCTS } from 'actionTypes';
-import { GET_ALL_REVIEWS, CREATE_REVIEW } from 'actionTypes';
+import { GET_PRODUCTS } from './actionTypes';
+import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
+import { SET_AUTH, LOGOUT } from './actionTypes';
 
 export const _getProducts = (products) => ({ type: GET_PRODUCTS, products });
 

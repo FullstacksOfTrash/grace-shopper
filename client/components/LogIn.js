@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { logIn } from '../reducers/authReducer'
+import { logIn } from '../store/thunks'
 
 
 class LogIn extends React.Component{
