@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { getProduct } from '../store'
 
 class ProductDetails extends Component {
+  // constructor(props) {
+  //   super(props)
+  // }
 
   render() {
 
-    const { name, price, imageUrl, stock, description } = this.props.product
+    if (!this.props.product) { return null }
+
+    const { name, imageUrl, price, stock, description } = this.props.product
 
     return (
       <div>
+        <h3> Introducing the { name }! </h3>
+        <hr />
         <ul>
-          <li>Name: { name } </li>
           <li>ImageUrl: { imageUrl }</li>
           <li>Price: $ { price } </li>
           <li>Stock: { stock } </li>
@@ -21,4 +28,11 @@ class ProductDetails extends Component {
   }
 }
 
-export default connect()(ProductDetails)
+const mapStateToProps = ({ products }, { id }) => {
+  return {
+    products,
+    product: getProduct(id, products)
+  }
+}
+
+export default connect(mapStateToProps)(ProductDetails)

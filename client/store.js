@@ -11,11 +11,16 @@ const reducer = combineReducers({
 
 const store = createStore(reducer, applyMiddleware(logger, thunk));
 
+// ******************* helpers / selectors ******************* 
+
+const getProduct = (id, products) => products.find(prd => prd.id === parseInt(id))
+
 // ******************* EXPORTS *******************
 
 export default store;
 
 export {
   productReducer,
-  getProducts
+  getProducts,
+  getProduct
 }
