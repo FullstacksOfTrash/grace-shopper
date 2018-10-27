@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 import { _getProducts } from './actionCreators';
-import { _getOrders } from './actionCreators';
+import { _getOrders, _updateOrder } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
-
 
 import authHeader from './utils';
 
@@ -26,6 +25,20 @@ export const getOrders = ()=> {
         axios.get(`/api/users/${user.id}/orders`, authHeader())
             .then(response => response.data)
             .then(orders => dispatch(_getOrders(orders)))
+    }
+}
+
+export const updateOrder = (order)=> {
+    return (dispatch, getState)=> {
+        const user = getState().auth;
+        axios.get(`/api/users/${user.id}/orders/${order.id}`)
+            .then(response => response.data)
+            .then(order => dispatch(_updateOrder(order)))
+            .then(()=> {
+                axios.get(`/api/users/${user.id}/orders`) // after updating the order, load all of the user's orders again to normalize data
+                    .then(response => response.data)
+                    .then(orders => dispatch(_getOrders(orders)))
+            })
     }
 }
 
