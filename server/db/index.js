@@ -26,126 +26,155 @@ Product.belongsToMany(Category, { through: 'productTable' });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
-  const [Scott, Mikey] = await Promise.all([
+  const [moe, harry, jarret, cang, zi] = await Promise.all([
     User.create({
       firstName: 'Moe',
       lastName: 'lastNamePlaceholder',
       email: 'moe@moe.com',
       password: 'MOE',
       address: 'addressPlaceholder',
+      // admin: false // ensure this is false by default
     }),
     User.create({
-      firstName: 'Scott',
-      lastName: 'McTrashy',
-      email: 'scootmctrashy@gmail.com',
-      password: 'smt',
-      address: '2647 Stillwell Ave, Brooklyn, NY 11223',
+      firstName: 'Harry',
+      lastName: 'Chen',
+      email: 'harry@harry.com',
+      password: 'HARRY',
+      address: 'Harry Street',
+      admin: true,
     }),
     User.create({
-      firstName: 'Mikey',
-      lastName: 'LovesTrash',
-      email: 'miketrash@gmail.com',
-      password: 'mt',
-      address: '1324 Forest Ave, Staten Island, NY 10302',
+      firstName: 'Jarret',
+      lastName: 'Rose',
+      email: 'jarret@jarret.com',
+      password: 'JARRET',
+      address: 'Jarret Street',
+      admin: true,
+    }),
+    User.create({
+      firstName: 'Cang',
+      lastName: 'Truong',
+      email: 'cang@cang.com',
+      password: 'CANG',
+      address: 'Cang Street',
+      admin: true,
+    }),
+    User.create({
+      firstName: 'Zi',
+      lastName: 'Yan',
+      email: 'zi@zi.com',
+      password: 'ZI',
+      address: 'Zi Street',
       admin: true,
     }),
   ]);
-  const [order1, order2, order3] = await Promise.all([
+  const [order1, order2, order3, order4, order5, order6] = await Promise.all([
     Order.create({
       status: 'CART',
-      userId: Scott.id,
+      userId: moe.id,
     }),
     Order.create({
       status: 'ORDER',
-      userId: Scott.id,
+      userId: moe.id,
     }),
     Order.create({
       status: 'CART',
-      userId: Mikey.id,
+      userId: harry.id,
+    }),
+    Order.create({
+      status: 'CART',
+      userId: jarret.id,
+    }),
+    Order.create({
+      status: 'CART',
+      userId: cang.id,
+    }),
+    Order.create({
+      status: 'CART',
+      userId: zi.id,
     }),
   ]);
-  const [electronics, food, essentials, alcoholic] = await Promise.all([
-    Category.create({ name: 'Trashtronics (electronics)' }),
-    Category.create({ name: 'Edible Trash' }),
-    Category.create({ name: 'Essential Trash' }),
-    Category.create({ name: 'Alcoholic Trash' }),
+  const [computers, tablets, phones, onSale] = await Promise.all([
+    Category.create({ name: 'Computers' }),
+    Category.create({ name: 'Tablets' }),
+    Category.create({ name: 'Phones' }),
+    Category.create({ name: 'On Sale' }),
   ]);
-  const [iTrash, leftOver, newTrash, unused, Jack] = await Promise.all([
+  const [macbook, macbookPro, ipad, ipadPro, iphone] = await Promise.all([
     Product.create({
-      name: 'iTrash',
+      name: 'Macbook',
       price: 100,
-      imageUrl: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      imageUrl: '',
       stock: 200,
-      description: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      description: 'description placeholder',
     }),
     Product.create({
-      name: 'Leftover Trash',
+      name: 'Macbook Pro',
       price: 25,
-      imageUrl: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      imageUrl: '',
       stock: 300,
-      description: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      description: 'description placeholder',
     }),
     Product.create({
-      name: 'New Trash',
+      name: 'iPad',
       price: 50,
-      imageUrl: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      imageUrl: '',
       stock: 200,
-      description: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      description: 'description placeholder',
     }),
     Product.create({
-      name: 'Unused Trash(never used, was thrown away)',
+      name: 'iPad Pro',
       price: 100,
-      imageUrl: 'eros in cursus turpis massa tincidunt dui ut ornare lectus',
+      imageUrl: '',
       stock: 200,
-      description:
-        'enim facilisis gravida neque convallis a cras semper auctor neque',
+      description: 'description placeholder',
     }),
     Product.create({
-      name: 'Jack Trash',
+      name: 'iPhone',
       price: 300,
-      imageUrl: 'erat velit scelerisque in dictum non consectetur a erat nam.',
+      imageUrl: '',
       stock: 200,
-      description:
-        'elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi',
+      description: 'description placeholder',
     }),
   ]);
 
   await Promise.all([
-    electronics.addProduct(iTrash),
-    food.addProduct(leftOver),
-    alcoholic.addProduct(Jack),
-    essentials.addProduct(newTrash),
-    essentials.addProduct(unused),
+    computers.addProduct(macbook),
+    computers.addProduct(macbookPro),
+    tablets.addProduct(ipad),
+    tablets.addProduct(ipadPro),
+    phones.addProduct(iphone),
+    onSale.addProduct(iphone),
+    onSale.addProduct(ipad)
   ]);
-
   const [l1, l2, l3] = await Promise.all([
-    LineItem.create({ productId: iTrash.id, orderId: order2.id, quantity: 4 }),
-    LineItem.create({ productId: Jack.id, orderId: order3.id, quantity: 3 }),
-    LineItem.create({ productId: unused.id, orderId: order3.id, quantity: 1 }),
+    LineItem.create({ productId: ipad.id, orderId: order1.id, quantity: 4 }),
+    LineItem.create({ productId: macbook.id, orderId: order2.id, quantity: 3 }),
+    LineItem.create({ productId: iphone.id, orderId: order2.id, quantity: 1 }),
   ]);
-  const [scottReview, MikeReview] = await Promise.all([
+  const [review1, review2] = await Promise.all([
     Review.create({
-      productId: Jack.id,
-      userId: Scott.id,
+      productId: macbookPro.id,
+      userId: moe.id,
       rating: 5,
-      text: 'consectetur adipiscing elit pellentesque habitant',
-      verfiedBuyer: true,
+      text: 'review placeholder',
+      // verfiedBuyer: true, // not sure this should be hardcoded here... may make sense to set this with a sequelize hook
     }),
     Review.create({
-      productId: iTrash.id,
-      userId: Mikey.id,
+      productId: ipadPro.id,
+      userId: harry.id,
       rating: 6,
-      text: 'consectetur adipiscing elit pellentesque habitant',
+      text: 'review placeholder',
     }),
   ]);
-  return {
-    users: [Scott, Mikey],
-    products: [iTrash, leftOver, newTrash, unused, Jack],
-    categories: [electronics, food, essentials, alcoholic],
-    orders: [order1, order2, order3],
-    lineItems: [l1, l2, l3],
-    reviews: [scottReview, MikeReview],
-  };
+  // return {
+  //   users: [Scott, Mikey],
+  //   products: [iTrash, leftOver, newTrash, unused, Jack],
+  //   categories: [electronics, food, essentials, alcoholic],
+  //   orders: [order1, order2, order3],
+  //   lineItems: [l1, l2, l3],
+  //   reviews: [scottReview, MikeReview],
+  // };
 };
 module.exports = {
   syncAndSeed,
