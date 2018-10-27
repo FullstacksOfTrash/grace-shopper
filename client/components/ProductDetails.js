@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProduct } from '../store'
+import { getProduct, getProductReviews } from '../store'
 import Reviews from './Reviews'
 
 class ProductDetails extends Component {
@@ -12,7 +12,10 @@ class ProductDetails extends Component {
 
     if (!this.props.product) { return null }
 
-    const { name, imageUrl, price, stock, description, reviews} = this.props.product
+    const { name, imageUrl, price, stock, description } = this.props.product
+    const { productReviews } = this.props
+
+    // console.log('productreviews: ', productReviews)
 
     return (
       <div>
@@ -24,17 +27,18 @@ class ProductDetails extends Component {
           <li>Stock: { stock } </li>
           <li>Description: { description } </li>
         </ul>
-        <Reviews reviews={reviews} />
+        <Reviews productReviews = { productReviews } />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ products }, { id }) => {
-  console.log(getProduct(id, products))
+const mapStateToProps = ({ products, reviews }, { id }) => {
+  // console.log('mapstatetoprops reviews: ',reviews)
   return {
-    products,
-    product: getProduct(id, products)
+    products, reviews,
+    product: getProduct(id, products),
+    productReviews: getProductReviews(id, reviews)
   }
 }
 

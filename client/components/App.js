@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom'
-import { getProducts } from '../store'
+import { getProducts, getAllReviews } from '../store'
 import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
@@ -34,6 +34,7 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   init: () => {
     dispatch(getProducts());
+    dispatch(getAllReviews());
   }
 })
 
