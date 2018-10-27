@@ -45,4 +45,12 @@ const mapStateToProps = ({ products, reviews }, { id }) => {
   }
 }
 
+const mapDispatchToProps = (dispatch)=> {
+  return {
+    increaseQuantity: ()=> {},
+    createLineItem: ()=> {},
+    decreaseQuantity: ()=> {},
+  }
+}
+
 export default connect(mapStateToProps)(ProductDetails)
