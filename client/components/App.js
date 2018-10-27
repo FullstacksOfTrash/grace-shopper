@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { getProducts, getAllReviews, getCategories } from '../store/thunks'
+import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
 
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
 import { exchangeTokenForAuth } from '../store/thunks'
@@ -10,6 +10,7 @@ import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
 import LogIn from './LogIn'
+import Cart from './Cart'
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
             <Route path='/login' component={LogIn}/>
+            <Route path='/cart' component={Cart} />
           </div>
         </Router>
       </div>
@@ -50,6 +52,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getProducts());
     dispatch(getAllReviews());
     dispatch(getCategories())
+    dispatch(getOrders())
   }
 })
 
