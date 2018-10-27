@@ -18,7 +18,7 @@ router.post('/', (req, res, next)=> {
 
 router.get('/', (req, res, next)=> {
   if (!req.user) {
-    console.log('code is fucked')
+    // console.log('code is fucked')
     return next({ status: 401 })
   }
   res.send(req.user);
