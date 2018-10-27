@@ -7,6 +7,7 @@ router.post('/', (req, res, next)=> {
   const { email, password } = req.body;
   User.findOne({ where: { email, password }})
     .then(user => {
+      // console.log(user)
       if (!user) {
         return next({ status: 401 })
       }
@@ -17,6 +18,7 @@ router.post('/', (req, res, next)=> {
 
 router.get('/', (req, res, next)=> {
   if (!req.user) {
+    console.log('code is fucked')
     return next({ status: 401 })
   }
   res.send(req.user);

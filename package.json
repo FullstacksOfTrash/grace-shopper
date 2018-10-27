@@ -7,7 +7,7 @@
     "test:dev": "JWT_SECRET=foo DATABASE_URL=postgres://localhost/fullstacktrash_test PORT=3000 nodemon ./node_modules/mocha/bin/mocha server/**/*test.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "webpack:dev": "webpack --watch --mode=development",
-    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/fullstacktrash PORT=3000 nodemon server --ignore /dist /client",
+    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/fullstacktrash PORT=3000 JWT_SECRET=foo nodemon server --ignore /dist /client",
     "postinstall": "npm run webpack",
     "start": "node server"
   },

@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { logIn } from '../reducers/authReducer'
 
 class LogIn extends React.Component{
     constructor(){
         super()
         this.state = {
-            email: '',
-            password: ''
+            email: 'moe@moe.com',
+            password: 'MOE'
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -18,26 +19,31 @@ class LogIn extends React.Component{
     }
     handleSubmit(event){
         event.preventDefault()
+        const { history, loggingIn } = this.props
+        loggingIn(this.state, history)
+        
     }
     render(){
         const { email, password } = this.state
         const { handleChange, handleSubmit } = this
-        console.log(this.state)
+        // console.log(this.state)
         return (
-            <form onSubmit={handleSubmit} >
-                <label htmlFor='email'>Email: </label>
-                <input type='email' name='email' value={email} onChange={handleChange}></input>
-                <label htmlFor='password'>Password: </label>
-                <input type='password' name='password' value={password} onChange={handleChange}></input>
-                <button type='submit'>Log in</button>
-            </form>
+            <div>
+                <form onSubmit={handleSubmit} >
+                    <label htmlFor='email'>Email: </label>
+                    <input type='email' name='email' value={email} onChange={handleChange}></input>
+                    <label htmlFor='password'>Password: </label>
+                    <input type='password' name='password' value={password} onChange={handleChange}></input>
+                    <button type='submit'>Log in</button>
+                </form>
+            </div>
         )
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps)=> {
     return {
-        loggingIn: (credentials) => dispatch()
+        loggingIn: (credentials, history) => dispatch(logIn(credentials,  history))
     }
 }
 
