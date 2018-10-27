@@ -5,7 +5,6 @@ import { _getOrders, _updateOrder } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
-import { _getOrders } from './actionCreators'
 
 import authHeader from './utils';
 
