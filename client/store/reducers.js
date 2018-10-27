@@ -22,7 +22,7 @@ export const reviewReducer = (state = [], action) => {
   return state;
 }
 
-const authReducer = (state = { user: {} }, action) => {
+export const authReducer = (state = { user: {} }, action) => {
     switch(action.type){
         case SET_AUTH:
             return { user: action.user }
