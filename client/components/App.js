@@ -23,7 +23,7 @@ class App extends Component {
         <Router>
           <div>
             <Route component={NavBar} />
-            {/* <Route exact path='/' render={() => (loggedIn? <Redirect to='/products' /> : <LogIn />) }/> mixed on this functionality. if user logs in, it will not render the log in page. However home link becomes unusable */}
+            <Route exact path='/' render={() => (loggedIn? <Redirect to='/products' /> : <LogIn />) }/>
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
             <Route path='/login' component={LogIn}/>

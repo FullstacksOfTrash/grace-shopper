@@ -31,7 +31,6 @@ class ProductDetails extends Component {
 }
 
 const mapStateToProps = ({ products }, { id }) => {
-  //console.log(getProduct(id, products))
   return {
     products,
     product: getProduct(id, products)
