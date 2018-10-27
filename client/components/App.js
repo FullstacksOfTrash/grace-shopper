@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+
+import { getProducts, getAllReviews } from '../store'
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
-import { getProducts } from '../store'
 import { exchangeTokenForAuth } from '../reducers/authReducer'
+
 import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
@@ -45,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
   init: () => {
     dispatch(exchangeTokenForAuth())
     dispatch(getProducts());
+    dispatch(getAllReviews());
   }
 })
 
