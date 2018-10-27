@@ -4,6 +4,8 @@ import { _getProducts } from './actionCreators';
 import { _getOrders } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
+import { _getCategories } from './actionCreators';
+
 
 import authHeader from './utils';
 
@@ -86,4 +88,12 @@ export const logOut = history => {
         dispatch(_logOut())
         history.push('/home')
     }
+}
+
+// CATEGORIES
+export const getCategories = () => {
+  return (dispatch) => {
+    axios.get('/api/categories')
+      .then(response => dispatch(_getCategories(response.data)))
+  }
 }

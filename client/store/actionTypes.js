@@ -7,3 +7,6 @@ export const CREATE_REVIEW = 'CREATE_REVIEW'
 
 export const SET_AUTH = 'SET_AUTH'
 export const LOGOUT = 'LOGOUT'
+
+
+export const GET_CATEGORIES = 'GET_CATEGORIES'
