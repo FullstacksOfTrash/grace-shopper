@@ -43,6 +43,21 @@ export const updateOrder = (order)=> {
     }
 }
 
+//LINE ITEMS
+export const createLineItem = (lineItem)=> {
+
+}
+
+export const deleteLineItem = (lineItem)=> {
+
+}
+
+export const updateLineItem = (lineItem)=> {
+
+}
+
+
+
 //REVIEWS
 export const getAllReviews = (reviews) => {
   return (dispatch) => {
@@ -109,16 +124,6 @@ export const getCategories = () => {
   return (dispatch) => {
     axios.get('/api/categories')
       .then(response => dispatch(_getCategories(response.data)))
-      .catch(err => console.log(err.message))
-  }
-}
-
-
-// ORDERS
-export const getOrders = () => {
-  return (dispatch) => {
-    axios.get('/api/orders')
-      .then(response => dispatch(_getOrders(response.data)))
       .catch(err => console.log(err.message))
   }
 }
