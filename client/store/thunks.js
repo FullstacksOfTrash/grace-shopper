@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { _getProduct } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
+import { _setAuth, _logOut } from './actionCreators';
 
 //PRODUCTS
 export const getProducts = () => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProduct, getProductReviews } from '../store'
+import { getProduct, getProductReviews } from '../store/thunks'
 import Reviews from './Reviews'
 
 class ProductDetails extends Component {

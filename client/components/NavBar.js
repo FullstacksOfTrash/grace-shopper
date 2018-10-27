@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logOut } from '../reducers/authReducer'
+import { logOut } from '../store/thunks'
 
 class NavBar extends Component {
   render () {
