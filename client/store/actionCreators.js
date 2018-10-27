@@ -1,6 +1,7 @@
 import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
+import { GET_ORDERS } from './actionTypes'
 
 
 // Products
@@ -17,3 +18,8 @@ export const _logOut = () => ({ type: LOGOUT })
 
 // Categories
 export const _getCategories = (categories) => ({ type: GET_CATEGORIES, categories })
+
+
+// Orders
+export const _getOrders = (orders) => ({ type: GET_ORDERS, orders })
+

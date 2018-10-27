@@ -4,6 +4,7 @@ import { _getProducts } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
+import { _getOrders } from './actionCreators'
 
 
 //PRODUCTS
@@ -75,5 +76,16 @@ export const getCategories = () => {
   return (dispatch) => {
     axios.get('/api/categories')
       .then(response => dispatch(_getCategories(response.data)))
+      .catch(err => console.log(err.message))
+  }
+}
+
+
+// ORDERS
+export const getOrders = () => {
+  return (dispatch) => {
+    axios.get('/api/orders')
+      .then(response => dispatch(_getOrders(response.data)))
+      .catch(err => console.log(err.message))
   }
 }
