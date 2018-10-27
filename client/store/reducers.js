@@ -3,6 +3,7 @@ import { GET_ORDERS, UPDATE_ORDER } from './actionTypes';
 import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
+import { GET_ORDERS } from './actionTypes'
 
 export const productReducer = (state = [], action) => {
   switch (action.type) {
@@ -48,6 +49,16 @@ export const categoryReducer = (state = [], action) => {
   switch(action.type) {
     case GET_CATEGORIES:
       return action.categories
+    default:
+      return state
+  }
+}
+
+
+export const ordersReducer = (state = [], action) => {
+  switch(action.type) {
+    case GET_ORDERS:
+      return action.orders
     default:
       return state
   }
