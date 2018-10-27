@@ -34,7 +34,6 @@ class ProductDetails extends Component {
 }
 
 const mapStateToProps = ({ products, reviews }, { id }) => {
-  // console.log('mapstatetoprops reviews: ',reviews)
   return {
     products, reviews,
     product: getProduct(id, products),

@@ -30,7 +30,9 @@ router.put('/:id', (req, res, next) => {
 
 //finds all products
 router.get('/', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({
+    include: [{ model: Review}]
+  })
     .then(products => res.send(products))
     .catch(next);
 });
