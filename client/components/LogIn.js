@@ -28,17 +28,6 @@ class LogIn extends React.Component{
         const { email, password } = this.state
         const { handleChange, handleSubmit } = this
         return (
-            <div>
-                <form onSubmit={handleSubmit} >
-                    <label htmlFor='email'>Email: </label>
-                    <input type='email' name='email' value={email} onChange={handleChange}></input>
-                    <label htmlFor='password'>Password: </label>
-                    <input type='password' name='password' value={password} onChange={handleChange}></input>
-                    <button type='submit'>Log in</button>
-                </form>
-            </div>
-        console.log(this.state)
-        return (
             <form onSubmit={handleSubmit} >
                 <label htmlFor='email'>Email: </label>
                 <input type='email' name='email' value={email} onChange={handleChange}></input>
