@@ -5,6 +5,7 @@ import { getProducts } from '../store'
 import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
+import LogIn from './LogIn'
 
 class App extends Component {
 
@@ -19,6 +20,7 @@ class App extends Component {
         <Router>
           <div>
             <Route component={NavBar} />
+            <Route exact path='/' component={LogIn} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
 
