@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { HashRouter as Router, Route } from'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import { getProducts } from '../store'
 import NavBar from './NavBar'
 import Products from './Products'
@@ -14,14 +14,16 @@ class App extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
-				<Router>
-					<div>
-						<Route component={NavBar} />
-						<Route exact path='/products' component={ Products } />
-					</div>
-				</Router>
+        <Router>
+          <div>
+            <Route component={NavBar} />
+            <Route exact path='/products' component={Products} />
+            <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
+
+          </div>
+        </Router>
       </div>
     )
   }
