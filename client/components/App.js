@@ -11,6 +11,7 @@ import Products from './Products'
 import ProductDetails from './ProductDetails'
 import LogIn from './LogIn'
 import Cart from './Cart'
+import OrderHistory from './OrderHistory';
 
 class App extends Component {
 
@@ -32,6 +33,7 @@ class App extends Component {
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
             <Route path='/login' component={LogIn}/>
             <Route path='/cart' component={Cart} />
+            <Route path='/order-history' component={OrderHistory} />
           </div>
         </Router>
       </div>
