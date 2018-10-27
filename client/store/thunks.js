@@ -23,7 +23,7 @@ export const getProducts = () => {
 export const getOrders = ()=> {
     return (dispatch, getState)=> {
         const user = getState().auth;
-        axios.get(`/api/orders/${user.id}`, authHeader())
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
             .then(response => response.data)
             .then(orders => dispatch(_getOrders(orders)))
     }
