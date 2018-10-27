@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from './actionTypes';
+import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
@@ -23,12 +23,21 @@ export const reviewReducer = (state = [], action) => {
 }
 
 export const authReducer = (state = { user: {} }, action) => {
-    switch(action.type){
-        case SET_AUTH:
-            return { user: action.user }
-        case LOGOUT:
-            return { user: {}}
-        default:
-            return state
-    }
+  switch(action.type){
+    case SET_AUTH:
+      return { user: action.user }
+    case LOGOUT:
+      return { user: {}}
+    default:
+      return state
+  }
+}
+
+export const categoryReducer = (state = [], action) => {
+  switch(action.type) {
+    case GET_CATEGORIES:
+      return action.categories
+    default:
+      return state
+  }
 }

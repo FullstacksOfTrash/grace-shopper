@@ -35,8 +35,7 @@ class ProductDetails extends Component {
 
 const mapStateToProps = ({ products, reviews }, { id }) => {
   return {
-    products, reviews,
-    product: getProduct(id, products),
+    product: getProduct(id,products),
     productReviews: getProductReviews(id, reviews)
   }
 }

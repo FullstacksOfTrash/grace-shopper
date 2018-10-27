@@ -21,6 +21,8 @@ LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
 LineItem.belongsTo(Order);
 
+Product.belongsTo(Category)
+
 Category.belongsToMany(Product, { through: 'productTable' });
 Product.belongsToMany(Category, { through: 'productTable' });
 
@@ -139,13 +141,13 @@ const syncAndSeed = async () => {
   ]);
 
   await Promise.all([
-    computers.addProduct(macbook),
-    computers.addProduct(macbookPro),
-    tablets.addProduct(ipad),
-    tablets.addProduct(ipadPro),
-    phones.addProduct(iphone),
-    onSale.addProduct(iphone),
-    onSale.addProduct(ipad)
+    macbook.setCategory(computers),
+    macbookPro.setCategory(computers),
+    ipad.setCategory(tablets),
+    ipadPro.setCategory(tablets),
+    iphone.setCategory(phones),
+    iphone.setCategory(onSale),
+    ipad.setCategory(onSale)
   ]);
   const [l1, l2, l3] = await Promise.all([
     LineItem.create({ productId: ipad.id, orderId: order1.id, quantity: 4 }),
@@ -167,14 +169,6 @@ const syncAndSeed = async () => {
       text: 'review placeholder',
     }),
   ]);
-  // return {
-  //   users: [Scott, Mikey],
-  //   products: [iTrash, leftOver, newTrash, unused, Jack],
-  //   categories: [electronics, food, essentials, alcoholic],
-  //   orders: [order1, order2, order3],
-  //   lineItems: [l1, l2, l3],
-  //   reviews: [scottReview, MikeReview],
-  // };
 };
 module.exports = {
   syncAndSeed,
