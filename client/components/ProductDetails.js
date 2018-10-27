@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getProduct } from '../store'
+import Reviews from './Reviews'
 
 class ProductDetails extends Component {
   // constructor(props) {
@@ -11,7 +12,7 @@ class ProductDetails extends Component {
 
     if (!this.props.product) { return null }
 
-    const { name, imageUrl, price, stock, description } = this.props.product
+    const { name, imageUrl, price, stock, description, reviews} = this.props.product
 
     return (
       <div>
@@ -23,12 +24,14 @@ class ProductDetails extends Component {
           <li>Stock: { stock } </li>
           <li>Description: { description } </li>
         </ul>
+        <Reviews reviews={reviews} />
       </div>
     )
   }
 }
 
 const mapStateToProps = ({ products }, { id }) => {
+  console.log(getProduct(id, products))
   return {
     products,
     product: getProduct(id, products)
