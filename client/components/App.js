@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
 import { getProducts } from '../store'
+import { exchangeTokenForAuth } from '../reducers/authReducer'
 import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
@@ -15,15 +16,17 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.props
+    const loggedIn = user.id? true : false
     return (
       <div>
         <Router>
           <div>
             <Route component={NavBar} />
-            <Route exact path='/' component={LogIn} />
+            <Route exact path='/' render={() => (loggedIn? <Redirect to='/products' /> : <LogIn />) }/>
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
-
+            <Route path='/login' component={LogIn}/>
           </div>
         </Router>
       </div>
@@ -31,10 +34,18 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = ({ auth }) => {
+  console.log(auth)
+  return {
+    user: auth.user
+  }
+}
+
 const mapDispatchToProps = dispatch => ({
   init: () => {
+    dispatch(exchangeTokenForAuth())
     dispatch(getProducts());
   }
 })
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
