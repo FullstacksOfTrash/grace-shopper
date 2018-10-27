@@ -1,8 +1,11 @@
 import { GET_PRODUCTS } from './actionTypes';
+import { GET_ORDERS } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
 export const _getProducts = (products) => ({ type: GET_PRODUCTS, products });
+
+export const _getOrders = (orders)=> ({ type: GET_ORDERS, orders });
 
 export const _getAllReviews = (reviews) => ({ type: GET_ALL_REVIEWS, reviews})
 export const _createReview = (review) => ({ type: CREATE_REVIEW, review})

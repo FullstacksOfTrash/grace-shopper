@@ -1,4 +1,5 @@
 import { GET_PRODUCTS } from './actionTypes';
+import { GET_ORDERS } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
@@ -10,6 +11,15 @@ export const productReducer = (state = [], action) => {
       });
   }
   return state;
+}
+
+export const orderReducer = (state=[], action)=> {
+  switch(action.type) {
+    case GET_ORDERS:
+      return action.orders;
+    default:
+      return state;
+  }
 }
 
 export const reviewReducer = (state = [], action) => {

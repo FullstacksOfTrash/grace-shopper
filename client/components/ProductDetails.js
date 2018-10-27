@@ -27,6 +27,11 @@ class ProductDetails extends Component {
           <li>Stock: { stock } </li>
           <li>Description: { description } </li>
         </ul>
+        <hr />
+        <button>+</button>
+        <button>-</button>
+        <p>Quantity in cart:</p>
+        <hr />
         <Reviews productReviews = { productReviews } />
       </div>
     )

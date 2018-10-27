@@ -1,8 +1,11 @@
 import axios from 'axios';
 
 import { _getProducts } from './actionCreators';
+import { _getOrders } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
+
+import authHeader from './utils';
 
 //PRODUCTS
 export const getProducts = () => {
@@ -12,6 +15,16 @@ export const getProducts = () => {
       .then(products => dispatch(_getProducts(products)))
       .catch(error => console.log(error.message))
   }
+}
+
+//ORDERS
+export const getOrders = ()=> {
+    return (dispatch, getState)=> {
+        const user = getState().auth;
+        axios.get(`/api/orders/${user.id}`, authHeader())
+            .then(response => response.data)
+            .then(orders => dispatch(_getOrders(orders)))
+    }
 }
 
 //REVIEWS
@@ -34,23 +47,30 @@ export const createReview = (review) => {
 
 //AUTH
 export const exchangeTokenForAuth = history => {
-    return async dispatch => {
-        try {
-            const token = window.localStorage.getItem('token')
-            if(!token){
-                return
-            }
-            const user = await axios.get('/api/auth', { headers : {
-                authorization : token
-            }})
-            dispatch(_setAuth(user.data))
-            if(history){
-                history.push('/products')
-            }
-        } catch(err){
-            console.log(err)
-            window.localStorage.removeItem('token')
+    return dispatch => {
+        const token = window.localStorage.getItem('token')
+        if(!token){
+            return;
         }
+        return axios.get('/api/auth', {
+            headers : {
+                authorization : token
+            }
+        })
+        .then( response => response.data )
+        .then( auth => {
+            dispatch(_setAuth(auth))
+        })
+        .then(()=> {
+            dispatch(getOrders())
+            if (history) {
+                history.push('/products');
+            }
+        })
+        .catch(ex => {
+            console.log(ex);
+            window.localStorage.removeItem('token');
+        })
     }
 }
 export const logIn = (credentials, history) => {
