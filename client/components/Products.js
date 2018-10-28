@@ -24,7 +24,6 @@ class Products extends Component {
 
     const { products, categories } = this.props
     const { category } = this.state
-    console.log(this.state)
     const { handleChange } = this
     if (!products) { return null }
 

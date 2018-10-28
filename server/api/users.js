@@ -15,8 +15,9 @@ const isMe = (paramKey)=> {
 
 
 router.get('/:userId/orders', loggedIn, isMe, async(req, res, next) => {
+    console.log('hitting the route')
     const temp = {
-        userId : req.body.userId,
+        userId : req.user.id,
         status: 'CART'
     }
     try {
@@ -50,12 +51,12 @@ router.put('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, res, 
         .catch(next)
 })
 
-router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it 
+router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it
     LineItem.findOne({
         where: {
             id: req.params.id,
             orderId: req.params.orderId
-        }   
+        }
     })
     .then(lineItem => lineItem.destroy())
     .then(() => res.sendStatus(204))

@@ -12,7 +12,7 @@ class NavBar extends Component {
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/products'>Products</Link></li>
           <li><Link to='/cart'>Cart</Link></li>
-          <li><Link to='/order-history'></Link></li>
+          <li><Link to='/order-history'>Order History</Link></li>
           <li>{user.id?
             <button onClick={() => loggingOut(history)}>Log out</button> :
             <Link to='/login'>Log in</Link>}

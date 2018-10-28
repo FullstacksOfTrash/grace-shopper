@@ -42,7 +42,7 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  console.log(auth)
+
   return {
     user: auth.user
   }
@@ -53,7 +53,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(exchangeTokenForAuth())
     dispatch(getProducts());
     dispatch(getAllReviews());
-    dispatch(getCategories())
+    dispatch(getCategories());
     dispatch(getOrders())
   }
 })
