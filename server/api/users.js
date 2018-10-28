@@ -44,13 +44,6 @@ router.put('/:userId/orders/:orderId', loggedIn, isMe('userId'), (req, res, next
         .catch(next)
 })
 
-router.put('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId'), (req, res, next) => {       //used to incrementing or decrementing lineItem
-    LineItem.findById(req.params.lineItemId)
-        .then(lineItem => lineItem.update(req.body))
-        .then(lineItem => res.send(lineItem))
-        .catch(next)
-})
-
 router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId'), (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it
     LineItem.findOne({
         where: {
@@ -62,6 +55,15 @@ router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId')
     .then(() => res.sendStatus(204))
     .catch(next)
 })
+
+router.put('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId'), (req, res, next) => {       //used to incrementing or decrementing lineItem
+    LineItem.findById(req.params.id)
+        .then(lineItem => lineItem.update(req.body))
+        .then(lineItem => res.send(lineItem))
+        .catch(next)
+})
+
+
 
 router.post('/:userId/orders/:orderId/lineitems', loggedIn, isMe('userId'), (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
     LineItem.create({ productId: req.body.productId, orderId: req.params.orderId})

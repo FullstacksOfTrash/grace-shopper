@@ -1,5 +1,5 @@
 
-import { GET_ORDERS, UPDATE_ORDER } from './actionTypes';
+import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
 import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
 import { GET_ALL_REVIEWS, CREATE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
@@ -18,6 +18,8 @@ export const orderReducer = (state=[], action)=> {
   switch(action.type) {
     case GET_ORDERS:
       return action.orders;
+    case REMOVE_ORDERS:
+      return [];
     default:
       return state;
   }
