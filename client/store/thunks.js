@@ -20,6 +20,7 @@ export const getProducts = () => {
 
 //ORDERS
 export const getOrders = ()=> {
+    console.log('calling get orders')
     return (dispatch, getState)=> {
         const {user} = getState().auth;
         axios.get(`/api/users/${user.id}/orders`, authHeader())
@@ -32,7 +33,7 @@ export const getOrders = ()=> {
 export const updateOrder = (order)=> {
     return (dispatch, getState)=> {
         const user = getState().auth;
-        axios.get(`/api/users/${user.id}/orders/${order.id}`)
+        axios.get(`/api/users/${user.id}/orders/${order.id}`, authHeader())
             .then(response => response.data)
             .then(order => dispatch(_updateOrder(order)))
             .then(()=> {
@@ -43,17 +44,36 @@ export const updateOrder = (order)=> {
     }
 }
 
-//LINE ITEMS
-export const createLineItem = (lineItem)=> {
-
+export const addToCart = (cart, product, lineItem)=> {
+    return (dispatch, getState)=> {
+        const user = getState().auth;
+        if (lineItem) {
+            axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+                .then(()=> {
+                    axios.get(`/api/users/${user.id}/orders`, authHeader())
+                        .then(response => response.data)
+                        .then( orders => dispatch(_getOrders(orders)))
+                })
+        } else {
+            axios.post(`/api/users/${user.id}/orders/${cart.id}`, { productId: product.id, quantity: 1 }, authHeader())
+                .then(()=> {
+                    axios.get(`/api/users/${user.id}/orders`, authHeader())
+                        .then(response => response.data)
+                        .then(orders => dispatch(_getOrders(orders)))
+                })
+        }
+    }
 }
 
-export const deleteLineItem = (lineItem)=> {
+export const removeFromCart = (cart, lineItem)=> {
+    // return (dispatch, getState())=> {
+    //     const user = getState().auth;
+    //     if (lineItem.quantity <== 1) {
 
-}
+    //     } else {
 
-export const updateLineItem = (lineItem)=> {
-
+    //     }
+    // }
 }
 
 

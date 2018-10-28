@@ -14,8 +14,8 @@ const isMe = (paramKey)=> {
 }
 
 
-router.get('/:userId/orders', loggedIn, isMe('userId'), async(req, res, next) => {
 
+router.get('/:userId/orders', loggedIn, isMe('userId'), async(req, res, next) => {
     const temp = {
         userId : req.user.id,
         status: 'CART'

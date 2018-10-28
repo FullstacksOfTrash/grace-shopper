@@ -22,7 +22,7 @@ class App extends Component {
 
   render() {
     const { user } = this.props
-    const loggedIn = user.id? true : false
+    const loggedIn = user.id ? true : false
     return (
       <div>
         <Router>
