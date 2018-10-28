@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCart, getProduct, lineItemsTotalQuant } from '../store/utils'
 import { addToCart, removeFromCart, updateOrder } from '../store/thunks'
-
+import { Link } from 'react-router-dom'
 
 class Cart extends Component {
 
@@ -20,7 +20,7 @@ class Cart extends Component {
         <ul>
           {
             lineItems.map(item => (
-              <div key={item.id}> {getProduct(item.productId, products).name}
+              <div key={item.id}> <Link to={`/products/${item.productId}`}>{getProduct(item.productId, products).name}</Link>
                 <li>Quantity: {item.quantity}
                   <button onClick={() => addToCart(cart, null, item)}>+</button>
                   <button onClick={() => removeFromCart(cart, item)}>-</button>
