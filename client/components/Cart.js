@@ -16,7 +16,7 @@ class Cart extends Component {
         <ul>
           {
             cart.lineItems.map(item => (
-              <div> {getProduct(item.productId, products).name}
+              <div key={item.id}> {getProduct(item.productId, products).name}
                 <li>Quantity: {item.quantity}                 <button>+</button>
                 <button>-</button>
                 </li>

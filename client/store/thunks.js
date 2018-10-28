@@ -23,7 +23,6 @@ export const getOrders = ()=> {
     console.log('calling get orders')
     return (dispatch, getState)=> {
         const {user} = getState().auth;
-        console.log(user)
         axios.get(`/api/users/${user.id}/orders`, authHeader())
             .then(response => response.data)
             .then(orders => dispatch(_getOrders(orders)))

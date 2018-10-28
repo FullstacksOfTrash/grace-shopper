@@ -9,13 +9,13 @@ const loggedIn = (req, res, next)=> {
 
 const isMe = (paramKey)=> {
     return (req, res, next)=> {
-        next( req.user.id === req.params[paramKey] ? null : { status: 401 })
+        next( req.user.id === req.params[paramKey]*1 ? null : { status: 401 })
     }
 }
 
 
-router.get('/:userId/orders', loggedIn, isMe, async(req, res, next) => {
-    console.log('hitting the route')
+
+router.get('/:userId/orders', loggedIn, isMe('userId'), async(req, res, next) => {
     const temp = {
         userId : req.user.id,
         status: 'CART'
