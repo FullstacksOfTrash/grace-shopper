@@ -13,12 +13,12 @@ class OrderHistory extends Component {
         <div>
           {
             orders.map(order => (
-              <ul>Order# {order.id}
+              <ul key={order.id}>Order# {order.id}
               <li>Total: ${lineItemsTotalQuant(order.lineItems,products)}</li>
               <li>Order Placed: {order.createdAt}</li>
               {
                 order.lineItems.map(item => (
-                <ul>
+                <ul key={item.id}>
                   <li>{getProduct(item.productId,products).name} - {item.quantity}</li>
                 </ul>
                 ))

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCart, getProduct, lineItemsTotalQuant } from '../store/utils'
-import { addToCart, removeFromCart } from '../store/thunks'
+import { addToCart, removeFromCart, updateOrder } from '../store/thunks'
 
 
 class Cart extends Component {
@@ -9,10 +9,11 @@ class Cart extends Component {
 
   render() {
 
-    const { cart, products, totalCost, addToCart, removeFromCart, lineItems } = this.props
+    const { cart, products, totalCost, addToCart, removeFromCart, lineItems, submitCart, history } = this.props
     if(!cart) {
       return null
     }
+    console.log(cart)
     return (
       <div>
         Review your order:
@@ -34,7 +35,10 @@ class Cart extends Component {
           Total Cost: ${totalCost}
         </div>
         <div>
-          <button>Continue to Checkout</button>
+          <button onClick={() => {
+            submitCart(cart)
+            .then(() => history.push('/order-history'))
+          }}>Submit Order</button>
         </div>
       </div>
     )
@@ -63,6 +67,7 @@ const mapDispatchToProps = (dispatch)=> {
     removeFromCart: (cart, lineItem)=> {
       return dispatch(removeFromCart(cart, lineItem))
     },
+    submitCart: (cart) => dispatch(updateOrder(cart))
   }
 }
 

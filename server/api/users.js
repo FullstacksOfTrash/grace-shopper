@@ -38,7 +38,7 @@ router.get('/:userId/orders', loggedIn, isMe('userId'), async(req, res, next) =>
 })
 
 router.put('/:userId/orders/:orderId', loggedIn, isMe('userId'), (req, res, next)=> { //edit a user's order, for example, change status from 'CART' to 'ORDER'
-    Order.findById(req.params.id)
+    return Order.findById(req.params.orderId)
         .then(order => order.update(req.body))
         .then(order => res.send(order))
         .catch(next)

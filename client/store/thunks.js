@@ -20,7 +20,6 @@ export const getProducts = () => {
 
 //ORDERS
 export const getOrders = ()=> {
-    console.log('calling get orders')
     return (dispatch, getState)=> {
         const {user} = getState().auth;
         axios.get(`/api/users/${user.id}/orders`, authHeader())
@@ -31,16 +30,17 @@ export const getOrders = ()=> {
 }
 
 export const updateOrder = (order)=> {
+
     return (dispatch, getState)=> {
-        const user = getState().auth;
-        return axios.get(`/api/users/${user.id}/orders/${order.id}`, authHeader())
-            .then(response => response.data)
-            .then(order => dispatch(_updateOrder(order)))
+        const { user } = getState().auth;
+        return axios.put(`/api/users/${user.id}/orders/${order.id}`, {status:'ORDER'}, authHeader())
             .then(()=> {
-                axios.get(`/api/users/${user.id}/orders`) // after updating the order, load all of the user's orders again to normalize data
+                axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
                     .then(response => response.data)
                     .then(orders => dispatch(_getOrders(orders)))
+                    .catch(err => console.log(err.message))
             })
+            .catch(err => console.log(err.message))
     }
 }
 
