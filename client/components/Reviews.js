@@ -4,15 +4,15 @@ import { connect } from 'react-redux'
 class Reviews extends React.Component{
 
     render(){
-        const { productReviews } = this.props
-        if (!productReviews.length) {
+        const { reviews } = this.props
+        if (!reviews.length) {
             return <div>There's no reviews for this product. Be the first one to write one!</div>
         }
         return (
             <div>
                 <h4>Reviews</h4>
                 <ul>
-                    {productReviews.map(review => {
+                    {reviews.map(review => {
                         return (
                             <div key={review.id}>
                                 <span>Rating: {review.rating}</span>

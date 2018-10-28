@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProduct, getProductReviews, getCart, lineItemFinder } from '../store/utils'
+import { getProduct, getCart, lineItemFinder } from '../store/utils'
+// import { getProduct, getProductReviews, getCart, lineItemFinder } from '../store/utils'
+
 import { addToCart, removeFromCart } from '../store/thunks'
 import Reviews from './Reviews'
 
@@ -13,9 +15,14 @@ class ProductDetails extends Component {
 
     if (!this.props.product) { return null }
 
-    const { name, imageUrl, price, stock, description } = this.props.product
-    const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
+    const { name, imageUrl, price, stock, description, reviews } = this.props.product
+    // const { name, imageUrl, price, stock, description } = this.props.product
+    const { addToCart, removeFromCart, item, cart, product } = this.props
+
+    // const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
     // console.log('productreviews: ', productReviews)
+
+    console.log(reviews)
 
     return (
       <div>
@@ -32,7 +39,8 @@ class ProductDetails extends Component {
         <button onClick={() => removeFromCart(cart, item)} disabled={!item.quantity}>-</button>
         <p>Quantity in cart: {item.quantity || 0}</p>
         <hr />
-        <Reviews productReviews = { productReviews } />
+        <Reviews reviews = { reviews } />
+        {/* <Reviews productReviews = { productReviews } /> */}
       </div>
     )
   }
@@ -50,7 +58,7 @@ const mapStateToProps = (state, ownProps) => { //({ products, reviews }, { id })
     cart: cart,
     item: lineItem || {}, //being defensive
     product: getProduct(id, products),
-    productReviews: getProductReviews(id, reviews)
+    // productReviews: getProductReviews(id, reviews)
   }
 }
 

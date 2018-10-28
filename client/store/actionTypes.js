@@ -4,8 +4,8 @@ export const GET_ORDERS = 'GET_ORDERS'
 export const UPDATE_ORDER = 'UPDATE_ORDER'
 export const REMOVE_ORDERS = 'REMOVE_ORDERS'
 
-export const GET_ALL_REVIEWS = 'GET_ALL_REVIEWS'
-export const CREATE_REVIEW = 'CREATE_REVIEW'
+// export const GET_ALL_REVIEWS = 'GET_ALL_REVIEWS'
+// export const CREATE_REVIEW = 'CREATE_REVIEW'
 
 export const SET_AUTH = 'SET_AUTH'
 export const LOGOUT = 'LOGOUT'
