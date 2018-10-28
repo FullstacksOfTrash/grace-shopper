@@ -88,23 +88,14 @@ export const removeFromCart = (cart, lineItem)=> {
 }
 
 //REVIEWS
-// export const getAllReviews = (reviews) => {
-//   return (dispatch) => {
-//     axios.get('/api/reviews')
-//       .then(response => response.data)
-//       .then(reviews => dispatch(_getAllReviews(reviews)))
-//       .catch(error => console.log(error.message))
-//   }
-// }
-
-// export const createReview = (review) => {
-//   return (dispatch) => {
-//     axios.post(`/api/products/${id}/reviews`, review)
-//       .then(response => response.data)
-//       .then(review => dispatch(_createReview(review)))
-//       .catch(error => console.log(error.message))
-//   }
-// }
+export const createReview = (review) => {
+  return (dispatch) => {
+    axios.post(`/api/products/${id}/reviews`, review)
+      .then(response => response.data)
+      .then(review => dispatch(_createReview(review)))
+      .catch(error => console.log(error.message))
+  }
+}
 
 //AUTH
 export const exchangeTokenForAuth = history => {

@@ -20,6 +20,9 @@ class ReviewWriter extends React.Component{
         event.preventDefault()
     }
     render(){
+        const { user } = this.props.auth
+        // get's the logged-in user to pass to create review
+        
         const { handleChange, handleSubmit } = this
         const { rating, text } = this.state
         return (
@@ -38,4 +41,6 @@ class ReviewWriter extends React.Component{
     }
 }
 
-export default connect()(ReviewWriter)
+const mapStateToProps = ({ auth }) => ({ auth })
+
+export default connect(mapStateToProps)(ReviewWriter)
