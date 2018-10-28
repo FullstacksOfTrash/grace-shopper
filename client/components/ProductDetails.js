@@ -5,6 +5,7 @@ import { getProduct, getCart, lineItemFinder } from '../store/utils'
 
 import { addToCart, removeFromCart } from '../store/thunks'
 import Reviews from './Reviews'
+import ReviewWriter from './ReviewWriter'
 
 class ProductDetails extends Component {
   // constructor(props) {
@@ -39,6 +40,7 @@ class ProductDetails extends Component {
         <hr />
         <Reviews reviews = { reviews } />
         {/* <Reviews productReviews = { productReviews } /> */}
+        <ReviewWriter />
       </div>
     )
   }
