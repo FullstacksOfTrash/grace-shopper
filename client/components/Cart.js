@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getCart, getProduct } from '../store/utils'
+import { getCart, getProduct, lineItemsTotalQuant } from '../store/utils'
 import { addToCart, removeFromCart } from '../store/thunks'
 
 
@@ -10,8 +10,8 @@ class Cart extends Component {
   render() {
 
     const { cart, products, totalCost, addToCart, removeFromCart, lineItems } = this.props
-    if(!cart) { 
-      return null 
+    if(!cart) {
+      return null
     }
     return (
       <div>
@@ -20,11 +20,12 @@ class Cart extends Component {
           {
             lineItems.map(item => (
               <div key={item.id}> {getProduct(item.productId, products).name}
-                <li>Quantity: {item.quantity}                
+                <li>Quantity: {item.quantity}
                   <button onClick={() => addToCart(cart, null, item)}>+</button>
                   <button onClick={() => removeFromCart(cart, item)}>-</button>
                 </li>
-                <li>Cost: ${item.quantity * getProduct(item.productId, products).price}</li>
+                <li>Price: ${getProduct(item.productId, products).price}</li>
+                <li>Subtotal: ${item.quantity * getProduct(item.productId, products).price}</li>
               </div>
           ))
           }
@@ -44,10 +45,8 @@ const mapStateToProps = ({orders, products}) => {
   const cart = orders.filter(order => order.userId === 1).find(order => order.status === 'CART') || { lineItems: []}
   let totalCost = 0
   if(cart.id) {
-    totalCost = cart.lineItems.reduce( (acc, item) => {
-      return acc + item.quantity * getProduct(item.productId, products).price
-    },0)
-  } 
+    totalCost = lineItemsTotalQuant(cart.lineItems,products)
+  }
   return {
     cart: orders.filter(order => order.userId === 1).find(order => order.status === 'CART'),
     lineItems: cart.lineItems.sort((a, b) => a.id - b.id),

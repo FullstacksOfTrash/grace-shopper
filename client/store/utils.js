@@ -13,3 +13,9 @@ export const authHeader = ()=> {
 export const lineItemFinder = (lineItems, productId) => {
   return lineItems.find(lineItem => lineItem.productId === +productId)
 }
+
+export const lineItemsTotalQuant = (lineItems, products) => {
+  return lineItems.reduce( (acc, item) => {
+    return acc + item.quantity * getProduct(item.productId, products).price
+  },0)
+}
