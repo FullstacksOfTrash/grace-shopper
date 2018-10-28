@@ -9,7 +9,7 @@ const loggedIn = (req, res, next)=> {
 
 const isMe = (paramKey)=> {
     return (req, res, next)=> {
-        next( req.user.id === req.params[paramKey]*1 ? null : { status: 401 })
+        next( req.user.id == req.params[paramKey] ? null : { status: 401 })
     }
 }
 
@@ -37,21 +37,21 @@ router.get('/:userId/orders', loggedIn, isMe('userId'), async(req, res, next) =>
     }
 })
 
-router.put('/:userId/orders/:orderId', loggedIn, isMe, (req, res, next)=> { //edit a user's order, for example, change status from 'CART' to 'ORDER'
+router.put('/:userId/orders/:orderId', loggedIn, isMe('userId'), (req, res, next)=> { //edit a user's order, for example, change status from 'CART' to 'ORDER'
     Order.findById(req.params.id)
         .then(order => order.update(req.body))
         .then(order => res.send(order))
         .catch(next)
 })
 
-router.put('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, res, next) => {       //used to incrementing or decrementing lineItem
+router.put('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId'), (req, res, next) => {       //used to incrementing or decrementing lineItem
     LineItem.findById(req.params.lineItemId)
         .then(lineItem => lineItem.update(req.body))
         .then(lineItem => res.send(lineItem))
         .catch(next)
 })
 
-router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it
+router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe('userId'), (req, res, next) => {   //when lineItem has been reduced to zero, a delete request will be called to destroy it
     LineItem.findOne({
         where: {
             id: req.params.id,
@@ -63,7 +63,7 @@ router.delete('/:userId/orders/:orderId/lineitems/:id', loggedIn, isMe, (req, re
     .catch(next)
 })
 
-router.post('/:userId/orders/:orderId/lineitems', loggedIn, isMe, (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
+router.post('/:userId/orders/:orderId/lineitems', loggedIn, isMe('userId'), (req, res, next) => {         //route will be sent a productId in req.body to determine waht product a lineItem is related to
     LineItem.create({ productId: req.body.productId, orderId: req.params.orderId})
     .then(lineItem => res.status(201).send(lineItem))
     .catch(next)
