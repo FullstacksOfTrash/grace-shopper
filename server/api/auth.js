@@ -22,4 +22,10 @@ router.get('/', (req, res, next)=> {
   res.send(req.user);
 });
 
+router.post('/create', (req, res, next) => {
+  return User.create(req.body)
+  .then(user => res.send(user))
+  .catch(next)
+})
+
 module.exports = router;
