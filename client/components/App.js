@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
+import { getProducts, getCategories, getOrders } from '../store/thunks'
+// import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
 
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
 import { exchangeTokenForAuth } from '../store/thunks'
@@ -53,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
   init: () => {
     dispatch(exchangeTokenForAuth())
     dispatch(getProducts());
-    dispatch(getAllReviews());
+    // dispatch(getAllReviews());
     dispatch(getCategories());
     dispatch(getOrders())
   }

@@ -15,8 +15,8 @@ export const _updateOrder = (order)=> ({ type: UPDATE_ORDER, order });
 export const _removeOrders = () => ({ type: REMOVE_ORDERS })
 
 // Reviews
-export const _getAllReviews = (reviews) => ({ type: GET_ALL_REVIEWS, reviews})
-export const _createReview = (review) => ({ type: CREATE_REVIEW, review})
+// export const _getAllReviews = (reviews) => ({ type: GET_ALL_REVIEWS, reviews})
+// export const _createReview = (review) => ({ type: CREATE_REVIEW, review})
 
 // Auth
 export const _setAuth = user => ({ type: SET_AUTH, user})
