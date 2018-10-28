@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getProduct, lineItemsTotalQuant } from '../store/utils'
+import { Link } from 'react-router-dom'
 
 class OrderHistory extends Component {
   render () {
@@ -19,7 +20,7 @@ class OrderHistory extends Component {
               {
                 order.lineItems.map(item => (
                 <ul key={item.id}>
-                  <li>{getProduct(item.productId,products).name} - {item.quantity}</li>
+                  <li><Link to={`/products/${item.productId}`}>{getProduct(item.productId,products).name}</Link> <span> {item.quantity} </span></li>
                 </ul>
                 ))
               }
