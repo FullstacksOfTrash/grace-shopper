@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProduct, getCart, lineItemFinder } from '../store/utils'
+import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
 // import { getProduct, getProductReviews, getCart, lineItemFinder } from '../store/utils'
 
 import { addToCart, removeFromCart } from '../store/thunks'
@@ -19,7 +19,8 @@ class ProductDetails extends Component {
     const { name, imageUrl, price, stock, description, reviews } = this.props.product
     // const { name, imageUrl, price, stock, description } = this.props.product
     const { addToCart, removeFromCart, item, cart, product } = this.props
-
+    console.log(stock)
+    console.log(item)
     // const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
     // console.log('productreviews: ', productReviews)
 
@@ -30,11 +31,11 @@ class ProductDetails extends Component {
         <ul>
           <li>ImageUrl: { imageUrl }</li>
           <li>Price: $ { price } </li>
-          <li>Stock: { stock } </li>
+          <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
           <li>Description: { description } </li>
         </ul>
         <hr />
-        <button onClick={() => addToCart(cart, product, item)}>+</button>
+        <button onClick={() => addToCart(cart, product, item)} disabled={stock <= (item.quantity || 0) ? true : false }>+</button>
         <button onClick={() => removeFromCart(cart, item)} disabled={!item.quantity}>-</button>
         <p>Quantity in cart: {item.quantity || 0}</p>
         <hr />
@@ -45,6 +46,7 @@ class ProductDetails extends Component {
     )
   }
 }
+
 
 const mapStateToProps = (state, ownProps) => { //({ products, reviews }, { id }) 
   // const { products, orders, reviews } = state

@@ -138,6 +138,13 @@ const syncAndSeed = async () => {
       stock: 200,
       description: 'description placeholder',
     }),
+    Product.create({
+      name: 'Placeholder Product',
+      price: 300,
+      imageUrl: '',
+      stock: 0,
+      description: 'description placeholder',
+    }),
   ]);
 
   await Promise.all([
