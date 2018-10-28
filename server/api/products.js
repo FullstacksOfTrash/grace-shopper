@@ -38,13 +38,13 @@ router.get('/', (req, res, next) => {
 });
 
 //checks for user's admin status before allowing them to create product
-router.post('/', (req, res, next) => {
-    if (!req.user || !req.user.admin) {
-      return next({ status: 401 });
-    }
-    Product.create(req.body)
-      .then(product => res.send(product))
-      .catch(next);
-  });
+// router.post('/', (req, res, next) => {
+//     if (!req.user || !req.user.admin) {
+//       return next({ status: 401 });
+//     }
+//     Product.create(req.body)
+//       .then(product => res.send(product))
+//       .catch(next);
+//   });
 
 module.exports = router;

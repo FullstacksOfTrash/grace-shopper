@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCart, getProduct } from '../store/utils'
+import { addToCart, removeFromCart } from '../store/thunks'
+
 
 class Cart extends Component {
 
 
   render() {
 
-    const { cart, products, totalCost } = this.props
-    if(!cart) { return null }
-    console.log(cart)
+    const { cart, products, totalCost, addToCart, removeFromCart, lineItems } = this.props
+    if(!cart) { 
+      return null 
+    }
     return (
       <div>
         Review your order:
         <ul>
           {
-            cart.lineItems.map(item => (
+            lineItems.map(item => (
               <div key={item.id}> {getProduct(item.productId, products).name}
-                <li>Quantity: {item.quantity}                 <button>+</button>
-                <button>-</button>
+                <li>Quantity: {item.quantity}                
+                  <button onClick={() => addToCart(cart, null, item)}>+</button>
+                  <button onClick={() => removeFromCart(cart, item)}>-</button>
                 </li>
                 <li>Cost: ${item.quantity * getProduct(item.productId, products).price}</li>
               </div>
@@ -37,18 +41,31 @@ class Cart extends Component {
 }
 
 const mapStateToProps = ({orders, products}) => {
-  const cart = orders.filter(order => order.userId === 1).find(order => order.status === 'CART')
+  const cart = orders.filter(order => order.userId === 1).find(order => order.status === 'CART') || { lineItems: []}
   let totalCost = 0
-  if(cart) {
+  if(cart.id) {
     totalCost = cart.lineItems.reduce( (acc, item) => {
       return acc + item.quantity * getProduct(item.productId, products).price
     },0)
-  }
+  } 
   return {
     cart: orders.filter(order => order.userId === 1).find(order => order.status === 'CART'),
+    lineItems: cart.lineItems.sort((a, b) => a.id - b.id),
     products,
     totalCost
   }
 }
 
-export default connect(mapStateToProps)(Cart)
+const mapDispatchToProps = (dispatch)=> {
+  return {
+    addToCart: (cart, product, lineItem)=> {
+      return dispatch(addToCart(cart, product, lineItem))
+    },
+    removeFromCart: (cart, lineItem)=> {
+      return dispatch(removeFromCart(cart, lineItem))
+    },
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { _getProducts } from './actionCreators';
-import { _getOrders, _updateOrder } from './actionCreators';
+import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
 import { _getAllReviews, _createReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
@@ -33,7 +33,7 @@ export const getOrders = ()=> {
 export const updateOrder = (order)=> {
     return (dispatch, getState)=> {
         const user = getState().auth;
-        axios.get(`/api/users/${user.id}/orders/${order.id}`, authHeader())
+        return axios.get(`/api/users/${user.id}/orders/${order.id}`, authHeader())
             .then(response => response.data)
             .then(order => dispatch(_updateOrder(order)))
             .then(()=> {
@@ -46,16 +46,16 @@ export const updateOrder = (order)=> {
 
 export const addToCart = (cart, product, lineItem)=> {
     return (dispatch, getState)=> {
-        const user = getState().auth;
-        if (lineItem) {
-            axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+        const { user } = getState().auth
+        if (lineItem.id) {
+            return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
                 .then(()=> {
                     axios.get(`/api/users/${user.id}/orders`, authHeader())
                         .then(response => response.data)
                         .then( orders => dispatch(_getOrders(orders)))
                 })
         } else {
-            axios.post(`/api/users/${user.id}/orders/${cart.id}`, { productId: product.id, quantity: 1 }, authHeader())
+            return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
                 .then(()=> {
                     axios.get(`/api/users/${user.id}/orders`, authHeader())
                         .then(response => response.data)
@@ -66,17 +66,26 @@ export const addToCart = (cart, product, lineItem)=> {
 }
 
 export const removeFromCart = (cart, lineItem)=> {
-    // return (dispatch, getState())=> {
-    //     const user = getState().auth;
-    //     if (lineItem.quantity <== 1) {
-
-    //     } else {
-
-    //     }
-    // }
+    return (dispatch, getState) => {
+        const { user } = getState().auth
+        if(lineItem.quantity <= 1){
+            return axios.delete(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, authHeader())
+            .then(() => {
+                return axios.get(`/api/users/${user.id}/orders`, authHeader())
+                    .then(response => response.data)
+                    .then(orders => dispatch(_getOrders(orders)))
+                    .catch(err => console.log(err))
+            })
+        } else {
+            return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
+                .then(()=> {
+                    axios.get(`/api/users/${user.id}/orders`, authHeader())
+                        .then(response => response.data)
+                        .then( orders => dispatch(_getOrders(orders)))
+                })
+        }
+    }
 }
-
-
 
 //REVIEWS
 export const getAllReviews = (reviews) => {
@@ -136,6 +145,7 @@ export const logOut = history => {
     return dispatch => {
         window.localStorage.removeItem('token')
         dispatch(_logOut())
+        dispatch(_removeOrders())
         history.push('/home')
     }
 }

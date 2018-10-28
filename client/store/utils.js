@@ -9,3 +9,7 @@ export const authHeader = ()=> {
     headers: { authorization: window.localStorage.getItem('token')}
   }
 }
+
+export const lineItemFinder = (lineItems, productId) => {
+  return lineItems.find(lineItem => lineItem.productId === +productId)
+}
