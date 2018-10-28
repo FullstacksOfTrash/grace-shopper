@@ -12,6 +12,7 @@ import ProductDetails from './ProductDetails'
 import LogIn from './LogIn'
 import Cart from './Cart'
 import OrderHistory from './OrderHistory';
+import SignUp from './SignUp'
 
 class App extends Component {
 
@@ -28,9 +29,9 @@ class App extends Component {
         <Router>
           <div>
             <Route component={NavBar} />
-            <Route exact path='/' render={() => (loggedIn? <Redirect to='/products' /> : <LogIn />) }/>
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
+            <Route path='/signup' component={SignUp} />
             <Route path='/login' component={LogIn}/>
             <Route path='/cart' component={Cart} />
             <Route path='/order-history' component={OrderHistory} />

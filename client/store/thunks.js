@@ -126,6 +126,7 @@ export const exchangeTokenForAuth = history => {
 }
 export const logIn = (credentials, history) => {
     return async dispatch => {
+        //console.log(credentials)
         const response = await axios.post('/api/auth/', credentials)
         window.localStorage.setItem('token', response.data.token)
         return dispatch(exchangeTokenForAuth(history))
@@ -139,6 +140,15 @@ export const logOut = history => {
     }
 }
 
+export const signUp = (userInfo, history) => {
+    return dispatch => {
+        return axios.post('/api/auth/create', userInfo)
+        .then( user => {
+            const { email, password } = user.data
+            dispatch(logIn({email, password}, history))})
+        .catch((err) => console.log(err))
+    }
+}
 // CATEGORIES
 export const getCategories = () => {
   return (dispatch) => {
