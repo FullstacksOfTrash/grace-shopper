@@ -22,8 +22,6 @@ class ProductDetails extends Component {
     // const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
     // console.log('productreviews: ', productReviews)
 
-    console.log(reviews)
-
     return (
       <div>
         <h3> Introducing the { name }! </h3>
@@ -47,7 +45,8 @@ class ProductDetails extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => { //({ products, reviews }, { id }) 
-  const { products, orders, reviews } = state
+  // const { products, orders, reviews } = state
+  const { products, orders } = state
   const { id } = ownProps
   const cart = getCart(orders)
   let lineItem;
