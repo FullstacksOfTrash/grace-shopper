@@ -34,7 +34,7 @@ class App extends Component {
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
             <Route path='/signup' component={SignUp} />
             <Route path='/login' component={LogIn}/>
-            <Route path='/cart' component={Cart} />
+            <Route path='/cart' render={({history}) => <Cart history={history}/>} />
             <Route path='/order-history' component={OrderHistory} />
           </div>
         </Router>

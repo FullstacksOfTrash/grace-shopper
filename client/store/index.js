@@ -14,6 +14,6 @@ const reducer = combineReducers({
   orders: orderReducer
 });
 
-const store = createStore(reducer, applyMiddleware( thunk));
+const store = createStore(reducer, applyMiddleware( thunk, logger ));
 
 export default store;
