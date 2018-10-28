@@ -11,7 +11,7 @@ import { authHeader } from './utils';
 //PRODUCTS
 export const getProducts = () => {
   return (dispatch) => {
-    return axios.get('/api/products', authHeader())
+    return axios.get('/api/products')
       .then(response => response.data)
       .then(products => dispatch(_getProducts(products)))
       .catch(error => console.log(error.message))
