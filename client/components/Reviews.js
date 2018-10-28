@@ -6,7 +6,7 @@ class Reviews extends React.Component{
     render(){
         const { reviews } = this.props
         if (!reviews.length) {
-            return <div>There's no reviews for this product. Be the first one to write one!</div>
+            return <div>There are no reviews for this product. Be the first to write one!</div>
         }
         return (
             <div>

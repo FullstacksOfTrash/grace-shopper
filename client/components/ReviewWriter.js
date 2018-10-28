@@ -1,4 +1,5 @@
-import React from 'React'
+import React from 'react'
+import { connect } from 'react-redux';
 
 class ReviewWriter extends React.Component{
     constructor(){
@@ -23,15 +24,18 @@ class ReviewWriter extends React.Component{
         const { rating, text } = this.state
         return (
             <div>
+                <hr />
                 <h4>Write a review for this product</h4>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='rating'>Rating</label>
-                    <input name='rating' onChange={handleChange} value={rating}></input>
-                    <label htmlFor='text'>Tell us about this product...</label>
-                    <input name='text' onChange={handleChange} value={text}></input>
+                    <label htmlFor='rating'>Rating:</label>{' '}
+                    <input name='rating' onChange={handleChange} value={rating}></input>{' '}
+                    <label htmlFor='text'>Tell us about this product:</label>{' '}
+                    <input name='text' onChange={handleChange} value={text}></input>{' '}
                     <button type='submit'>Submit</button>
                 </form>
             </div>
         )
     }
 }
+
+export default connect()(ReviewWriter)
