@@ -37,9 +37,6 @@ class ReviewWriter extends React.Component{
     }
 
     render(){
-        // const { user } = this.props.auth // get's the logged-in user to pass to create review
-
-        // console.log(this.state)
         
         const { handleChange, handleSubmit } = this
         const { rating, text } = this.state
