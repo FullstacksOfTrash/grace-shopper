@@ -19,8 +19,8 @@ class ProductDetails extends Component {
     const { name, imageUrl, price, stock, description, reviews } = this.props.product
     // const { name, imageUrl, price, stock, description } = this.props.product
     const { addToCart, removeFromCart, item, cart, product } = this.props
-    console.log(stock)
-    console.log(item)
+    // console.log(stock)
+    // console.log(item)
     // const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
     // console.log('productreviews: ', productReviews)
 
