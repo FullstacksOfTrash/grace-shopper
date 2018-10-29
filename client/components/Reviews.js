@@ -5,8 +5,7 @@ import { deleteReview } from '../store/thunks'
 class Reviews extends React.Component{
 
     render(){
-
-        const { reviews, onDelete } = this.props
+        const { reviews, onDelete, user } = this.props
         if (!reviews.length) {
             return <div>There are no reviews for this product. Be the first to write one!</div>
         }
@@ -18,13 +17,15 @@ class Reviews extends React.Component{
                         return (
                             <div key={review.id} 
                             style={{border: '2px solid black', borderRadius: '5px'}}>
-                            {
-                                console.log(review.productId)
-                            }
                                 <span>Rating: {review.rating}</span>
                                 <p>{review.text}</p>
                                 <button>Edit Review</button>{' '}
-                                <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>{' '}
+                                {
+                                    user.id === review.userId ?
+                                    <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
+                                    :
+                                    <button onClick={() => alert('You do not have permission to delete this review.')}>Delete Review</button>
+                                }                          
                             </div>
                         )
                     })}
@@ -32,13 +33,12 @@ class Reviews extends React.Component{
             </div>
         )
     }
-
 }
 
-// const mapStateToProps = (state, {reviews}) => (state, {reviews})
+const mapStateToProps = ({ auth }) => ({ user: auth.user })
 
 const mapDispatchToProps = (dispatch) => ({
     onDelete: (productId, reviewId) => dispatch(deleteReview(productId, reviewId))
 })
 
-export default connect(null, mapDispatchToProps)(Reviews)
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
