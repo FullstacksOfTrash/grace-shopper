@@ -27,4 +27,6 @@ class Reviews extends React.Component{
 
 }
 
-export default connect()(Reviews)
+const mapStateToProps = (state, {reviews}) => (state, {reviews})
+
+export default connect(mapStateToProps)(Reviews)
