@@ -1,7 +1,7 @@
 
 import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
 import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
-import { CREATE_REVIEW } from './actionTypes';
+import { CREATE_REVIEW, DELETE_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
 export const productReducer = (state = [], action) => {
@@ -29,6 +29,8 @@ export const reviewReducer = (state = [], action) => {
   switch (action.type) {
     case CREATE_REVIEW:
       return [...state, action.review]
+    case DELETE_REVIEW:
+      return state.filter(review => review.id !== parseInt(action.review.id))
   }
   return state;
 }
