@@ -6,6 +6,7 @@ class Reviews extends React.Component{
 
     render(){
         const { reviews, onDelete, user } = this.props
+        console.log(user)
         if (!reviews.length) {
             return <div>There are no reviews for this product. Be the first to write one!</div>
         }
@@ -21,7 +22,7 @@ class Reviews extends React.Component{
                                 <p>{review.text}</p>
                                 <button>Edit Review</button>{' '}
                                 {
-                                    user.id === review.userId ?
+                                    user.id === review.userId || user.admin === true ?
                                     <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
                                     :
                                     <button onClick={() => alert('You do not have permission to delete this review.')}>Delete Review</button>
