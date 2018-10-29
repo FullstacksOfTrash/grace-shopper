@@ -21,10 +21,14 @@ class ReviewWriter extends React.Component{
     }
 
     handleSubmit(event){
+        event.preventDefault()
         const { saveReview } = this.props
         const { id } = this.props // gets the product id
+        const { userId } = this.props
 
-        event.preventDefault()
+        !userId || userId === undefined ?
+        alert('You must be logged in to leave a review.')
+        :
         saveReview(id, this.state)
         this.setState({
             rating: 0,
