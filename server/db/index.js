@@ -166,14 +166,14 @@ const syncAndSeed = async () => {
       productId: macbookPro.id,
       userId: moe.id,
       rating: 5,
-      text: 'review placeholder',
+      text: 'review placeholder23213wdsadsdsdsad2e2',
       // verfiedBuyer: true, // not sure this should be hardcoded here... may make sense to set this with a sequelize hook
     }),
     Review.create({
       productId: ipadPro.id,
       userId: harry.id,
       rating: 6,
-      text: 'review placeholder',
+      text: 'review placeholdersdasdwewqdsadsadsadw3423',
     }),
   ]);
 };
