@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { createReview } from '../store/thunks'
 
 class ReviewWriter extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             rating: 0,
             text: '',
-            userId: 0
+            userId: props.userId
         }
+        console.log('constructor state ', this.state)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -23,18 +24,13 @@ class ReviewWriter extends React.Component{
     handleSubmit(event){
         const { saveReview } = this.props
         const { id } = this.props // gets the product id
-        const { user } = this.props.auth
-        this.state.userId = parseInt(user.id)
-
-        console.log('THIS STATE ', this.state)
 
         event.preventDefault()
         saveReview(id, this.state)
-        this.setState = {
+        this.setState({
             rating: 0,
             text: '',
-            userId: 0
-        }
+        })
     }
 
     render(){
@@ -60,7 +56,15 @@ class ReviewWriter extends React.Component{
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+// const mapStateToProps = ({ auth }) => {
+//     return {
+//         auth,
+//         userId: auth.user.id
+//     }
+// }
+
+const mapStateToProps = ({ auth }) => ({ auth, userId: auth.user.id })
+
 
 const mapDispatchToProps = (dispatch) => ({
     saveReview: (id, review) => dispatch(createReview(id, review))
