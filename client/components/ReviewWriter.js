@@ -10,7 +10,6 @@ class ReviewWriter extends React.Component{
             text: '',
             userId: props.userId
         }
-        console.log('constructor state ', this.state)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -55,13 +54,6 @@ class ReviewWriter extends React.Component{
         )
     }
 }
-
-// const mapStateToProps = ({ auth }) => {
-//     return {
-//         auth,
-//         userId: auth.user.id
-//     }
-// }
 
 const mapStateToProps = ({ auth }) => ({ auth, userId: auth.user.id })
 
