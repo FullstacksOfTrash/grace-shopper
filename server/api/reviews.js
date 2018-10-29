@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Review } = require('../db')
+const { Review, Product } = require('../db')
 
 // mounted on /api/products
 
@@ -9,5 +9,12 @@ router.post('/:id/reviews', (req, res, next) => {     //will be passed userId in
   .then(review => res.send(review))
   .catch(next)
 })
+
+router.delete('/:productId/reviews/:reviewId', (req, res, next) => {
+  Review.findById(parseInt(req.params.reviewId))
+    .then(response => response.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next)
+});
 
 module.exports = router;
