@@ -3,13 +3,6 @@ const { Product, Review } = require('../db')
 
 // route: /api/products
 
-router.post('/:id/reviews', (req, res, next) => {     //will be passed userId into req.body to delete author of post || req.body can be empty for anonymous authors or non verfied buyers
-  const { userId, rating, text, verfiedBuyer } = req.body
-  Review.create({ id: req.params.id, rating, text, verfiedBuyer})
-  .then(review => res.send(review))
-  .catch(next)
-})
-
 //finds product based on id and includes review
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id, {
