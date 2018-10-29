@@ -23,20 +23,24 @@ class ReviewWriter extends React.Component{
     handleSubmit(event){
         const { saveReview } = this.props
         const { id } = this.props // gets the product id
+        const { user } = this.props.auth
+        this.state.userId = parseInt(user.id)
+
+        console.log('THIS STATE ', this.state)
 
         event.preventDefault()
         saveReview(id, this.state)
         this.setState = {
             rating: 0,
             text: '',
-            userId: ''
+            userId: 0
         }
     }
 
     render(){
         // const { user } = this.props.auth // get's the logged-in user to pass to create review
 
-        console.log(this.state)
+        // console.log(this.state)
         
         const { handleChange, handleSubmit } = this
         const { rating, text } = this.state
