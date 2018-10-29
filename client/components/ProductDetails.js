@@ -16,13 +16,11 @@ class ProductDetails extends Component {
 
     if (!this.props.product) { return null }
 
-    const { name, imageUrl, price, stock, description, reviews } = this.props.product
-    // const { name, imageUrl, price, stock, description } = this.props.product
+    const { name, imageUrl, price, stock, description, reviews, id } = this.props.product
     const { addToCart, removeFromCart, item, cart, product } = this.props
-    console.log(stock)
-    console.log(item)
-    // const { productReviews, addToCart, removeFromCart, item, cart, product } = this.props
-    // console.log('productreviews: ', productReviews)
+
+    // console.log(stock)
+    // console.log(item)
 
     return (
       <div>
@@ -40,16 +38,14 @@ class ProductDetails extends Component {
         <p>Quantity in cart: {item.quantity || 0}</p>
         <hr />
         <Reviews reviews = { reviews } />
-        {/* <Reviews productReviews = { productReviews } /> */}
-        <ReviewWriter />
+        <ReviewWriter id = { id } />
       </div>
     )
   }
 }
 
 
-const mapStateToProps = (state, ownProps) => { //({ products, reviews }, { id }) 
-  // const { products, orders, reviews } = state
+const mapStateToProps = (state, ownProps) => { 
   const { products, orders } = state
   const { id } = ownProps
   const cart = getCart(orders)
@@ -60,8 +56,7 @@ const mapStateToProps = (state, ownProps) => { //({ products, reviews }, { id })
   return {
     cart: cart,
     item: lineItem || {}, //being defensive
-    product: getProduct(id, products),
-    // productReviews: getProductReviews(id, reviews)
+    product: getProduct(id, products)
   }
 }
 

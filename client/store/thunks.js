@@ -88,7 +88,7 @@ export const removeFromCart = (cart, lineItem)=> {
 }
 
 //REVIEWS
-export const createReview = (review) => {
+export const createReview = (id, review) => {
   return (dispatch) => {
     axios.post(`/api/products/${id}/reviews`, review)
       .then(response => response.data)
