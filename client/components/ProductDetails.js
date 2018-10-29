@@ -19,9 +19,6 @@ class ProductDetails extends Component {
     const { name, imageUrl, price, stock, description, reviews, id } = this.props.product
     const { addToCart, removeFromCart, item, cart, product } = this.props
 
-    // console.log(stock)
-    // console.log(item)
-
     return (
       <div>
         <h3> Introducing the { name }! </h3>

@@ -15,6 +15,10 @@ const User = conn.define('user', {
     validate: {
       isEmail: true,
     },
+    unique: {
+      args: true,
+      msg: 'Email address already in user!'
+    }
   },
   password: {
     type: conn.Sequelize.STRING,
