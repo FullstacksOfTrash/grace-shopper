@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { _getProducts } from './actionCreators';
 import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
-import { _createReview, _deleteReview } from './actionCreators';
+import { _createReview, _deleteReview, _getProductReviews } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
 
@@ -98,10 +98,19 @@ export const createReview = (id, review) => {
 }
 
 export const deleteReview = (productId, reviewId) => {
-    return(dispatch) => {
+    return (dispatch) => {
         axios.delete(`/api/products/${productId}/reviews/${reviewId}`)
-        .then(() => dispatch(_deleteReview))
-        .catch(error => console.log(error.message))
+            .then(() => dispatch(_deleteReview(reviewId)))
+            .catch(error => console.log(error.message))
+    }
+}
+
+export const getProductReviews = (productId) => {
+    return (dispatch) => {
+        return axios.get(`/api/products/${productId}/reviews`)
+            .then(response => response.data)
+            .then(reviews => dispatch(_getProductReviews(reviews)))
+            .catch(error => console.log(error.message))
     }
 }
 

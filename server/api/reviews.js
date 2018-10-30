@@ -17,4 +17,14 @@ router.delete('/:productId/reviews/:reviewId', (req, res, next) => {
     .catch(next)
 });
 
+router.get('/:id/reviews', (req, res, next) => {
+  Review.findAll({
+    where: {
+      productId: req.params.id
+    }
+  })
+  .then(reviews => res.send(reviews))
+  .catch(next)
+})
+
 module.exports = router;

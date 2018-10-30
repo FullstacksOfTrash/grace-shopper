@@ -7,6 +7,7 @@ export const REMOVE_ORDERS = 'REMOVE_ORDERS'
 // export const GET_ALL_REVIEWS = 'GET_ALL_REVIEWS'
 export const CREATE_REVIEW = 'CREATE_REVIEW'
 export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const GET_PRODUCT_REVIEWS = 'GET_PRODUCT_REVIEWS'
 
 export const SET_AUTH = 'SET_AUTH'
 export const LOGOUT = 'LOGOUT'
