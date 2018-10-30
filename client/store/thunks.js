@@ -90,7 +90,7 @@ export const removeFromCart = (cart, lineItem)=> {
 //REVIEWS
 export const createReview = (id, review) => {
   return (dispatch) => {
-    axios.post(`/api/products/${id}/reviews`, review)
+    axios.post(`/api/reviews/${id}`, review)
       .then(response => response.data)
       .then(review => dispatch(_createReview(review)))
       .catch(error => console.log(error.message))
@@ -99,7 +99,7 @@ export const createReview = (id, review) => {
 
 export const deleteReview = (productId, reviewId) => {
     return (dispatch) => {
-        axios.delete(`/api/products/${productId}/reviews/${reviewId}`)
+        axios.delete(`/api/reviews/${productId}/${reviewId}`)
             .then(() => dispatch(_deleteReview(reviewId)))
             .catch(error => console.log(error.message))
     }
@@ -107,7 +107,7 @@ export const deleteReview = (productId, reviewId) => {
 
 export const getProductReviews = (productId) => {
     return (dispatch) => {
-        return axios.get(`/api/products/${productId}/reviews`)
+        return axios.get(`/api/reviews/${productId}`)
             .then(response => response.data)
             .then(reviews => dispatch(_getProductReviews(reviews)))
             .catch(error => console.log(error.message))
