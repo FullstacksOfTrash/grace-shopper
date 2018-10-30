@@ -114,11 +114,14 @@ export const deleteReview = (productId, reviewId) => {
     }
 }
 
-// export const editReview = (productId, reviewId) => {
-//     return (dispatch) => {
-//         axios.put(`/api/reviews`)
-//     }
-// }
+export const editReview = (productId, review) => {
+    return (dispatch) => {
+        axios.put((`/api/reviews/${productId}/${review.id}`, review))
+            .then(response => response.data)
+            .then(review => dispatch(_editReview(review)))
+            .catch(error => console.log(error.message))
+    }
+}
 
 //AUTH
 export const exchangeTokenForAuth = history => {
