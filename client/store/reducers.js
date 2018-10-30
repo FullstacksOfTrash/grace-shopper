@@ -1,7 +1,7 @@
 
 import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
 import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
-import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS } from './actionTypes';
+import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS, EDIT_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
 export const productReducer = (state = [], action) => {
@@ -33,7 +33,9 @@ export const reviewReducer = (state = [], action) => {
       return [...state, action.review]
     case DELETE_REVIEW:
       return state.filter(review => review.id !== parseInt(action.reviewId))
-  }
+    case EDIT_REVIEW:
+      return state.map( rvw => rvw.id !== action.review.id ? rvw : action.review )
+    }
   return state;
 }
 
