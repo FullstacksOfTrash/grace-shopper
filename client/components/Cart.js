@@ -13,7 +13,7 @@ class Cart extends Component {
     if(!cart) {
       return null
     }
-    console.log(cart)
+    // console.log(cart)
     return (
       <div>
         Review your order:

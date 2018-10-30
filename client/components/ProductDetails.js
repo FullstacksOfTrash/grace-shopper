@@ -9,12 +9,17 @@ import ReviewWriter from './ReviewWriter'
 
 class ProductDetails extends Component {
 
+  componentDidMount() {
+    const { init } = this.props;
+    init();
+  }
+
   render() {
 
     if (!this.props.product) { return null }
 
-    const { name, imageUrl, price, stock, description, reviews, id } = this.props.product
-    const { addToCart, removeFromCart, item, cart, product } = this.props
+    const { name, imageUrl, price, stock, description, id } = this.props.product
+    const { addToCart, removeFromCart, item, cart, product, reviews } = this.props
 
     return (
       <div>
@@ -31,7 +36,7 @@ class ProductDetails extends Component {
         <button onClick={() => removeFromCart(cart, item)} disabled={!item.quantity}>-</button>
         <p>Quantity in cart: {item.quantity || 0}</p>
         <hr />
-        <Reviews reviews = { reviews } />
+        <Reviews />
         <ReviewWriter id = { id } />
       </div>
     )
@@ -50,12 +55,18 @@ const mapStateToProps = (state, ownProps) => {
   return {
     cart: cart,
     item: lineItem || {}, //being defensive
-    product: getProduct(id, products)
+    product: getProduct(id, products),
+    reviews: state.reviews
   }
 }
 
-const mapDispatchToProps = (dispatch)=> {
+// init: (ownProps.id) => return dispatch(getProductReviews(parseInt(productId))),
+
+const mapDispatchToProps = (dispatch, ownProps)=> {
   return {
+    init: () => {
+      dispatch(getProductReviews(ownProps.id));
+    },
     addToCart: (cart, product, lineItem)=> {
       return dispatch(addToCart(cart, product, lineItem))
     },

@@ -4,6 +4,12 @@ import { deleteReview } from '../store/thunks'
 
 class Reviews extends React.Component{
 
+    componentDidUpdate(prevProps) {
+        if (this.props.reviews !== prevProps.reviews) {
+            this.setState({ reviews: this.props.reviews })
+        }
+    }
+
     render(){
         const { reviews, onDelete, user } = this.props
 
@@ -36,7 +42,7 @@ class Reviews extends React.Component{
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ user: auth.user })
+const mapStateToProps = ({ reviews, auth }) => ({ reviews, user: auth.user })
 
 const mapDispatchToProps = (dispatch) => ({
     onDelete: (productId, reviewId) => dispatch(deleteReview(productId, reviewId))
