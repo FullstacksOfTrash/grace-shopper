@@ -32,7 +32,7 @@ export const reviewReducer = (state = [], action) => {
     case CREATE_REVIEW:
       return [...state, action.review]
     case DELETE_REVIEW:
-      return state.filter(review => review.id !== parseInt(action.id))
+      return state.filter(review => review.id !== parseInt(action.reviewId))
   }
   return state;
 }

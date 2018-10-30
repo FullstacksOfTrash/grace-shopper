@@ -17,7 +17,7 @@ export const _removeOrders = () => ({ type: REMOVE_ORDERS })
 // Reviews
 // export const _getAllReviews = (reviews) => ({ type: GET_ALL_REVIEWS, reviews})
 export const _createReview = (review) => ({ type: CREATE_REVIEW, review})
-export const _deleteReview = (id) => ({ type: DELETE_REVIEW, reviewId})
+export const _deleteReview = (reviewId) => ({ type: DELETE_REVIEW, reviewId})
 export const _getProductReviews = (reviews) => ({type: GET_PRODUCT_REVIEWS, reviews})
 
 // Auth
