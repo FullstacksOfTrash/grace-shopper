@@ -30,6 +30,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "express": "^4.16.4",
     "jwt-simple": "^0.5.5",
@@ -45,6 +46,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^4.41.0",
+    "stripe": "^6.13.0",
     "webpack": "^4.23.0",
     "webpack-cli": "^3.1.2"
   },

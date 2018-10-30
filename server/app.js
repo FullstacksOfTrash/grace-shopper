@@ -1,11 +1,13 @@
 const express = require('express');
 const jwt = require('jwt-simple')
+const bodyParser = require('body-parser')
 const app = express();
 const path = require('path')
 const api = require('./api')
 const { User } = require('../server/db/')
 
 app.use(express.json())
+app.use(bodyParser.text())
 app.use('/dist', express.static(path.join(__dirname, '../dist')))
 app.use(express.static(path.join(__dirname, '..','public')))
 
