@@ -25,19 +25,14 @@ export const orderReducer = (state=[], action)=> {
   }
 }
 
-
-
 export const reviewReducer = (state = [], action) => {
   switch (action.type) {
-
     case GET_PRODUCT_REVIEWS:
-      return action.reviews
-    
+      return action.reviews    
     case CREATE_REVIEW:
       return [...state, action.review]
-
     case DELETE_REVIEW:
-      return state.filter(review => review.id === parseInt(action.review.id))
+      return state.filter(review => review.id !== parseInt(action.id))
   }
   return state;
 }

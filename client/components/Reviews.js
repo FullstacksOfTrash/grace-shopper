@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteReview } from '../store/thunks'
+import { deleteReview, editReview } from '../store/thunks'
 
-class Reviews extends React.Component{
+class Reviews extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.reviews !== prevProps.reviews) {
@@ -10,8 +10,8 @@ class Reviews extends React.Component{
         }
     }
 
-    render(){
-        const { reviews, onDelete, user } = this.props
+    render() {
+        const { reviews, onDelete, user, onEdit } = this.props
 
         if (!reviews.length) {
             return <div>There are no reviews for this product. Be the first to write one!</div>
@@ -22,17 +22,27 @@ class Reviews extends React.Component{
                 <ul>
                     {reviews.map(review => {
                         return (
-                            <div key={review.id} 
-                            style={{border: '2px solid black', borderRadius: '5px'}}>
+                            <div key={review.id}
+                                style={{ border: '2px solid black', borderRadius: '5px' }}>
                                 <span>Rating: {review.rating}</span>
                                 <p>{review.text}</p>
-                                <button>Edit Review</button>{' '}
+
                                 {
                                     user.id === review.userId || user.admin === true ?
-                                    <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
-                                    :
-                                    <button onClick={() => alert('You do not have permission to delete this review.')}>Delete Review</button>
-                                }                          
+                                        <button onClick={() => onEdit(review.productId, review.id)}>Edit Review</button>
+                                        :
+                                        <button onClick={() => alert('You do not have permission to edit this review.')}>Edit Review</button>
+                                }
+
+
+                                {' '}
+
+                                {
+                                    user.id === review.userId || user.admin === true ?
+                                        <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
+                                        :
+                                        <button onClick={() => alert('You do not have permission to delete this review.')}>Delete Review</button>
+                                }
                             </div>
                         )
                     })}
@@ -45,7 +55,8 @@ class Reviews extends React.Component{
 const mapStateToProps = ({ reviews, auth }) => ({ reviews, user: auth.user })
 
 const mapDispatchToProps = (dispatch) => ({
-    onDelete: (productId, reviewId) => dispatch(deleteReview(productId, reviewId))
+    onDelete: (productId, reviewId) => dispatch(deleteReview(productId, reviewId)),
+    onEdit: (productId, reviewId) => dispatch(editReview(productId, reviewId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reviews)

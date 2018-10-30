@@ -88,6 +88,15 @@ export const removeFromCart = (cart, lineItem)=> {
 }
 
 //REVIEWS
+export const getProductReviews = (productId) => {
+    return (dispatch) => {
+        return axios.get(`/api/reviews/${productId}`)
+            .then(response => response.data)
+            .then(reviews => dispatch(_getProductReviews(reviews)))
+            .catch(error => console.log(error.message))
+    }
+}
+
 export const createReview = (id, review) => {
   return (dispatch) => {
     axios.post(`/api/reviews/${id}`, review)
@@ -105,14 +114,11 @@ export const deleteReview = (productId, reviewId) => {
     }
 }
 
-export const getProductReviews = (productId) => {
-    return (dispatch) => {
-        return axios.get(`/api/reviews/${productId}`)
-            .then(response => response.data)
-            .then(reviews => dispatch(_getProductReviews(reviews)))
-            .catch(error => console.log(error.message))
-    }
-}
+// export const editReview = (productId, reviewId) => {
+//     return (dispatch) => {
+//         axios.put(`/api/reviews`)
+//     }
+// }
 
 //AUTH
 export const exchangeTokenForAuth = history => {
