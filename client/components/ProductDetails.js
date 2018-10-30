@@ -3,14 +3,11 @@ import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
 // import { getProduct, getProductReviews, getCart, lineItemFinder } from '../store/utils'
 
-import { addToCart, removeFromCart } from '../store/thunks'
+import { addToCart, removeFromCart, getProductReviews } from '../store/thunks'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 
 class ProductDetails extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
 
   render() {
 
