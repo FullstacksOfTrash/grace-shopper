@@ -19,7 +19,7 @@ export const _removeOrders = () => ({ type: REMOVE_ORDERS })
 export const _createReview = (review) => ({ type: CREATE_REVIEW, review})
 export const _deleteReview = (reviewId) => ({ type: DELETE_REVIEW, reviewId})
 export const _getProductReviews = (reviews) => ({type: GET_PRODUCT_REVIEWS, reviews})
-export const _editReview = (review) => ({ type: EDIT_REVIEW, review})
+export const _editReview = (update) => ({ type: EDIT_REVIEW, update})
 
 // Auth
 export const _setAuth = user => ({ type: SET_AUTH, user})

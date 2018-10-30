@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { _getProducts } from './actionCreators';
 import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
-import { _createReview, _deleteReview, _getProductReviews } from './actionCreators';
+import { _createReview, _deleteReview, _getProductReviews, _editReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
 
@@ -99,7 +99,7 @@ export const getProductReviews = (productId) => {
 
 export const createReview = (id, review) => {
   return (dispatch) => {
-    axios.post(`/api/reviews/${id}`, review)
+    return axios.post(`/api/reviews/${id}`, review)
       .then(response => response.data)
       .then(review => dispatch(_createReview(review)))
       .catch(error => console.log(error.message))
@@ -108,15 +108,16 @@ export const createReview = (id, review) => {
 
 export const deleteReview = (productId, reviewId) => {
     return (dispatch) => {
-        axios.delete(`/api/reviews/${productId}/${reviewId}`)
+        return axios.delete(`/api/reviews/${productId}/${reviewId}`)
             .then(() => dispatch(_deleteReview(reviewId)))
             .catch(error => console.log(error.message))
     }
 }
 
-export const editReview = (productId, review) => {
+export const editReview = (id, review) => {
+    console.log(review)
     return (dispatch) => {
-        axios.put((`/api/reviews/${productId}/${review.id}`, review))
+        return axios.put(`/api/reviews/${id}`, review)
             .then(response => response.data)
             .then(review => dispatch(_editReview(review)))
             .catch(error => console.log(error.message))

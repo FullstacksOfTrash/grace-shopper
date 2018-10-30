@@ -27,7 +27,7 @@ router.get('/:productId', (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:productId/:reviewId', (req, res, next) => {
+router.put('/:reviewId', (req, res, next) => {
   Review.findById(req.params.reviewId)
     .then(review => review.update(req.body))
     .then(review => res.send(review))
