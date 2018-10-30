@@ -115,7 +115,6 @@ export const deleteReview = (productId, reviewId) => {
 }
 
 export const editReview = (id, review) => {
-    console.log(review)
     return (dispatch) => {
         return axios.put(`/api/reviews/${id}`, review)
             .then(response => response.data)
