@@ -44,19 +44,18 @@ class ProductDetails extends Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => { 
-  const { products, orders } = state
-  const { id } = ownProps
+const mapStateToProps = ({ products, orders, reviews }, { id }) => {
   const cart = getCart(orders)
+  console.log(cart)
   let lineItem;
   if(cart){
     lineItem = lineItemFinder(cart.lineItems, id)
   }
   return {
-    cart: cart,
+    cart,
     item: lineItem || {}, //being defensive
     product: getProduct(id, products),
-    reviews: state.reviews
+    reviews
   }
 }
 

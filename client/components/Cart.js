@@ -7,13 +7,17 @@ import { Link } from 'react-router-dom'
 class Cart extends Component {
 
 
+
   render() {
 
     const { cart, products, totalCost, addToCart, removeFromCart, lineItems, submitCart, history } = this.props
+
+    console.log('render')
     if(!cart) {
+      console.log('no cart')
       return null
     }
-    // console.log(cart)
+
     return (
       <div>
         Review your order:
@@ -45,14 +49,16 @@ class Cart extends Component {
   }
 }
 
-const mapStateToProps = ({orders, products}) => {
-  const cart = orders.filter(order => order.userId === 1).find(order => order.status === 'CART') || { lineItems: []}
+const mapStateToProps = ({orders, products,auth}) => {
+  console.log('auth user id ', auth.user.id)
+  const cart = orders.filter(order => order.userId === auth.user.id).find(order => order.status === 'CART') || { lineItems: []}
+  console.log(cart)
   let totalCost = 0
   if(cart.id) {
     totalCost = lineItemsTotalQuant(cart.lineItems,products)
   }
   return {
-    cart: orders.filter(order => order.userId === 1).find(order => order.status === 'CART'),
+    cart,
     lineItems: cart.lineItems.sort((a, b) => a.id - b.id),
     products,
     totalCost
