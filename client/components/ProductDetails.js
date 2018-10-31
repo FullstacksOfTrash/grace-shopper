@@ -6,17 +6,20 @@ import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 
 class ProductDetails extends Component {
-
-  componentDidMount() {
-    const { init } = this.props;
-    init();
+  constructor() {
+    super();
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubtract = this.handleSubtract.bind(this);
   }
 
+  componentDidMount() {
+    const { init } = this.props;
+    init();
+  }
+
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem } = this.props;
-    lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, lineItem, product);
+    lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, product);
   }
 
   handleSubtract() {
@@ -25,11 +28,14 @@ class ProductDetails extends Component {
   }
 
   render() {
-
     if (!this.props.product) { return null }
 
     const { name, imageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews } = this.props
+    const { handleAdd, handleSubtract } = this;
+
+    const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
+    const noQuantity = !lineItem || !lineItem.quantity;
 
     return (
       <div>
@@ -43,10 +49,10 @@ class ProductDetails extends Component {
         </ul>
         <hr />
 
-        <button onClick={handleAdd} disabled={stock <= (lineItem.quantity || 0) ? true : false }>+</button>
-        <button onClick={handleSubtract} disabled={!lineItem.quantity}>-</button>
+        <button onClick={handleAdd} disabled={outOfStock}>+</button>
+        <button onClick={handleSubtract} disabled={noQuantity}>-</button>
 
-        <p>Quantity in cart: {lineItem.quantity || 0}</p>
+        <p>Quantity in cart: {lineItem ? lineItem.quantity : 0}</p>
         <hr />
         <Reviews />
         <ReviewWriter id = { id } />
@@ -58,9 +64,13 @@ class ProductDetails extends Component {
 
 const mapStateToProps = ({ products, orders, reviews }, { id }) => {
   const cart = getCart(orders)
+  let lineItem;
+  if(cart){
+    lineItem = lineItemFinder(cart.lineItems, id)
+  }
   return {
     cart,
-    lineItem: lineItemFinder(cart.lineItems, id),
+    lineItem,
     product: getProduct(id, products),
     reviews
   }
@@ -72,8 +82,8 @@ const mapDispatchToProps = (dispatch, { id })=> {
     init: () => {
       dispatch(getProductReviews({ id }));
     },
-    createLineItem: (cart, lineItem, product)=> {
-      dispatch(createLineItem(cart, product, lineItem));
+    createLineItem: (cart, product)=> {
+      dispatch(createLineItem(cart, product));
     },
     incrementLineItem: (cart, lineItem)=> {
       dispatch(incrementLineItem(cart, lineItem));

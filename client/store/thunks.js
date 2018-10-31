@@ -47,7 +47,7 @@ export const updateOrder = (order)=> {
 
 
 //LINE ITEMS
-export const createLineItem = (cart, lineItem, product)=> {
+export const createLineItem = (cart, product)=> {
     return (dispatch, getState)=> {
         const { user } = getState().auth;
         return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
@@ -71,7 +71,7 @@ export const incrementLineItem = (cart, lineItem)=> {
     }
 }
 
-export const removeLineItem = (cart, lineItem)=> {
+export const deleteLineItem = (cart, lineItem)=> {
     return (dispatch, getState)=> {
         const { user } = getState().auth;
             return axios.delete(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, authHeader())
@@ -84,7 +84,7 @@ export const removeLineItem = (cart, lineItem)=> {
     }
 }
 
-export const decrementLineItem = (cart, lineitem)=> {
+export const decrementLineItem = (cart, lineItem)=> {
     return (dispatch, getState)=> {
         const { user } = getState().auth;
         return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
