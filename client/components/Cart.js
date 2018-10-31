@@ -1,19 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCart, getProduct, lineItemsTotalQuant } from '../store/utils'
-import { addToCart, removeFromCart, updateOrder } from '../store/thunks'
+import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
 import { Link } from 'react-router-dom'
 
 class Cart extends Component {
+  constructor() {
+    super();
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleSubtract = this.handleSubtract.bind(this);
+  }
 
+  handleAdd(cart,lineItem) {
+    const { incrementLineItem } = this.props;
+    return incrementLineItem(cart, lineItem)
+  }
 
-
+  handleSubtract(cart, lineItem) {
+    const { deleteLineItem, decrementLineItem } = this.props;
+    lineItem.quantity === 1 ? deleteLineItem(cart, lineItem) : decrementLineItem(cart, lineItem);
+  }
   render() {
-
-    const { cart, products, totalCost, addToCart, removeFromCart, lineItems, submitCart, history } = this.props
-
+    const { cart, products, totalCost, lineItems } = this.props
+    const { handleAdd, handleSubtract } = this
     if(!cart) {
-      console.log('no cart')
       return null
     }
 
@@ -24,10 +34,12 @@ class Cart extends Component {
           {
             lineItems.map(item => (
               <div key={item.id}> 
-                <Link to={`/products/${item.productId}`}>{getProduct(item.productId, products).name}</Link>
+                <Link to={`/products/${item.productId}`}>
+                  {getProduct(item.productId, products).name}
+                </Link>
                 <li>Quantity: {item.quantity}
-                  <button onClick={() => addToCart(cart, null, item)}>+</button>
-                  <button onClick={() => removeFromCart(cart, item)}>-</button>
+                  <button onClick={() => handleAdd(cart, item)}>+</button>
+                  <button onClick={() => handleSubtract(cart, item)}>-</button>
                 </li>
                 <li>Price: ${getProduct(item.productId, products).price}</li>
                 <li>Subtotal: ${item.quantity * getProduct(item.productId, products).price}</li>
@@ -62,11 +74,14 @@ const mapStateToProps = ({orders, products}) => {
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    addToCart: (cart, product, lineItem)=> {
-      return dispatch(addToCart(cart, product, lineItem))
+    incrementLineItem: (cart, lineItem) => {
+      dispatch(incrementLineItem(cart, lineItem))
     },
-    removeFromCart: (cart, lineItem)=> {
-      return dispatch(removeFromCart(cart, lineItem))
+    decrementLineItem: (cart, lineItem) => {
+      dispatch(decrementLineItem(cart, lineItem))
+    },
+    deleteLineItem: (cart, lineItem) => {
+      dispatch(deleteLineItem(cart,lineItem))
     },
     submitCart: (cart) => dispatch(updateOrder(cart))
   }
