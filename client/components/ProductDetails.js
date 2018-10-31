@@ -1,25 +1,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
-// import { getProduct, getProductReviews, getCart, lineItemFinder } from '../store/utils'
-
-import { addToCart, removeFromCart, getProductReviews } from '../store/thunks'
+import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem } from '../store/thunks'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 
 class ProductDetails extends Component {
+  constructor() {
+    super();
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleSubtract = this.handleSubtract.bind(this);
+  }
 
   componentDidMount() {
     const { init } = this.props;
     init();
   }
 
-  render() {
+  handleAdd() {
+    const { cart, product, lineItem, createLineItem, incrementLineItem } = this.props;
+    lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, product);
+  }
 
+  handleSubtract() {
+    const { cart, lineItem, deleteLineItem, decrementLineItem } = this.props;
+    lineItem.quantity === 1 ? deleteLineItem(cart, lineItem) : decrementLineItem(cart, lineItem);
+  }
+
+  render() {
     if (!this.props.product) { return null }
 
     const { name, imageUrl, price, stock, description, id } = this.props.product
-    const { addToCart, removeFromCart, item, cart, product, reviews } = this.props
+    const { addToCart, removeFromCart, lineItem, cart, product, reviews } = this.props
+    const { handleAdd, handleSubtract } = this;
+
+    const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
+    const noQuantity = !lineItem || !lineItem.quantity;
 
     return (
       <div>
@@ -32,9 +48,11 @@ class ProductDetails extends Component {
           <li>Description: { description } </li>
         </ul>
         <hr />
-        <button onClick={() => addToCart(cart, product, item)} disabled={stock <= (item.quantity || 0) ? true : false }>+</button>
-        <button onClick={() => removeFromCart(cart, item)} disabled={!item.quantity}>-</button>
-        <p>Quantity in cart: {item.quantity || 0}</p>
+
+        <button onClick={handleAdd} disabled={outOfStock}>+</button>
+        <button onClick={handleSubtract} disabled={noQuantity}>-</button>
+
+        <p>Quantity in cart: {lineItem ? lineItem.quantity : 0}</p>
         <hr />
         <Reviews />
         <ReviewWriter id = { id } />
@@ -53,28 +71,32 @@ const mapStateToProps = ({ products, orders, reviews }, { id }) => {
   }
   return {
     cart,
-    item: lineItem || {}, //being defensive
+    lineItem,
     product: getProduct(id, products),
     reviews
   }
 }
 
-// init: (ownProps.id) => return dispatch(getProductReviews(parseInt(productId))),
 
-const mapDispatchToProps = (dispatch, ownProps)=> {
+const mapDispatchToProps = (dispatch, { id })=> {
   return {
     init: () => {
-      dispatch(getProductReviews(ownProps.id));
+      dispatch(getProductReviews({ id }));
     },
-    addToCart: (cart, product, lineItem)=> {
-      return dispatch(addToCart(cart, product, lineItem))
+    createLineItem: (cart, product)=> {
+      dispatch(createLineItem(cart, product));
     },
-    removeFromCart: (cart, lineItem)=> {
-      return dispatch(removeFromCart(cart, lineItem))
+    incrementLineItem: (cart, lineItem)=> {
+      dispatch(incrementLineItem(cart, lineItem));
     },
+    deleteLineItem: (cart, lineItem)=> {
+      dispatch(deleteLineItem(cart, lineItem));
+    },
+    decrementLineItem: (cart, lineItem)=> {
+      dispatch(decrementLineItem(cart, lineItem));
+    }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails)
 
-// export const removeFromCart = (cart, lineItem)=> {

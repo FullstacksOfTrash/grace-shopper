@@ -60,3 +60,8 @@ export const categoryReducer = (state = [], action) => {
       return state
   }
 }
+
+export const countReducer = (state = 0, action) => {
+
+  return state;
+}

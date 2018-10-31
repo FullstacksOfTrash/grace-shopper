@@ -3,7 +3,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 // import { productReducer, authReducer, reviewReducer, categoryReducer, orderReducer } from './reducers';
-import { productReducer, authReducer, categoryReducer, orderReducer, reviewReducer } from './reducers';
+import { productReducer, authReducer, categoryReducer, orderReducer, reviewReducer, countReducer } from './reducers';
 
 
 const reducer = combineReducers({
