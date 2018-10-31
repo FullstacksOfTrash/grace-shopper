@@ -21,12 +21,8 @@ class UpdateReview extends React.Component{
 
     handleSubmit(event){
         event.preventDefault()
-        const { onEdit, review, user } = this.props
-
-        user.id === review.userId || user.admin === true ? 
+        const { onEdit, review } = this.props
         onEdit(parseInt(review.id), this.state)
-        :
-        alert ('You do not have permission to edit this review.')
     }
 
     render(){
