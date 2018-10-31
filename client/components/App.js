@@ -17,7 +17,7 @@ import Cart from './Cart'
 import OrderHistory from './OrderHistory';
 import SignUp from './SignUp'
 import Payment from './Payment'
-import CreateProduct from './CreateProduct'
+import ProductForm from './ProductForm'
 
 class App extends Component {
 
@@ -40,7 +40,7 @@ class App extends Component {
             <Route path='/login' component={LogIn}/>
             <Route path='/cart' render={({history}) => <Cart history={history}/>} />
             <Route path='/order-history' component={OrderHistory} />
-            <Route path='/addProduct' component={CreateProduct} />
+            <Route path='/addProduct' component={ProductForm} />
             <StripeProvider apiKey={key1}>
               <Elements>
                 <Route path='/payment' component={Payment}/>

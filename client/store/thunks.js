@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { _getProducts } from './actionCreators';
+import { _getProducts, _createProduct } from './actionCreators';
 import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
 import { _createReview, _deleteReview, _getProductReviews, _editReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
@@ -15,6 +15,14 @@ export const getProducts = () => {
       .then(response => response.data)
       .then(products => dispatch(_getProducts(products)))
       .catch(error => console.log(error.message))
+  }
+}
+
+export const createProduct = (product) => {
+  return (dispatch) => {
+    axios.post('/api/products', product)
+      .then(response => dispatch(_createProduct(response.data)))
+      .catch( err => console.log(err.message))
   }
 }
 
