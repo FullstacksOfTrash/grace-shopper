@@ -15,6 +15,10 @@ const Review = conn.define('review', {
       }
     },
   },
+  author: {
+    type: conn.Sequelize.STRING,
+    defaultValue: 'Anonymous' // because I don't want to mess with the seed data right now
+  },
   verfiedBuyer: {
     type: conn.Sequelize.BOOLEAN,
     defaultValue: false,

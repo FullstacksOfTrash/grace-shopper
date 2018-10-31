@@ -8,7 +8,8 @@ class ReviewWriter extends React.Component{
         this.state = {
             rating: 0,
             text: '',
-            userId: props.userId
+            userId: props.userId,
+            author: props.userName
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,8 +23,7 @@ class ReviewWriter extends React.Component{
 
     handleSubmit(event){
         event.preventDefault()
-        const { saveReview } = this.props
-        const { id } = this.props 
+        const { saveReview, id, userName } = this.props
         
         saveReview(id, this.state)
         this.setState({
@@ -52,7 +52,10 @@ class ReviewWriter extends React.Component{
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ auth, userId: auth.user.id })
+const mapStateToProps = ({ auth }) => ({ 
+    auth, 
+    userId: auth.user.id, 
+    userName: auth.user.firstName + ' ' + auth.user.lastName })
 
 
 const mapDispatchToProps = (dispatch) => ({

@@ -29,8 +29,8 @@ router.get('/:productId', (req, res, next) => {
 })
 
 router.post('/:userId/:productId', loggedIn, isMe('userId') || isAdmin('userId'), (req, res, next) => {     
-  const { userId, rating, text, verfiedBuyer } = req.body
-  Review.create({ productId: req.params.productId, rating, text, verfiedBuyer, userId})
+  const { userId, rating, text, verfiedBuyer, author } = req.body
+  Review.create({ productId: req.params.productId, rating, text, verfiedBuyer, userId, author})
   .then(review => res.send(review))
   .catch(next)
 })
