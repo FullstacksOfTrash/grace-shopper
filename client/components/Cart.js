@@ -39,7 +39,7 @@ class Cart extends Component {
           Total Cost: ${totalCost}
         </div>
         <div>
-          <Link to={{pathname: '/checkout', state={cart}}}>Checkout</Link>
+          <Link to='/checkout'>Checkout</Link>
         </div>
       </div>
     )

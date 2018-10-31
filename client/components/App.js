@@ -14,9 +14,9 @@ import LogIn from './LogIn'
 import Cart from './Cart'
 import OrderHistory from './OrderHistory';
 import SignUp from './SignUp'
-import Payment from './Payment'
 import CheckOut from './Checkout'
 import ProductForm from './ProductForm'
+import Home from './Home'
 
 class App extends Component {
 
@@ -27,12 +27,12 @@ class App extends Component {
 
   render() {
     const { user } = this.props
-    const loggedIn = user.id ? true : false
     return (
       <div>
         <Router>
           <div>
             <Route component={NavBar} />
+            <Route exact path='/' render={(props) => <Home user={user}/>} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
             <Route path='/signup' component={SignUp} />
@@ -40,6 +40,7 @@ class App extends Component {
             <Route path='/cart' render={({history}) => <Cart history={history}/>} />
             <Route path='/order-history' component={OrderHistory} />
             <Route path='/addProduct' component={ProductForm} />
+            <Route path='/checkout' render={(props) => <CheckOut {...props} />} />
           </div>
         </Router>
       </div>
