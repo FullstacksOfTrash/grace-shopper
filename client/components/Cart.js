@@ -12,7 +12,6 @@ class Cart extends Component {
 
     const { cart, products, totalCost, addToCart, removeFromCart, lineItems, submitCart, history } = this.props
 
-    console.log('render')
     if(!cart) {
       console.log('no cart')
       return null
@@ -50,9 +49,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = ({orders, products,auth}) => {
-  console.log('auth user id ', auth.user.id)
   const cart = orders.filter(order => order.userId === auth.user.id).find(order => order.status === 'CART') || { lineItems: []}
-  console.log(cart)
   let totalCost = 0
   if(cart.id) {
     totalCost = lineItemsTotalQuant(cart.lineItems,products)
