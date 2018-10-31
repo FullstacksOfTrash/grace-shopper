@@ -31,7 +31,7 @@ const syncAndSeed = async () => {
   const [moe, harry, jarret, cang, zi] = await Promise.all([
     User.create({
       firstName: 'Moe',
-      lastName: 'lastNamePlaceholder',
+      lastName: 'Howard',
       email: 'moe@moe.com',
       password: 'MOE',
       address: 'addressPlaceholder',
@@ -164,6 +164,7 @@ const syncAndSeed = async () => {
   const [review1, review2] = await Promise.all([
     Review.create({
       productId: macbookPro.id,
+      author: "Moe Howard",
       userId: moe.id,
       rating: 5,
       text: 'review placeholder23213wdsadsdsdsad2e2',
@@ -171,6 +172,7 @@ const syncAndSeed = async () => {
     }),
     Review.create({
       productId: ipadPro.id,
+      author: "Harry Chen",
       userId: harry.id,
       rating: 6,
       text: 'review placeholdersdasdwewqdsadsadsadw3423',
