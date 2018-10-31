@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Review, Product } = require('../db')
+const { Review } = require('../db')
 
 const loggedIn = (req, res, next)=> {
   next( req.user ? null: { status: 401 })
@@ -8,6 +8,12 @@ const loggedIn = (req, res, next)=> {
 const isMe = (paramKey)=> {
   return (req, res, next)=> {
       next( req.user.id == req.params[paramKey] ? null : { status: 401 })
+  }
+}
+
+const isAdmin = (paramKey) => {
+  return (req, res, next) => {
+    next( req.user.id == req.params[paramKey] && req.user.admin ? null : { status: 401 })
   }
 }
 
@@ -22,7 +28,7 @@ router.get('/:productId', (req, res, next) => {
   .catch(next)
 })
 
-router.post('/:userId/:productId', loggedIn, isMe('userId'), (req, res, next) => {     
+router.post('/:userId/:productId', loggedIn, isMe('userId') || isAdmin('userId'), (req, res, next) => {     
   const { userId, rating, text, verfiedBuyer } = req.body
   Review.create({ productId: req.params.productId, rating, text, verfiedBuyer, userId})
   .then(review => res.send(review))
@@ -30,14 +36,14 @@ router.post('/:userId/:productId', loggedIn, isMe('userId'), (req, res, next) =>
 })
 //will be passed userId into req.body to delete author of post || req.body can be empty for anonymous authors or non verfied buyers
 
-router.delete('/:userId/:productId/:reviewId', loggedIn, isMe('userId'), (req, res, next) => {
+router.delete('/:userId/:productId/:reviewId', loggedIn, isMe('userId') || isAdmin('userId'), (req, res, next) => {
   Review.findById(parseInt(req.params.reviewId))
     .then(response => response.destroy())
     .then(() => res.sendStatus(204))
     .catch(next)
 });
 
-router.put('/:userId/:reviewId', loggedIn, isMe('userId'), (req, res, next) => {
+router.put('/:userId/:reviewId', loggedIn, isMe('userId') || isAdmin('userId'), (req, res, next) => {
   Review.findById(req.params.reviewId)
     .then(review => review.update(req.body))
     .then(review => res.send(review))
