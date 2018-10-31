@@ -64,6 +64,7 @@ class ProductDetails extends Component {
 
 const mapStateToProps = ({ products, orders, reviews }, { id }) => {
   const cart = getCart(orders)
+  
   let lineItem;
   if(cart){
     lineItem = lineItemFinder(cart.lineItems, id)
@@ -78,6 +79,7 @@ const mapStateToProps = ({ products, orders, reviews }, { id }) => {
 
 
 const mapDispatchToProps = (dispatch, { id })=> {
+  console.log(id)
   return {
     init: () => {
       dispatch(getProductReviews( id ));
