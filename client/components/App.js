@@ -16,6 +16,7 @@ import OrderHistory from './OrderHistory';
 import SignUp from './SignUp'
 import Payment from './Payment'
 import CheckOut from './Checkout'
+import ProductForm from './ProductForm'
 
 class App extends Component {
 
@@ -38,7 +39,7 @@ class App extends Component {
             <Route path='/login' component={LogIn}/>
             <Route path='/cart' render={({history}) => <Cart history={history}/>} />
             <Route path='/order-history' component={OrderHistory} />
-            <Route path='/checkout' component={CheckOut}></Route>
+            <Route path='/addProduct' component={ProductForm} />
           </div>
         </Router>
       </div>

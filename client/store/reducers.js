@@ -1,6 +1,6 @@
 
 import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
-import { GET_PRODUCTS, GET_CATEGORIES } from './actionTypes';
+import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT } from './actionTypes';
 import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS, EDIT_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
@@ -10,6 +10,8 @@ export const productReducer = (state = [], action) => {
       return action.products.sort(function (a, b) {
         return a.name - b.name
       });
+    case CREATE_PRODUCT:
+      return Object.assign(state, action.product)
   }
   return state;
 }
@@ -28,7 +30,7 @@ export const orderReducer = (state=[], action)=> {
 export const reviewReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCT_REVIEWS:
-      return action.reviews    
+      return action.reviews
     case CREATE_REVIEW:
       return [...state, action.review]
     case DELETE_REVIEW:
@@ -57,4 +59,9 @@ export const categoryReducer = (state = [], action) => {
     default:
       return state
   }
+}
+
+export const countReducer = (state = 0, action) => {
+
+  return state;
 }
