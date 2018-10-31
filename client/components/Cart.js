@@ -13,6 +13,7 @@ class Cart extends Component {
     const { cart, products, totalCost, addToCart, removeFromCart, lineItems, submitCart, history } = this.props
 
     if(!cart) {
+      console.log('no cart')
       return null
     }
 

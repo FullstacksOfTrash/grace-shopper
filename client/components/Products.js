@@ -22,7 +22,7 @@ class Products extends Component {
 
   render() {
 
-    const { products, categories } = this.props
+    const { products, categories, admin } = this.props
     const { category } = this.state
     const { handleChange } = this
     if (!products) { return null }
@@ -42,6 +42,7 @@ class Products extends Component {
             </select>
           </form>
         </div>
+        {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
           { category
           ? <ul>
@@ -72,9 +73,10 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = ({ products, categories }) => ({
+const mapStateToProps = ({ products, categories, auth }) => ({
    products,
-   categories
+   categories,
+   admin: auth.user.admin
   })
 
 export default connect(mapStateToProps)(Products);
