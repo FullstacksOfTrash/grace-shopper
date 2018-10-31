@@ -44,31 +44,36 @@ export const updateOrder = (order)=> {
     }
 }
 
-export const addToCart = (cart, product, lineItem)=> {
+
+
+//LINE ITEMS
+export const createLineItem = (cart, lineItem, product)=> {
     return (dispatch, getState)=> {
-        const { user } = getState().auth
-        if (lineItem.id) {
-            return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
-                .then(()=> {
-                    axios.get(`/api/users/${user.id}/orders`, authHeader())
-                        .then(response => response.data)
-                        .then( orders => dispatch(_getOrders(orders)))
-                })
-        } else {
-            return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
+        const { user } = getState().auth;
+        return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
                 .then(()=> {
                     axios.get(`/api/users/${user.id}/orders`, authHeader())
                         .then(response => response.data)
                         .then(orders => dispatch(_getOrders(orders)))
                 })
-        }
     }
 }
 
-export const removeFromCart = (cart, lineItem)=> {
-    return (dispatch, getState) => {
-        const { user } = getState().auth
-        if(lineItem.quantity <= 1){
+export const incrementLineItem = (cart, lineItem)=> {
+    return (dispatch, getState)=> {
+        const { user } = getState().auth;
+        return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+            .then(()=> {
+                    axios.get(`/api/users/${user.id}/orders`, authHeader())
+                        .then(response => response.data)
+                        .then( orders => dispatch(_getOrders(orders)))
+                })
+    }
+}
+
+export const removeLineItem = (cart, lineItem)=> {
+    return (dispatch, getState)=> {
+        const { user } = getState().auth;
             return axios.delete(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, authHeader())
             .then(() => {
                 return axios.get(`/api/users/${user.id}/orders`, authHeader())
@@ -76,16 +81,23 @@ export const removeFromCart = (cart, lineItem)=> {
                     .then(orders => dispatch(_getOrders(orders)))
                     .catch(err => console.log(err))
             })
-        } else {
-            return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
+    }
+}
+
+export const decrementLineItem = (cart, lineitem)=> {
+    return (dispatch, getState)=> {
+        const { user } = getState().auth;
+        return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
                 .then(()=> {
                     axios.get(`/api/users/${user.id}/orders`, authHeader())
                         .then(response => response.data)
                         .then( orders => dispatch(_getOrders(orders)))
                 })
-        }
     }
 }
+
+
+
 
 //REVIEWS
 export const getProductReviews = (productId) => {
