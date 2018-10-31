@@ -22,86 +22,86 @@ export const createProduct = (product) => {
   return (dispatch) => {
     axios.post('/api/products', product)
       .then(response => dispatch(_createProduct(response.data)))
-      .catch( err => console.log(err.message))
+      .catch(err => console.log(err.message))
   }
 }
 
 //ORDERS
-export const getOrders = ()=> {
-    return (dispatch, getState)=> {
-        const {user} = getState().auth;
-        axios.get(`/api/users/${user.id}/orders`, authHeader())
-            .then(response => response.data)
-            .then(orders => dispatch(_getOrders(orders)))
-            .catch(err => console.log(err.message))
-    }
+export const getOrders = () => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    axios.get(`/api/users/${user.id}/orders`, authHeader())
+      .then(response => response.data)
+      .then(orders => dispatch(_getOrders(orders)))
+      .catch(err => console.log(err.message))
+  }
 }
 
-export const updateOrder = (order)=> {
+export const updateOrder = (order) => {
 
-    return (dispatch, getState)=> {
-        const { user } = getState().auth;
-        return axios.put(`/api/users/${user.id}/orders/${order.id}`, {status:'ORDER'}, authHeader())
-            .then(()=> {
-                axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
-                    .then(response => response.data)
-                    .then(orders => dispatch(_getOrders(orders)))
-                    .catch(err => console.log(err.message))
-            })
-            .catch(err => console.log(err.message))
-    }
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.put(`/api/users/${user.id}/orders/${order.id}`, { status: 'ORDER' }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+          .catch(err => console.log(err.message))
+      })
+      .catch(err => console.log(err.message))
+  }
 }
 
 
 
 //LINE ITEMS
-export const createLineItem = (cart, product)=> {
-    return (dispatch, getState)=> {
-        const { user } = getState().auth;
-        return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
-                .then(()=> {
-                    axios.get(`/api/users/${user.id}/orders`, authHeader())
-                        .then(response => response.data)
-                        .then(orders => dispatch(_getOrders(orders)))
-                })
-    }
+export const createLineItem = (cart, product) => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+      })
+  }
 }
 
-export const incrementLineItem = (cart, lineItem)=> {
-    return (dispatch, getState)=> {
-        const { user } = getState().auth;
-        return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
-            .then(()=> {
-                    axios.get(`/api/users/${user.id}/orders`, authHeader())
-                        .then(response => response.data)
-                        .then( orders => dispatch(_getOrders(orders)))
-                })
-    }
+export const incrementLineItem = (cart, lineItem) => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+      })
+  }
 }
 
-export const deleteLineItem = (cart, lineItem)=> {
-    return (dispatch, getState)=> {
-        const { user } = getState().auth;
-            return axios.delete(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, authHeader())
-            .then(() => {
-                return axios.get(`/api/users/${user.id}/orders`, authHeader())
-                    .then(response => response.data)
-                    .then(orders => dispatch(_getOrders(orders)))
-                    .catch(err => console.log(err))
-            })
-    }
+export const deleteLineItem = (cart, lineItem) => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.delete(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, authHeader())
+      .then(() => {
+        return axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+          .catch(err => console.log(err))
+      })
+  }
 }
 
-export const decrementLineItem = (cart, lineItem)=> {
-    return (dispatch, getState)=> {
-        const { user } = getState().auth;
-        return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
-                .then(()=> {
-                    axios.get(`/api/users/${user.id}/orders`, authHeader())
-                        .then(response => response.data)
-                        .then( orders => dispatch(_getOrders(orders)))
-                })
-    }
+export const decrementLineItem = (cart, lineItem) => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineItems/${lineItem.id}`, { quantity: --lineItem.quantity }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+      })
+  }
 }
 
 
@@ -109,17 +109,18 @@ export const decrementLineItem = (cart, lineItem)=> {
 
 //REVIEWS
 export const getProductReviews = (productId) => {
-    return (dispatch) => {
-        return axios.get(`/api/reviews/${productId}`)
-            .then(response => response.data)
-            .then(reviews => dispatch(_getProductReviews(reviews)))
-            .catch(error => console.log(error.message))
-    }
+  return (dispatch) => {
+    return axios.get(`/api/reviews/${productId}`)
+      .then(response => response.data)
+      .then(reviews => dispatch(_getProductReviews(reviews)))
+      .catch(error => console.log(error.message))
+  }
 }
 
 export const createReview = (id, review) => {
-  return (dispatch) => {
-    return axios.post(`/api/reviews/${id}`, review)
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.post(`/api/reviews/${user.id}/${id}`, review, authHeader())
       .then(response => response.data)
       .then(review => dispatch(_createReview(review)))
       .catch(error => console.log(error.message))
@@ -127,75 +128,78 @@ export const createReview = (id, review) => {
 }
 
 export const deleteReview = (productId, reviewId) => {
-    return (dispatch) => {
-        return axios.delete(`/api/reviews/${productId}/${reviewId}`)
-            .then(() => dispatch(_deleteReview(reviewId)))
-            .catch(error => console.log(error.message))
-    }
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.delete(`/api/reviews/${user.id}/${productId}/${reviewId}`, authHeader())
+      .then(() => dispatch(_deleteReview(reviewId)))
+      .catch(error => console.log(error.message))
+  }
 }
 
 export const editReview = (id, review) => {
-    return (dispatch) => {
-        return axios.put(`/api/reviews/${id}`, review)
-            .then(response => response.data)
-            .then(review => dispatch(_editReview(review)))
-            .catch(error => console.log(error.message))
-    }
+  return (dispatch, getState) => {
+    const { user } = getState().auth
+    return axios.put(`/api/reviews/${user.id}/${id}`, review, authHeader())
+      .then(response => response.data)
+      .then(review => dispatch(_editReview(review)))
+      .catch(error => console.log(error.message))
+  }
 }
 
 //AUTH
 export const exchangeTokenForAuth = history => {
-    return dispatch => {
-        const token = window.localStorage.getItem('token')
-        if(!token){
-            return;
-        }
-        return axios.get('/api/auth', {
-            headers : {
-                authorization : token
-            }
-        })
-        .then( response => response.data )
-        .then( auth => {
-            dispatch(_setAuth(auth))
-        })
-        .then(()=> {
-            dispatch(getOrders())
-            if (history) {
-                history.push('/products');
-            }
-        })
-        .catch(ex => {
-            console.log(ex);
-            window.localStorage.removeItem('token');
-        })
+  return dispatch => {
+    const token = window.localStorage.getItem('token')
+    if (!token) {
+      return;
     }
+    return axios.get('/api/auth', {
+      headers: {
+        authorization: token
+      }
+    })
+      .then(response => response.data)
+      .then(auth => {
+        dispatch(_setAuth(auth))
+      })
+      .then(() => {
+        dispatch(getOrders())
+        if (history) {
+          history.push('/products');
+        }
+      })
+      .catch(ex => {
+        console.log(ex);
+        window.localStorage.removeItem('token');
+      })
+  }
 }
 export const logIn = (credentials, history) => {
-    return async dispatch => {
-        //console.log(credentials)
-        const response = await axios.post('/api/auth/', credentials)
-        window.localStorage.setItem('token', response.data.token)
-        return dispatch(exchangeTokenForAuth(history))
-    }
+  return async dispatch => {
+    //console.log(credentials)
+    const response = await axios.post('/api/auth/', credentials)
+    window.localStorage.setItem('token', response.data.token)
+    return dispatch(exchangeTokenForAuth(history))
+  }
 }
 export const logOut = history => {
-    return dispatch => {
-        window.localStorage.removeItem('token')
-        dispatch(_logOut())
-        dispatch(_removeOrders())
-        history.push('/home')
-    }
+  return dispatch => {
+    window.localStorage.removeItem('token')
+    dispatch(_logOut())
+    dispatch(_removeOrders())
+    history.push('/home')
+  }
 }
 
 export const signUp = (userInfo, history) => {
-    return dispatch => {
-        return axios.post('/api/auth/create', userInfo)
-        .then( user => {
-            const { email, password } = user.data
-            dispatch(logIn({email, password}, history))})
-        .catch((err) => console.log(err))
-    }
+  return dispatch => {
+    return axios.post('/api/auth/create', userInfo)
+      .then(user => {
+        const { email, password } = user.data
+        dispatch(logIn({ email, password }, history))
+      })
+      .catch((err) => console.log(err))
+  }
 }
 // CATEGORIES
 export const getCategories = () => {
