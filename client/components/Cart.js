@@ -22,7 +22,8 @@ class Cart extends Component {
         <ul>
           {
             lineItems.map(item => (
-              <div key={item.id}> <Link to={`/products/${item.productId}`}>{getProduct(item.productId, products).name}</Link>
+              <div key={item.id}> 
+                <Link to={`/products/${item.productId}`}>{getProduct(item.productId, products).name}</Link>
                 <li>Quantity: {item.quantity}
                   <button onClick={() => addToCart(cart, null, item)}>+</button>
                   <button onClick={() => removeFromCart(cart, item)}>-</button>
@@ -37,18 +38,15 @@ class Cart extends Component {
           Total Cost: ${totalCost}
         </div>
         <div>
-          <button onClick={() => {
-            submitCart(cart)
-            .then(() => history.push('/order-history'))
-          }}>Submit Order</button>
+          <Link to={{pathname: '/checkout', state={cart}}}>Checkout</Link>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({orders, products,auth}) => {
-  const cart = orders.filter(order => order.userId === auth.user.id).find(order => order.status === 'CART') || { lineItems: []}
+const mapStateToProps = ({orders, products}) => {
+  const cart = orders.find(order => order.status === 'CART') || { lineItems: []}
   let totalCost = 0
   if(cart.id) {
     totalCost = lineItemsTotalQuant(cart.lineItems,products)

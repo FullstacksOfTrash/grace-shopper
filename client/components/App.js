@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { StripeProvider, Elements } from 'react-stripe-elements'
 
 import { getProducts, getCategories, getOrders } from '../store/thunks'
 // import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
@@ -8,7 +7,6 @@ import { getProducts, getCategories, getOrders } from '../store/thunks'
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
 import { exchangeTokenForAuth } from '../store/thunks'
 
-import { key1 } from '../../apiKeys'
 import NavBar from './NavBar'
 import Products from './Products'
 import ProductDetails from './ProductDetails'
@@ -17,6 +15,7 @@ import Cart from './Cart'
 import OrderHistory from './OrderHistory';
 import SignUp from './SignUp'
 import Payment from './Payment'
+import CheckOut from './Checkout'
 
 class App extends Component {
 
@@ -39,11 +38,7 @@ class App extends Component {
             <Route path='/login' component={LogIn}/>
             <Route path='/cart' render={({history}) => <Cart history={history}/>} />
             <Route path='/order-history' component={OrderHistory} />
-            <StripeProvider apiKey={key1}>
-              <Elements>
-                <Route path='/payment' component={Payment}/>
-              </Elements>
-            </StripeProvider>
+            <Route path='/checkout' component={CheckOut}></Route>
           </div>
         </Router>
       </div>
