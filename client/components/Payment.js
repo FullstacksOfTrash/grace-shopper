@@ -2,6 +2,7 @@ import React from 'react'
 import { injectStripe, CardElement } from 'react-stripe-elements'
 import { Redirect } from 'react-router-dom'
 
+
 class PaymentForm extends React.Component{
     constructor(){
         super()

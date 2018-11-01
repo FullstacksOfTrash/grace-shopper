@@ -4,6 +4,7 @@ import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
 import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem } from '../store/thunks'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
+import { Link } from 'react-router-dom'
 
 class ProductDetails extends Component {
   constructor() {
@@ -34,7 +35,7 @@ class ProductDetails extends Component {
     if (!this.props.product) { return null }
 
     const { name, imageUrl, price, stock, description, id } = this.props.product
-    const { addToCart, removeFromCart, lineItem, cart, product, reviews } = this.props
+    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin } = this.props
     const { handleAdd, handleSubtract } = this;
 
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
@@ -44,8 +45,15 @@ class ProductDetails extends Component {
       <div>
         <h3> Introducing the { name }! </h3>
         <hr />
+        { admin ?
+        <div>
+          <Link to={`/product/${this.props.id}/edit`}><button>Edit Product</button></Link>
+          <button>Delete Product</button>
+        </div>
+        : <div></div>
+        }
         <ul>
-          <li>ImageUrl: { imageUrl }</li>
+          <img src = {imageUrl} height="112"/>
           <li>Price: $ { price } </li>
           <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
           <li>Description: { description } </li>
@@ -65,9 +73,9 @@ class ProductDetails extends Component {
 }
 
 
-const mapStateToProps = ({ products, orders, reviews }, { id }) => {
+const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
   const cart = getCart(orders)
-  
+
   let lineItem;
   if(cart){
     lineItem = lineItemFinder(cart.lineItems, id)
@@ -76,7 +84,8 @@ const mapStateToProps = ({ products, orders, reviews }, { id }) => {
     cart,
     lineItem,
     product: getProduct(id, products),
-    reviews
+    reviews,
+    admin: auth.user.admin
   }
 }
 

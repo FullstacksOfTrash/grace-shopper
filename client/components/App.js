@@ -35,12 +35,13 @@ class App extends Component {
             <Route exact path='/' render={(props) => <Home user={user}/>} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match }) => <ProductDetails id={match.params.id} />} />
-            <Route path='/signup' component={SignUp} />
-            <Route path='/login' component={LogIn}/>
-            <Route path='/cart' render={({history}) => <Cart history={history}/>} />
-            <Route path='/order-history' component={OrderHistory} />
-            <Route path='/addProduct' component={ProductForm} />
-            <Route path='/checkout' render={(props) => <CheckOut {...props} />} />
+            <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/login' component={LogIn}/>
+            <Route exact path='/cart' render={({history}) => <Cart history={history}/>} />
+            <Route exact path='/order-history' component={OrderHistory} />
+            <Route exact path='/addProduct' component={ProductForm} />
+            <Route exact path='/product/:id/edit' component={ProductForm} />
+            <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
           </div>
         </Router>
       </div>

@@ -17,6 +17,15 @@ class ProductForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+
+  componentDidUpdate(prevProps){
+    const { editProduct, product } = this.props
+    if(prevProps !== this.props && editProduct && product.id){
+      this.setState(product)
+    }
+  }
+
+
   handleChange(event){
     this.setState({
       [event.target.name]: event.target.value
@@ -30,11 +39,12 @@ class ProductForm extends Component {
 
   render(){
     const { name, price, stock, description, imageUrl}  = this.state
-    const {handleChange, handleSubmit} = this
+    const { handleChange, handleSubmit } = this
+    const { editProduct, product } = this.props
 
     return (
       <div>
-        <h4>Sell a new product!</h4>
+        <h4>{ editProduct ? `Editing ${ product ? product.name : 'Form'}` : 'Sell a new product!' }</h4>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name: </label>
@@ -57,11 +67,18 @@ class ProductForm extends Component {
             <input type='file' name='imageUrl' value={imageUrl} onChange={handleChange}/>
           </div>
           <div>
-            <button type='submit' >Add Product</button>
+            <button type='submit' > {editProduct ? 'Edit Product' : 'Add Product'}</button>
           </div>
         </form>
       </div>
     )
+  }
+}
+
+const mapStateToProps = ({products}, {location, match}) => {
+  return {
+    product: products.find(product => product.id === match.params.id*1),
+    editProduct: location.pathname === `/product/${match.params.id}/edit`,
   }
 }
 
@@ -71,4 +88,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ProductForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductForm)
