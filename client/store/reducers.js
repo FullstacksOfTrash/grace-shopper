@@ -1,6 +1,6 @@
 
 import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
-import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT } from './actionTypes';
+import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT, DELETE_PRODUCT } from './actionTypes';
 import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS, EDIT_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
@@ -12,6 +12,9 @@ export const productReducer = (state = [], action) => {
       });
     case CREATE_PRODUCT:
       return Object.assign(state, action.product)
+    case DELETE_PRODUCT:
+      const filtered = state.filter(product => product.id !== action.product.id)
+      return filtered
   }
   return state;
 }

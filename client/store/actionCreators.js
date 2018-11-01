@@ -1,7 +1,7 @@
 
 
 import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
-import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT } from './actionTypes';
+import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT, DELETE_PRODUCT} from './actionTypes';
 import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS, EDIT_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
 
@@ -9,6 +9,7 @@ import { SET_AUTH, LOGOUT } from './actionTypes';
 // Products
 export const _getProducts = (products) => ({ type: GET_PRODUCTS, products });
 export const _createProduct = (product) => ({ type: CREATE_PRODUCT, product })
+export const _deleteProduct = (product) => ({ type: DELETE_PRODUCT, product })
 
 // Orders
 export const _getOrders = (orders)=> ({ type: GET_ORDERS, orders });

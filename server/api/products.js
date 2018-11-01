@@ -3,6 +3,11 @@ const { Product, Review } = require('../db')
 
 // route: /api/products
 
+const isAdmin = (req, res, next) => {
+  next(req.user.admin ? null : { status: 401 })
+}
+
+
 //finds product based on id and includes review
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id, {
@@ -38,5 +43,16 @@ router.post('/', (req, res, next) => {
       .then(product => res.send(product))
       .catch(next);
   });
+
+  router.delete('/:productId', isAdmin, (req, res, next) => {
+    // delete a product
+    Product.findById(req.params.productId)
+      .then(product => {
+        product.destroy()
+        return product
+      })
+      .then(product => res.send(product))
+      .catch(next)
+  })
 
 module.exports = router;
