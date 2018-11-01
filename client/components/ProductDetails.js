@@ -42,7 +42,7 @@ class ProductDetails extends Component {
         <h3> Introducing the { name }! </h3>
         <hr />
         <ul>
-          <li>ImageUrl: { imageUrl }</li>
+          <img src = {imageUrl} height="112"/>
           <li>Price: $ { price } </li>
           <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
           <li>Description: { description } </li>
