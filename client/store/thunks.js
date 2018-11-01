@@ -5,6 +5,7 @@ import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
 import { _createReview, _deleteReview, _getProductReviews, _editReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
+import { _getProductImages } from './actionCreators';
 
 import { authHeader } from './utils';
 
@@ -161,7 +162,17 @@ export const editReview = (id, review) => {
   }
 }
 
-//AUTH
+// IMAGES
+export const getProductImages = (productId) => {
+  return (dispatch) => {
+    return axios.get(`/api/images/${productId}`)
+      .then(response => response.data)
+      .then(images => dispatch(_getProductImages(images)))
+      .catch(error => console.log(error.message))
+  }
+}
+
+// AUTH
 export const exchangeTokenForAuth = history => {
   return dispatch => {
     const token = window.localStorage.getItem('token')

@@ -11,6 +11,8 @@ export const DELETE_REVIEW = 'DELETE_REVIEW'
 export const GET_PRODUCT_REVIEWS = 'GET_PRODUCT_REVIEWS'
 export const EDIT_REVIEW = 'EDIT_REVIEW'
 
+export const GET_PRODUCT_IMAGES = 'GET_PRODUCT_IMAGES'
+
 export const SET_AUTH = 'SET_AUTH'
 export const LOGOUT = 'LOGOUT'
 

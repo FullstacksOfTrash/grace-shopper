@@ -5,6 +5,7 @@ const Order = require('./models/Order');
 const Product = require('./models/Product');
 const Review = require('./models/Review');
 const User = require('./models/User');
+const Image = require('./models/Image')
 
 User.hasMany(Order);
 Order.belongsTo(User);
@@ -17,6 +18,8 @@ Review.belongsTo(Product);
 
 Product.hasMany(LineItem);
 LineItem.belongsTo(Product);
+
+Product.hasOne(Image);
 
 Order.hasMany(LineItem);
 LineItem.belongsTo(Order);
@@ -172,6 +175,14 @@ const syncAndSeed = async () => {
       text: 'review placeholdersdasdwewqdsadsadsadw3423',
     }),
   ]);
+
+  const [ipadimg1] = await Promise.all([
+    Image.create({
+      productId: ipad.id,
+      url: `https://s3.us-east-2.amazonaws.com/fullstacktrashbucket/henry-ascroft-1062688-unsplash.jpg`
+    })    
+  ]);
+
 };
 module.exports = {
   syncAndSeed,
@@ -181,6 +192,7 @@ module.exports = {
   Product,
   Review,
   User,
+  Image
 };
 
 // module.exports = {

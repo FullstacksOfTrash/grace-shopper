@@ -10,11 +10,11 @@ const Product = conn.define('product', {
     type: conn.Sequelize.INTEGER,
     allowNull: false,
   },
-  imageUrl: {
-    type: conn.Sequelize.TEXT,
-    defaultValue: defaultProductImage
-    //allowNull: false,  commented out for now
-  },
+  // imageUrl: {
+  //   type: conn.Sequelize.TEXT,
+  //   defaultValue: 'https://s3.us-east-2.amazonaws.com/fullstacktrashbucket/No_image_available.png'
+  //   //allowNull: false,  commented out for now
+  // },
   stock: {
     type: conn.Sequelize.INTEGER,
     allowNull: false,

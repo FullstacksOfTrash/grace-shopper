@@ -4,6 +4,15 @@ const { Product, Review } = require('../db')
 // route: /api/products
 
 //finds product based on id and includes review
+// router.get('/:id', (req, res, next) => {
+//   Product.findById(req.params.id, {
+//     include: [{ model : Review}]
+//   })
+//     .then(product => res.send(product))
+//     .catch(next);
+// });
+
+
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id, {
     include: [{ model : Review}]

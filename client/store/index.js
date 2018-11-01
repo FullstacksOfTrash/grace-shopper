@@ -3,7 +3,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 // import { productReducer, authReducer, reviewReducer, categoryReducer, orderReducer } from './reducers';
-import { productReducer, authReducer, categoryReducer, orderReducer, reviewReducer, countReducer } from './reducers';
+import { productReducer, authReducer, categoryReducer, orderReducer, reviewReducer, countReducer, imageReducer } from './reducers';
 
 
 const reducer = combineReducers({
@@ -11,7 +11,8 @@ const reducer = combineReducers({
   auth: authReducer,
   reviews: reviewReducer,
   categories: categoryReducer,
-  orders: orderReducer
+  orders: orderReducer,
+  images: imageReducer
 });
 
 const store = createStore(reducer, applyMiddleware( thunk, logger ));
