@@ -8,6 +8,7 @@ import { _getCategories } from './actionCreators';
 
 import { authHeader } from './utils';
 
+
 //PRODUCTS
 export const getProducts = () => {
   return (dispatch) => {
@@ -41,14 +42,28 @@ export const updateOrder = (order) => {
 
   return (dispatch, getState) => {
     const { user } = getState().auth;
-    return axios.put(`/api/users/${user.id}/orders/${order.id}`, { status: 'ORDER' }, authHeader())
+    return axios.put(`/api/users/${user.id}/orders/${order.id}`, { status: 'ORDER' }, authHeader()) 
       .then(() => {
-        axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
-          .then(response => response.data)
-          .then(orders => dispatch(_getOrders(orders)))
+        return dispatch(getOrders())
           .catch(err => console.log(err.message))
       })
       .catch(err => console.log(err.message))
+  }
+}
+
+/* Removed this from updateOrder to be DRY and instead calls the getOrders thunk 
+   axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
+           .then(response => response.data) 
+           .then(orders => dispatch(_getOrders(orders)))
+
+*/
+
+export const submitOrder = (order, transactionData) => {
+  return dispatch => {
+    return axios.post('/api/payment/charge', transactionData)
+      .then( response => response.data)
+      .then( status => status )
+      .catch(err => console.log(err))
   }
 }
 

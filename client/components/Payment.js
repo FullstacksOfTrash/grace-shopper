@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios'
 import { injectStripe, CardElement } from 'react-stripe-elements'
+import { Redirect } from 'react-router-dom'
 
 class PaymentForm extends React.Component{
     constructor(){
@@ -10,17 +10,18 @@ class PaymentForm extends React.Component{
     }
     async submit(event){
         event.preventDefault()
-        const { stripe , order } = this.props //assuming order will be passed down here
-        const { token } = await stripe.createToken({name: 'harry'})       //will turn into thunk later //pass in customer name and id for the name  prop
-        console.log(token)
-        const response = await axios.post('/api/payment/charge', token.id, { headers: {"Content-Type": 'text/plain' }})         //will change route will be passed token id as well as the order total to complete charge
-        if(response.data.status === 'succeeded'){
+        const { stripe , sum, user, cart, submitOrder, updateOrder} = this.props //assuming order will be passed down here
+        const { token } = await stripe.createToken({name: `${user.firstName} ${user.lastName}`})       
+        const response = await submitOrder(cart, { tokenId: token.id, sum, cartId: cart.id})       
+        if(response.status === 'succeeded'){
             this.setState({complete: true})
+            setTimeout(() => updateOrder(cart), 5000)
         }
     }
     render(){ 
+        const { cart } = this.props
         if(this.state.complete){
-            return <h1>Purchase has been completed</h1>
+            return <h4>Purchase has been completed. Besure to look out for an email regarding order#{cart.id}!</h4>
         }
         return (
             <div>
@@ -30,7 +31,6 @@ class PaymentForm extends React.Component{
             </div>
         )
     }
-
 }
 
 

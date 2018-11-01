@@ -4,18 +4,19 @@ const router = require('express').Router()
 
 
 router.post('/charge', async (req, res, next) => {
-    console.log(req.body)
+    const { tokenId, sum, cartId } = req.body
+    console.log(tokenId, sum, cartId)
     try {
         const { status } = await stripe.charges.create({
-            amount: 2200,
+            amount: (sum * 100), 
             currency: "usd",
-            description: 'an ex charge',
-            source:req.body
+            description: cartId,
+            source: tokenId
         })
-        console.log(status)
+        // console.log(status)
         res.send({status})
     } catch(err){
-        console.log(err)
+        // console.log(err)
         res.status(500).end()
     }
 })
