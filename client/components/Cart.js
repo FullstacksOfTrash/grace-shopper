@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getCart, getProduct, lineItemsTotalQuant } from '../store/utils'
-import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
 import { Link } from 'react-router-dom'
+import { getProduct, lineItemsTotalQuant } from '../store/utils'
+import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
 
 class Cart extends Component {
   constructor() {
@@ -23,10 +23,9 @@ class Cart extends Component {
   render() {
     const { cart, products, totalCost, lineItems } = this.props
     const { handleAdd, handleSubtract } = this
-    if(!cart) {
-      return null
+    if(!lineItems.length){
+      return <h4>Your cart is current empty. Browse through our wonder array of trash!</h4>
     }
-
     return (
       <div>
         Review your order:

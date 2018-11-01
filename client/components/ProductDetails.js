@@ -17,7 +17,10 @@ class ProductDetails extends Component {
     const { init } = this.props;
     init();
   }
-
+  componentDidUpdate(prevProps){
+    console.log('current:', this.props)
+    console.log('prev:', prevProps)
+  }
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem } = this.props;
     lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, product);
@@ -50,7 +53,7 @@ class ProductDetails extends Component {
         : <div></div>
         }
         <ul>
-          <li>ImageUrl: { imageUrl }</li>
+          <img src = {imageUrl} height="112"/>
           <li>Price: $ { price } </li>
           <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
           <li>Description: { description } </li>
