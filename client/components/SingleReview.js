@@ -9,8 +9,6 @@ class SingleReview extends Component {
   render() {
     const { onDelete, user, review } = this.props
 
-    console.log(review)
-
     return (
       <div style={{ border: '2px solid black', borderRadius: '5px' }}>
         <p>Review by: {review.author}</p>
