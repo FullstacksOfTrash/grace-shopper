@@ -1,4 +1,5 @@
 const conn = require('../conn');
+const defaultProductImage = require('../../../public/images/defaultProductImage')
 
 const Product = conn.define('product', {
   name: {
@@ -11,6 +12,7 @@ const Product = conn.define('product', {
   },
   imageUrl: {
     type: conn.Sequelize.TEXT,
+    defaultValue: defaultProductImage
     //allowNull: false,  commented out for now
   },
   stock: {
