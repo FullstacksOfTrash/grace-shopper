@@ -5,40 +5,48 @@ import { Redirect } from 'react-router-dom'
 
 import { key1 } from '../../apiKeys'
 import { lineItemsTotalQuant } from '../store/utils'
-import Cart from './Cart'
 import Payment from './Payment'
-
+import CurrentOrder from './CurrentOrder'
+import { submitOrder, updateOrder } from '../store/thunks'
 
 
 class CheckoutPage extends Component {
   render(){ 
-    const { cart, sum } = this.props
-    console.log(cart.lineItems)
-    if(!cart.lineItems){
-      return <Redirect to='/cart' />
+    const { cart, sum, products, user, submitOrder, updateOrder } = this.props
+    if(!cart.lineItems.length){
+      return <Redirect to='/cart'/>
     }
-
     return (
-      <div>
+      <div className={!cart.lineItems? 'hidden' : ''}>
+        <h4>Total: {`$${sum}`}</h4>
+        <CurrentOrder products={products} cart={cart}/>
         <StripeProvider apiKey={key1}>
-              <Elements>
-                <Payment/>
-              </Elements>
-            </StripeProvider>
+          <Elements>
+            <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
+          </Elements>
+        </StripeProvider>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const { orders, products } = state
+  const { orders, products, auth } = state
   const cart = orders.find(order => order.status === 'CART') || { lineItems: []}
   const sum = lineItemsTotalQuant(cart.lineItems, products)
   return {
+    products,
     cart,
-    sum
+    sum,
+    user: auth.user
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    submitOrder: (order, data) => dispatch(submitOrder(order, data)),
+    updateOrder: order => dispatch(updateOrder(order))
+  }
+}
 
-export default connect(mapStateToProps, null)(CheckoutPage)
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutPage)
