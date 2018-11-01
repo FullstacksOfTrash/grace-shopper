@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
-import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem } from '../store/thunks'
+import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem, deleteProduct } from '../store/thunks'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 class ProductDetails extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubtract = this.handleSubtract.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -31,12 +32,17 @@ class ProductDetails extends Component {
     lineItem.quantity === 1 ? deleteLineItem(cart, lineItem) : decrementLineItem(cart, lineItem);
   }
 
+  handleDelete(){
+    this.props.deleteProduct(this.props.product)
+    this.props.history.push('/products')
+  }
+
   render() {
     if (!this.props.product) { return null }
 
     const { name, imageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin } = this.props
-    const { handleAdd, handleSubtract } = this;
+    const { handleAdd, handleSubtract, handleDelete } = this;
 
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
     const noQuantity = !lineItem || !lineItem.quantity;
@@ -48,7 +54,7 @@ class ProductDetails extends Component {
         { admin ?
         <div>
           <Link to={`/product/${this.props.id}/edit`}><button>Edit Product</button></Link>
-          <button>Delete Product</button>
+          <button onClick={handleDelete}>Delete Product</button>
         </div>
         : <div></div>
         }
@@ -107,6 +113,9 @@ const mapDispatchToProps = (dispatch, { id })=> {
     },
     decrementLineItem: (cart, lineItem)=> {
       dispatch(decrementLineItem(cart, lineItem));
+    },
+    deleteProduct: (product) => {
+      dispatch(deleteProduct(product))
     }
   }
 }

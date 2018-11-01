@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { _getProducts, _createProduct } from './actionCreators';
+import { _getProducts, _createProduct, _deleteProduct } from './actionCreators';
 import { _getOrders, _updateOrder, _removeOrders } from './actionCreators';
 import { _createReview, _deleteReview, _getProductReviews, _editReview } from './actionCreators';
 import { _setAuth, _logOut } from './actionCreators';
@@ -27,6 +27,14 @@ export const createProduct = (product) => {
   }
 }
 
+export const deleteProduct = (product) => {
+  return (dispatch) => {
+    axios.delete(`/api/products/${product.id}`, authHeader())
+      .then(response => dispatch(_deleteProduct(response.data)))
+      .catch(err => console.log(err.message))
+  }
+}
+
 //ORDERS
 export const getOrders = () => {
   return (dispatch, getState) => {
@@ -42,7 +50,7 @@ export const updateOrder = (order) => {
 
   return (dispatch, getState) => {
     const { user } = getState().auth;
-    return axios.put(`/api/users/${user.id}/orders/${order.id}`, { status: 'ORDER' }, authHeader()) 
+    return axios.put(`/api/users/${user.id}/orders/${order.id}`, { status: 'ORDER' }, authHeader())
       .then(() => {
         return dispatch(getOrders())
           .catch(err => console.log(err.message))
@@ -51,9 +59,9 @@ export const updateOrder = (order) => {
   }
 }
 
-/* Removed this from updateOrder to be DRY and instead calls the getOrders thunk 
+/* Removed this from updateOrder to be DRY and instead calls the getOrders thunk
    axios.get(`/api/users/${user.id}/orders`, authHeader()) // after updating the order, load all of the user's orders again to normalize data
-           .then(response => response.data) 
+           .then(response => response.data)
            .then(orders => dispatch(_getOrders(orders)))
 
 */
