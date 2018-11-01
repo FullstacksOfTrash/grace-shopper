@@ -17,14 +17,10 @@ class ProductForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount(){
-
-  }
 
   componentDidUpdate(prevProps){
     const { editProduct, product } = this.props
     if(prevProps !== this.props && editProduct && product.id){
-      console.log('update product ', product)
       this.setState(product)
     }
   }
@@ -44,11 +40,11 @@ class ProductForm extends Component {
   render(){
     const { name, price, stock, description, imageUrl}  = this.state
     const { handleChange, handleSubmit } = this
-    const { editProduct } = this.props
-    console.log('state ', this.state)
+    const { editProduct, product } = this.props
+
     return (
       <div>
-        <h4>Sell a new product!</h4>
+        <h4>{ editProduct ? `Editing ${ product ? product.name : 'Form'}` : 'Sell a new product!' }</h4>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name: </label>
