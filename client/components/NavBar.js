@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../store/thunks'
+import SearchBar from './SearchBar'
 
 class NavBar extends Component {
   render () {
@@ -18,6 +19,7 @@ class NavBar extends Component {
             <Link to='/login'>Log in</Link>}
           </li>
         </ul>
+        <SearchBar />
       </div>
     )
   }
