@@ -79,26 +79,51 @@ export const submitOrder = (order, transactionData) => {
 
 //LINE ITEMS
 export const createLineItem = (cart, product) => {
-  return (dispatch, getState) => {
-    const { user } = getState().auth;
-    return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
-      .then(() => {
-        axios.get(`/api/users/${user.id}/orders`, authHeader())
-          .then(response => response.data)
-          .then(orders => dispatch(_getOrders(orders)))
-      })
+  const token = window.localStorage.getItem('token')
+  if(token){
+    return (dispatch, getState) => {
+      const { user } = getState().auth;
+      return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
+        .then(() => {
+          axios.get(`/api/users/${user.id}/orders`, authHeader())
+            .then(response => response.data)
+            .then(orders => dispatch(_getOrders(orders)))
+        })
+    }
+  } else {
+    // create the line item
+    return (dispatch) => {
+      return axios.post('/api/lineItems', { productId: product.id })
+        // catch the created lineitem
+        .then(lineItem => {
+          // create new array with line item
+          const lineItems = [lineItem]
+          // set the new object on localStorage as 'cart'
+          window.localStorage.setItem('lineItems', JSON.stringify({lineItems}))
+          const cart = JSON.parse(window.localStorage.getItem('lineItems'))
+          console.log(cart)
+        })
+    }
+    //  upon logging in/signing up -  aka token is found
+    // transfer lineItems from the localStorage cart to the "CART" object of that user
+    // destroy cart on localStorage
   }
 }
 
 export const incrementLineItem = (cart, lineItem) => {
-  return (dispatch, getState) => {
-    const { user } = getState().auth;
-    return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
-      .then(() => {
-        axios.get(`/api/users/${user.id}/orders`, authHeader())
-          .then(response => response.data)
-          .then(orders => dispatch(_getOrders(orders)))
-      })
+  const token = window.localStorage.getItem('token')
+  if(token){
+    return (dispatch, getState) => {
+      const { user } = getState().auth;
+      return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+        .then(() => {
+          axios.get(`/api/users/${user.id}/orders`, authHeader())
+            .then(response => response.data)
+            .then(orders => dispatch(_getOrders(orders)))
+        })
+    }
+  } else {
+
   }
 }
 
