@@ -12,11 +12,50 @@ import Products from './Products'
 import ProductDetails from './ProductDetails'
 import LogIn from './LogIn'
 import Cart from './Cart'
-import OrderHistory from './OrderHistory';
+import OrderHistory from './OrderHistory'
 import SignUp from './SignUp'
 import CheckOut from './Checkout'
 import ProductForm from './ProductForm'
 import Home from './Home'
+
+
+import { Typography } from '@material-ui/core'
+import { Toolbar } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
+import { AppBar } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import { MenuIcon } from '@material-ui/icons';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+
+const drawerWidth = 240;
+
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+  },
+});
+
+
 
 class App extends Component {
 
@@ -27,11 +66,24 @@ class App extends Component {
 
   render() {
     const { user } = this.props
+    const { classes } = this.props; // material-ui
     return (
-      <div>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            Permanent drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+        <Typography>Test</Typography>
+        
         <Router>
           <div>
             <Route component={NavBar} />
+            <main className={classes.content}>
+            <div className={classes.toolbar} />
             <Route exact path='/' render={(props) => <Home user={user}/>} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
@@ -42,8 +94,11 @@ class App extends Component {
             <Route exact path='/addProduct' component={ProductForm} />
             <Route exact path='/product/:id/edit' component={ProductForm} />
             <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
+             </main>
           </div>
         </Router>
+     
+        
       </div>
     )
   }
@@ -66,4 +121,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
