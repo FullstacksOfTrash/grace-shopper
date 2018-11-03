@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 
 import { getProducts, getCategories, getOrders } from '../store/thunks'
@@ -24,7 +24,9 @@ import { Toolbar } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
 import { AppBar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { MenuIcon } from '@material-ui/icons';
+import { MenuIcon, InboxIcon, MailIcon } from '@material-ui/icons';
+
+import { Drawer, Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -73,15 +75,27 @@ class App extends Component {
         <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Permanent drawer
+            Fullstacks of Trash
           </Typography>
         </Toolbar>
       </AppBar>
         <Typography>Test</Typography>
         
         <Router>
-          <div>
-            <Route component={NavBar} />
+          <Fragment>
+            <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              anchor="left"
+            >
+            <div className={classes.toolbar} />
+
+            <Route component={NavBar}/>
+
+            </Drawer>
             <main className={classes.content}>
             <div className={classes.toolbar} />
             <Route exact path='/' render={(props) => <Home user={user}/>} />
@@ -95,7 +109,7 @@ class App extends Component {
             <Route exact path='/product/:id/edit' component={ProductForm} />
             <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
              </main>
-          </div>
+          </Fragment>
         </Router>
      
         

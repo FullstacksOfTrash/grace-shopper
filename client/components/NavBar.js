@@ -15,10 +15,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
-  // appBar: {
-  //   width: `calc(100% - ${drawerWidth}px)`,
-  //   marginLeft: drawerWidth,
-  // },
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -27,11 +27,11 @@ const styles = theme => ({
     width: drawerWidth,
   },
   toolbar: theme.mixins.toolbar,
-  // content: {
-  //   flexGrow: 1,
-  //   backgroundColor: theme.palette.background.default,
-  //   padding: theme.spacing.unit * 3,
-  // },
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 
@@ -41,13 +41,6 @@ class NavBar extends Component {
     const { classes } = this.props // from material-ui withStyles
     return (
       <Fragment>
-        <Drawer className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left">
-        <div>
           <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/products'>Products</Link></li>
@@ -59,8 +52,6 @@ class NavBar extends Component {
             </li>
           </ul>
           <SearchBar />
-        </div>
-        </Drawer>
       </Fragment>
     )
   }
