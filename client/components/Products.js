@@ -39,7 +39,7 @@ class Products extends Component {
           <form>
             <label>Filter by Category: </label>
             <select onChange={handleChange}>
-              <option name='category' value='' >All</option>
+              <option name='category' value=''>All</option>
               {
                 categories.map(category => <option key={category.id} name='category' value={category.id}>{category.name}</option>)
               }
@@ -48,21 +48,26 @@ class Products extends Component {
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
-          {category
-            ? <ul>
-              {
-                products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
-                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
-                    {product.name}
-                  </Link>
-                </li>
-                ))
-              }
-            </ul>
+          {category ?
+            // <ul>
+            //   {
+            //     products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
+            //       <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+            //         {product.name}
+            //       </Link>
+            //     </li>
+            //     ))
+            //   }
+            // </ul>
+            <GridList >
+              {products.filter(product => product.categoryId === category * 1).map(product => (
+                <ProductCard key={product.id} id={product.id} />
+              ))}
+            </GridList>
             :
-            <GridList cols={3} >
+            <GridList >
               {products.map(product => (
-                  <ProductCard key={product.id} id={product.id} />
+                <ProductCard key={product.id} id={product.id} />
               ))}
             </GridList>
           }
