@@ -26,6 +26,7 @@ class SearchBar extends React.Component{
     const { location, history, query } = this.props
     if(event.key === 'Enter'){
       query(this.state.query)
+      this.setState({ query: '' })
       if(location.pathname !== '/products') history.push('/products')
     }
   }
@@ -42,11 +43,17 @@ class SearchBar extends React.Component{
     return (
       <div>
           <div className={classes.search}>
-          <div className={classes.searchIcon}></div>
+          <div className={classes.searchIcon}/>
           <InputBase placeholder="Search…" classes={{ root: classes.inputRoot, input: classes.inputInput }} onChange={handleChange} onKeyPress={handleQuery} value={query} name='query' />
           </div>
       </div>
     )
+  }
+}
+
+const mapStateToProps = state =>{
+  return {
+    query: state.query
   }
 }
 
@@ -56,5 +63,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-
-export default connect(null, mapDispatchToProps)(withStyles(styles)(SearchBar))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchBar))
