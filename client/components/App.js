@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 
 import { getProducts, getCategories, getOrders } from '../store/thunks'
@@ -12,11 +12,17 @@ import Products from './Products'
 import ProductDetails from './ProductDetails'
 import LogIn from './LogIn'
 import Cart from './Cart'
-import OrderHistory from './OrderHistory';
+import OrderHistory from './OrderHistory'
 import SignUp from './SignUp'
 import CheckOut from './Checkout'
 import ProductForm from './ProductForm'
 import Home from './Home'
+
+import { withStyles } from '@material-ui/core/styles'
+import styles from './App.styles';
+import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider, InputBase } from '@material-ui/core'
+import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
+import { Search } from '@material-ui/icons'
 
 class App extends Component {
 
@@ -27,23 +33,58 @@ class App extends Component {
 
   render() {
     const { user } = this.props
+    const { classes } = this.props; // material-ui
     return (
-      <div>
+      <div className={classes.root}>
+
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap>
+              Fullstacks of Trash
+            </Typography>
+            
+            <div className={classes.grow} />
+              <div className={classes.search}>
+              <div className={classes.searchIcon}><Search /></div>
+              <InputBase
+                placeholder="Search…"
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              />
+            </div>
+
+          </Toolbar>
+        </AppBar>
+        
         <Router>
-          <div>
-            <Route component={NavBar} />
-            <Route exact path='/' render={(props) => <Home user={user}/>} />
-            <Route exact path='/products' component={Products} />
-            <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
-            <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/login' component={LogIn}/>
-            <Route exact path='/cart' render={({history}) => <Cart history={history}/>} />
-            <Route exact path='/order-history' component={OrderHistory} />
-            <Route exact path='/addProduct' component={ProductForm} />
-            <Route exact path='/product/:id/edit' component={ProductForm} />
-            <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
-          </div>
+          <Fragment>
+
+            <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              classes={{ paper: classes.drawerPaper }}
+              anchor="left"
+            >
+              <div className={classes.toolbar} />
+              <Route component={NavBar}/>
+            </Drawer>
+            
+            <main className={classes.content}>
+              <Route exact path='/' render={(props) => <Home user={user}/>} />
+              <Route exact path='/products' component={Products} />
+              <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
+              <Route exact path='/signup' component={SignUp} />
+              <Route exact path='/login' component={LogIn}/>
+              <Route exact path='/cart' render={({history}) => <Cart history={history}/>} />
+              <Route exact path='/order-history' component={OrderHistory} />
+              <Route exact path='/addProduct' component={ProductForm} />
+              <Route exact path='/product/:id/edit' component={ProductForm} />
+              <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
+            </main>
+
+          </Fragment>
         </Router>
+     
+        
       </div>
     )
   }
@@ -66,4 +107,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
