@@ -105,7 +105,6 @@ const syncAndSeed = async () => {
   const [macbook, macbookPro, ipad, ipadPro, iphone] = await Promise.all([
     Product.create({
       name: 'Macbook',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/bmxbike_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/bmxbike_small.jpg',
       price: 100,
       stock: 200,
@@ -113,7 +112,6 @@ const syncAndSeed = async () => {
     }),
     Product.create({
       name: 'Macbook Pro',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/crutches_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/crutches_small.jpg',
       price: 25,
       stock: 300,
@@ -121,7 +119,6 @@ const syncAndSeed = async () => {
     }),
     Product.create({
       name: 'iPad',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/doll_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/doll_small.jpg',
       price: 50,
       stock: 200,
@@ -129,7 +126,6 @@ const syncAndSeed = async () => {
     }),
     Product.create({
       name: 'iPad Pro',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/protestsign_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/protestsign_small.jpg',
       price: 100,
       stock: 200,
@@ -137,7 +133,6 @@ const syncAndSeed = async () => {
     }),
     Product.create({
       name: 'iPhone',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/sodacan_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/sodacan_small.jpg',
       price: 300,
       stock: 200,
@@ -145,7 +140,6 @@ const syncAndSeed = async () => {
     }),
     Product.create({
       name: 'Placeholder Product',
-      // smallImageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/whiskeybottle_small.jpg',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/whiskeybottle_small.jpg',
       price: 300,
       stock: 0,
