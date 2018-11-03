@@ -3,6 +3,18 @@ import { GET_ORDERS, UPDATE_ORDER, REMOVE_ORDERS } from './actionTypes';
 import { GET_PRODUCTS, GET_CATEGORIES, CREATE_PRODUCT, DELETE_PRODUCT } from './actionTypes';
 import { CREATE_REVIEW, DELETE_REVIEW, GET_PRODUCT_REVIEWS, EDIT_REVIEW } from './actionTypes';
 import { SET_AUTH, LOGOUT } from './actionTypes';
+import { SET_QUERY, REMOVE_QUERY } from './actionTypes'
+
+export const searchReducer = (state = '', action) => {
+  switch(action.type){
+    case SET_QUERY:
+      return action.query
+    case REMOVE_QUERY:
+      return action.reset
+    default: 
+      return state
+  }
+}
 
 export const productReducer = (state = [], action) => {
   switch (action.type) {

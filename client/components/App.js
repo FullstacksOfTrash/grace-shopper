@@ -65,7 +65,7 @@ class App extends Component {
               anchor="left"
             >
               <div className={classes.toolbar} />
-              <Route component={NavBar}/>
+              <Route render={(props) => <NavBar {...props}/>} />
             </Drawer>
             
             <main className={classes.content}>

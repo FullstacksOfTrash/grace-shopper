@@ -17,15 +17,9 @@ class ProductDetails extends Component {
     this.handleSubtract = this.handleSubtract.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
-
   componentDidMount() {
     const { init } = this.props;
     init();
-  }
-
-  componentDidUpdate(prevProps){
-    console.log('current:', this.props)
-    console.log('prev:', prevProps)
   }
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem, id } = this.props;

@@ -20,3 +20,8 @@ export const lineItemsTotalQuant = (lineItems, products) => {
     return acc + item.quantity * getProduct(item.productId, products).price
   },0)
 }
+
+export const queryFilter = (query, products) => {
+  const querySearch = new RegExp(query, 'i')
+  return products.filter(product => querySearch.test(product.name))
+}

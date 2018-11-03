@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-
 import { Link } from 'react-router-dom'
+import { queryFilter } from '../store/utils'
 
 class Products extends Component {
 
@@ -73,10 +73,17 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = ({ products, categories, auth }) => ({
-   products,
+const mapStateToProps = ({ products, categories, auth, query }) =>{
+  console.log(products)
+  let filteredProducts;
+  if(query){
+    filteredProducts = queryFilter(query, products)
+  }
+  console.log(filteredProducts)
+  return {
+   products: query? filteredProducts : products,
    categories,
    admin: auth.user.admin
-  })
-
+  }
+}
 export default connect(mapStateToProps)(Products);
