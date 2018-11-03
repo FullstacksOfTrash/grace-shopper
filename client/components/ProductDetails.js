@@ -22,6 +22,7 @@ class ProductDetails extends Component {
     const { init } = this.props;
     init();
   }
+
   componentDidUpdate(prevProps){
     console.log('current:', this.props)
     console.log('prev:', prevProps)
@@ -75,10 +76,12 @@ class ProductDetails extends Component {
         : <div></div>
         }
         <ul>
-          <img src = {imageUrl} height="112"/>
-          <li>Price: $ { price } </li>
-          <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
-          <li>Description: { description } </li>
+          <li>
+            <a href={imageUrl}> <img src={imageUrl} height="112" /> </a>
+          </li>
+          <li>Price: $ {price} </li>
+          <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
+          <li>Description: {description} </li>
         </ul>
         <hr />
 

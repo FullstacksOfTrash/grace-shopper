@@ -1,3 +1,7 @@
 .hidden {
   visibility: hidden;
 }
+
+ul {
+  list-style: none;
+}
