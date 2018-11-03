@@ -40,31 +40,40 @@ class ProductDetails extends Component {
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart } = this.props;
     let localItem;
-    if(localCart){
+    if(getLocalCart()){
       localItem = findLocalLineItem(id)
     }
     if(lineItem || localItem){
-
+      console.log('increment')
       incrementLineItem(cart, lineItem ? lineItem : this.state.lineItem)
-        .then(({lineItems}) => {
-          const lineItem = lineItems.find(item => item.productId === id*1)
-          this.setState({lineItem})
-        })
-        .catch(err => this.setState({error: err.message}))
+      console.log('cart ', getLocalCart())
+      this.setState({lineItem: findLocalLineItem(id)})
     } else {
+      console.log('creating')
       createLineItem(cart, product)
-        .then(({lineItems}) => {
-          const lineItem = lineItems.find(item => item.productId === id*1)
-
-          this.setState({lineItem})
-        })
-        .catch(err => this.setState({error: err.message}))
+      console.log('cart ', getLocalCart())
+      this.setState({lineItem: findLocalLineItem(id)})
     }
   }
 
   handleSubtract() {
-    const { cart, lineItem, deleteLineItem, decrementLineItem } = this.props;
-    lineItem.quantity === 1 ? deleteLineItem(cart, lineItem) : decrementLineItem(cart, lineItem);
+    const { cart, lineItem, deleteLineItem, decrementLineItem, id, localCart, product } = this.props;
+    let localItem;
+    if(localCart){
+      localItem = findLocalLineItem(id)
+    }
+    if(localItem ? localItem.quantity === 1 : null || lineItem ? lineItem.quantity === 1 : null){
+      console.log('deleting')
+      deleteLineItem(cart, lineItem ? lineItem : this.state.lineItem)
+      console.log('deleted')
+    } else {
+      console.log('decrementing')
+      console.log('decrementing cart', cart)
+      console.log('decrementing local cart', getLocalCart())
+      decrementLineItem(cart, lineItem ? lineItem : this.state.lineItem)
+      console.log('cart ', getLocalCart())
+      this.setState({lineItem: findLocalLineItem(id)})
+    }
   }
 
   handleDelete(){
@@ -78,8 +87,7 @@ class ProductDetails extends Component {
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
     const { handleAdd, handleSubtract, handleDelete } = this;
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
-    let noQuantity = localCart ? !this.state.lineItem.quantity : !lineItem || !lineItem.quantity
-    console.log('localCart ', localCart)
+    let noQuantity = this.state.lineItem ? !this.state.lineItem.quantity : !lineItem || !lineItem.quantity
     console.log('state ', this.state)
     return (
       <div>
