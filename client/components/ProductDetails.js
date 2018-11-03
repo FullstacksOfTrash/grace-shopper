@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
+import { getProduct, getCart, lineItemFinder, tracker, getLocalCart, findLocalLineItem } from '../store/utils'
 import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem, deleteProduct } from '../store/thunks'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 class ProductDetails extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,21 +18,44 @@ class ProductDetails extends Component {
     this.handleSubtract = this.handleSubtract.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+
   componentDidMount() {
-    const { init } = this.props;
+    const { init, id} = this.props;
+    if(getLocalCart()){
+      const localItem = findLocalLineItem(id)
+      this.setState({
+        lineItem: localItem
+      })
+    }
     init();
   }
+
+  componentDidUpdate(prevProps){
+
+    if(prevProps !== this.props) {
+      console.log('should updated')
+    }
+  }
+
   handleAdd() {
-    const { cart, product, lineItem, createLineItem, incrementLineItem, id } = this.props;
-    if(lineItem){
-      incrementLineItem(cart, lineItem)
+    const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart } = this.props;
+    let localItem;
+    if(localCart){
+      localItem = findLocalLineItem(id)
+    }
+    if(lineItem || localItem){
+
+      incrementLineItem(cart, lineItem ? lineItem : this.state.lineItem)
+        .then(({lineItems}) => {
+          const lineItem = lineItems.find(item => item.productId === id*1)
+          this.setState({lineItem})
+        })
+        .catch(err => this.setState({error: err.message}))
     } else {
       createLineItem(cart, product)
-        .then(response => {
-          console.log('line items ', response.lineItems)
-          const lineItems = response.lineItems
-          const lineItem = lineItems.find(lineItem => lineItem.productId === id*1)
-          console.log(lineItem)
+        .then(({lineItems}) => {
+          const lineItem = lineItems.find(item => item.productId === id*1)
+
           this.setState({lineItem})
         })
         .catch(err => this.setState({error: err.message}))
@@ -51,13 +75,12 @@ class ProductDetails extends Component {
   render() {
     if (!this.props.product) { return null }
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
-    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin } = this.props
+    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
     const { handleAdd, handleSubtract, handleDelete } = this;
-    console.log('state ', this.state)
-
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
-    const noQuantity = !lineItem || !lineItem.quantity;
-
+    let noQuantity = localCart ? !this.state.lineItem.quantity : !lineItem || !lineItem.quantity
+    console.log('localCart ', localCart)
+    console.log('state ', this.state)
     return (
       <div>
         <h3> Introducing the { name }! </h3>
@@ -81,8 +104,11 @@ class ProductDetails extends Component {
 
         <button onClick={handleAdd} disabled={outOfStock}>+</button>
         <button onClick={handleSubtract} disabled={noQuantity}>-</button>
-
-        <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
+        {
+          lineItem
+          ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
+          : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
+        }
         <hr />
         <Reviews />
         <ReviewWriter id = { id } />
@@ -94,17 +120,19 @@ class ProductDetails extends Component {
 
 const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
   const cart = getCart(orders)
-
   let lineItem;
+
   if(cart){
     lineItem = lineItemFinder(cart.lineItems, id)
   }
+
   return {
     cart,
     lineItem,
     reviews,
     product: getProduct(id, products),
-    admin: auth.user.admin
+    admin: auth.user.admin,
+    localCart: getLocalCart()
   }
 }
 

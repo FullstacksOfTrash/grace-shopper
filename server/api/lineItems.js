@@ -2,6 +2,8 @@ const router = require('express').Router()
 module.exports = router
 const LineItem = require('../db/models/LineItem')
 
+// mounted on /api/lineItems
+
 router.post('/', (req, res, next) => {
   //route will be sent a productId in req.body to determine waht product a lineItem is related to
 	LineItem.create({ productId: req.body.productId})

@@ -6,7 +6,7 @@ import { _createReview, _deleteReview, _getProductReviews, _editReview } from '.
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
 
-import { authHeader } from './utils';
+import { authHeader, getLocalCart, findLocalLineItem } from './utils';
 
 
 //PRODUCTS
@@ -97,11 +97,16 @@ export const createLineItem = (cart, product) => {
         // catch the created lineitem
         .then(response => {
           // create new array with line item
-          const lineItems = [response.data]
+          const local = getLocalCart()
+          let cart;
+          if(local){
+            cart = {...local, lineItems: [...local.lineItems, response.data]}
+          } else {
+            cart = {lineItems:[response.data]}
+          }
           // set the new object on localStorage as 'cart'
-          window.localStorage.setItem('lineItems', JSON.stringify({lineItems}))
-          const cart = JSON.parse(window.localStorage.getItem('lineItems'))
-          console.log('cart ', cart)
+          window.localStorage.removeItem('lineItems')
+          window.localStorage.setItem('lineItems', JSON.stringify(cart))
           return cart
         })
     }
@@ -124,7 +129,18 @@ export const incrementLineItem = (cart, lineItem) => {
         })
     }
   } else {
-    return
+    return (dispatch) => {
+      const cart = getLocalCart()
+      const item = findLocalLineItem(lineItem.productId)
+      console.log('item ', item)
+      const filtered = cart.lineItems.filter(item => item.productId !== lineItem.productId)
+      const updatedLineItem = {...lineItem, quantity: lineItem.quantity+1}
+      const updatedCart = {...cart, lineItems: [...filtered, updatedLineItem]}
+      window.localStorage.removeItem('lineItems')
+      window.localStorage.setItem('lineItems', JSON.stringify(updatedCart))
+      console.log(updatedCart)
+      return updatedCart
+    }
   }
 }
 

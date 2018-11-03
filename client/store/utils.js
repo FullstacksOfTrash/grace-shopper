@@ -25,3 +25,12 @@ export const queryFilter = (query, products) => {
   const querySearch = new RegExp(query, 'i')
   return products.filter(product => querySearch.test(product.name))
 }
+
+export const getLocalCart = () => {
+  return JSON.parse(window.localStorage.getItem('lineItems'))
+}
+
+export const findLocalLineItem = (productId) => {
+  const localCart = JSON.parse(window.localStorage.getItem('lineItems'))
+  return localCart.lineItems.find(item => item.productId === productId*1)
+}
