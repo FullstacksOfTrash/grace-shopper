@@ -31,7 +31,7 @@ class App extends Component {
       <div>
         <Router>
           <div>
-            <Route component={NavBar} />
+            <Route render={(props) => <NavBar {...props}/>} />
             <Route exact path='/' render={(props) => <Home user={user}/>} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />

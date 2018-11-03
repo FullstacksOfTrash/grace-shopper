@@ -18,3 +18,5 @@ export const LOGOUT = 'LOGOUT'
 
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 
+export const SET_QUERY = 'SET_QUERY'
+export const REMOVE_QUERY = 'REMOVE_QUERY'

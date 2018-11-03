@@ -18,10 +18,6 @@ class ProductDetails extends Component {
     const { init } = this.props;
     init();
   }
-  componentDidUpdate(prevProps){
-    console.log('current:', this.props)
-    console.log('prev:', prevProps)
-  }
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem } = this.props;
     lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, product);
