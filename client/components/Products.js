@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
 
 import ProductCard from './ProductCard'
-import { withStyles } from '@material-ui/core/styles';
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+
 
 class Products extends Component {
 
@@ -26,7 +26,7 @@ class Products extends Component {
 
   render() {
 
-    const { products, categories, admin } = this.props
+    const { products, categories, admin, classes } = this.props
     const { category } = this.state
     const { handleChange } = this
     if (!products) { return null }
@@ -45,27 +45,31 @@ class Products extends Component {
               }
             </select>
           </form>
+          <br />
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
-          {category
-            ? <ul>
-              {
-                products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
-                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
-                    {product.name}
-                  </Link>
-                </li>
-                ))
-              }
-            </ul>
-            :
-            <GridList cols={3} spacing={100}>
-              {products.map(product => (
-                  <ProductCard key={product.id} id={product.id} />
-
-              ))}
-            </GridList>
+          {
+            <Grid container>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={40}>
+                  {category ?
+                    products.filter(product => product.categoryId === category * 1).map(product => (
+                      <Grid key={product.id} item>
+                        <Paper height={100} width={140} />
+                        <ProductCard key={product.id} id={product.id} />
+                      </Grid>))
+                    :
+                      products.map(product => (
+                        <Grid key={product.id} item>
+                          <Paper height={100} width={140} />
+                          <ProductCard key={product.id} id={product.id} />
+                        </Grid>
+                      ))
+                    }
+                </Grid>
+              </Grid>
+            </Grid>
           }
         </div>
       </div>
@@ -88,4 +92,3 @@ const mapStateToProps = ({ products, categories, auth, query }) => {
 }
 
 export default connect(mapStateToProps)(Products);
-// export default connect(mapStateToProps)(withStyles(styles)(Products));
