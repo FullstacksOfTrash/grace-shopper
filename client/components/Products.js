@@ -39,7 +39,7 @@ class Products extends Component {
           <form>
             <label>Filter by Category: </label>
             <select onChange={handleChange}>
-              <option name='category' value='' >All</option>
+              <option name='category' value=''>All</option>
               {
                 categories.map(category => <option key={category.id} name='category' value={category.id}>{category.name}</option>)
               }
@@ -63,6 +63,7 @@ class Products extends Component {
             <GridList cols={3} spacing={100}>
               {products.map(product => (
                   <ProductCard key={product.id} id={product.id} />
+
               ))}
             </GridList>
           }
