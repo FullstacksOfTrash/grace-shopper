@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import { logOut } from '../store/thunks'
 import SearchBar from './SearchBar'
 
-import { Drawer } from '@material-ui/core';
+import { Drawer, Divider, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import MailIcon from '@material-ui/icons/Mail'
+import { withStyles } from '@material-ui/core/styles'
+
 
 
 const drawerWidth = 240;
@@ -41,16 +43,46 @@ class NavBar extends Component {
     const { classes } = this.props // from material-ui withStyles
     return (
       <Fragment>
-          <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/products'>Products</Link></li>
-            <li><Link to='/cart'>Cart</Link></li>
-            <li><Link to='/order-history'>Order History</Link></li>
-            <li>{user.id?
-              <button onClick={() => loggingOut(history)}>Log out</button> :
-              <Link to='/login'>Log in</Link>}
-            </li>
-          </ul>
+        <Divider />
+        <Divider />
+        <List>
+            <Link to='/'>
+              <ListItem button>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary='Home'/>
+              </ListItem>
+            </Link>
+            <Link to='/products'>
+              <ListItem button>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary='Products'/>
+              </ListItem>
+            </Link>
+            <Link to='/cart'>
+              <ListItem button>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary='Cart'/>
+              </ListItem>
+            </Link>
+            <Link to='/order-history'>
+              <ListItem button>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary='Order History'/>
+              </ListItem>
+            </Link>
+            {
+              user.id
+                ? <ListItem>
+                    <Button onClick={()=> loggingOut(history)}>Log out</Button>
+                  </ListItem>
+                : <Link to='/login'>
+                    <ListItem>
+                      <Button>Log in</Button>
+                    </ListItem>
+                  </Link>
+            }
+            
+        </List>
           <SearchBar />
       </Fragment>
     )

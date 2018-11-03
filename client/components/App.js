@@ -19,16 +19,10 @@ import ProductForm from './ProductForm'
 import Home from './Home'
 
 
-import { Typography } from '@material-ui/core'
-import { Toolbar } from '@material-ui/core'
-import { IconButton } from '@material-ui/core'
-import { AppBar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { MenuIcon, InboxIcon, MailIcon } from '@material-ui/icons';
+import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider } from '@material-ui/core'
+import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 
-import { Drawer, Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
-
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const drawerWidth = 240;
@@ -71,7 +65,6 @@ class App extends Component {
     const { classes } = this.props; // material-ui
     return (
       <div className={classes.root}>
-        <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
