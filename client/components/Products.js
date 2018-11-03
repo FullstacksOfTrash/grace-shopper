@@ -52,7 +52,7 @@ class Products extends Component {
           {
             <Grid container>
               <Grid item xs={12}>
-                <Grid container justify="center" spacing={40}>
+                <Grid container spacing={40}>
                   {category ?
                     products.filter(product => product.categoryId === category * 1).map(product => (
                       <Grid key={product.id} item>

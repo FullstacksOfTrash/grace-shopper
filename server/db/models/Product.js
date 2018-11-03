@@ -20,10 +20,6 @@ const Product = conn.define('product', {
     defaultValue: defaultProductImage
     //allowNull: false,  commented out for now
   },
-  smallImageUrl: {
-    type: conn.Sequelize.TEXT,
-    defaultValue: defaultProductImage
-  },
   stock: {
     type: conn.Sequelize.INTEGER,
     allowNull: false,
