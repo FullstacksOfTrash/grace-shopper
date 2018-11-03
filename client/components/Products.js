@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
+import { _resetQuery } from '../store/actionCreators'
 
 import ProductCard from './ProductCard'
 import Grid from "@material-ui/core/Grid";
@@ -26,14 +27,14 @@ class Products extends Component {
 
   render() {
 
-    const { products, categories, admin, classes, found, query } = this.props
+    const { products, categories, admin, classes, found, query, reset } = this.props
     const { category } = this.state
     const { handleChange } = this
     if (!products) { return null }
 
     return (
       <div>
-        <h3>Our Products</h3>
+        <h3 onClick={reset}>Our Products</h3>
         <hr />
         <div>
           <form>
@@ -95,4 +96,9 @@ const mapStateToProps = ({ products, categories, auth, query }) => {
   }
 }
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = dispatch => {
+  return {
+    reset : () => dispatch(_resetQuery())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 //import { withRouter } from 'react-router-dom'
-import { _resetQuery, _query } from '../store/actionCreators'
+import { _query } from '../store/actionCreators'
 
 import { withStyles } from '@material-ui/core/styles'
 import { InputBase } from '@material-ui/core'
@@ -52,8 +52,7 @@ class SearchBar extends React.Component{
 
 const mapDispatchToProps = dispatch => {
   return {
-    query : (string) => dispatch(_query(string)),
-    reset : () => dispatch(_resetQuery())
+    query : (string) => dispatch(_query(string))
   }
 }
 
