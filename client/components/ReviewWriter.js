@@ -2,6 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { createReview } from '../store/thunks'
 
+import { withStyles } from '@material-ui/core/styles'
+import { Paper } from '@material-ui/core'
+
+const styles = theme => ({
+  // root: {
+  //   ...theme.mixins.gutters(),
+  //   paddingTop: theme.spacing.unit * 2,
+  //   paddingBottom: theme.spacing.unit * 2,
+  // },
+  paper: {
+    padding: 50,
+    marginTop: 10,
+    marginBottom: 10
+  },
+});
+
 class ReviewWriter extends React.Component {
 	constructor(props) {
 		super(props)
@@ -63,4 +79,4 @@ const mapDispatchToProps = (dispatch) => ({
 	saveReview: (id, review) => dispatch(createReview(id, review))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewWriter)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ReviewWriter))

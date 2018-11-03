@@ -10,6 +10,21 @@ import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import { Paper } from '@material-ui/core'
 
+
+const styles = theme => ({
+  // root: {
+  //   ...theme.mixins.gutters(),
+  //   paddingTop: theme.spacing.unit * 2,
+  //   paddingBottom: theme.spacing.unit * 2,
+  // },
+  paper: {
+    padding: 50,
+    marginTop: 10,
+    marginBottom: 10
+  },
+});
+
+
 class ProductDetails extends Component {
 
   constructor(props) {
@@ -48,7 +63,7 @@ class ProductDetails extends Component {
 
   handleSubtract() {
     const { cart, lineItem, deleteLineItem, decrementLineItem } = this.props;
-
+    
     if(lineItem ? lineItem.quantity === 1 : null){
       deleteLineItem(cart, lineItem)
       console.log('deleted')
@@ -68,6 +83,7 @@ class ProductDetails extends Component {
 
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
+    const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
@@ -76,7 +92,7 @@ class ProductDetails extends Component {
     return (
       <Fragment>
       <div>
-        <Paper>
+        <Paper className={classes.paper} elevation={1}>
         <h3> Introducing the { name }! </h3>
         <hr />
         { admin ?
@@ -103,10 +119,10 @@ class ProductDetails extends Component {
           ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
           : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
         }
-        <hr />
+        </Paper>
         <Reviews />
         <ReviewWriter id = { id } />
-        </Paper>
+        
       </div>
       </Fragment>
     )
@@ -145,5 +161,5 @@ const mapDispatchToProps = (dispatch, { id })=> {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProductDetails))
 

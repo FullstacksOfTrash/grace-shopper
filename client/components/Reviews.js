@@ -2,6 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import SingleReview from './SingleReview'
 
+import { withStyles } from '@material-ui/core/styles'
+import { Paper } from '@material-ui/core'
+
+const styles = theme => ({
+  // root: {
+  //   ...theme.mixins.gutters(),
+  //   paddingTop: theme.spacing.unit * 2,
+  //   paddingBottom: theme.spacing.unit * 2,
+  // },
+  paper: {
+    padding: 50,
+    marginTop: 10,
+    marginBottom: 10
+  },
+});
+
 class Reviews extends React.Component {
 
   componentDidUpdate(prevProps) {
@@ -12,21 +28,22 @@ class Reviews extends React.Component {
 
   render() {
     const { reviews } = this.props
-
+    const { classes } = this.props
     return (
-      !reviews.length ?
-        <div>There are no reviews for this product. Be the first to write one!</div>
-        :
-        <div>
-          <h4>Reviews</h4>
-          <ul>
-            {
-              reviews.map(review => (
-                <SingleReview key={review.id} reviewId={review.id} />
-              ))
-            }
-          </ul>
-        </div>
+      !reviews.length
+        ? <div />
+        : <div>
+            <Paper className={classes.paper}>
+              <h4>Reviews</h4>
+              <ul>
+                {
+                  reviews.map(review => (
+                    <SingleReview key={review.id} reviewId={review.id} />
+                  ))
+                }
+              </ul>
+            </Paper>
+          </div>
     )
   }
 }
@@ -36,4 +53,4 @@ const mapStateToProps = ({ reviews, auth }) => ({
   user: auth.user
 })
 
-export default connect(mapStateToProps)(Reviews)
+export default connect(mapStateToProps)(withStyles(styles)(Reviews))
