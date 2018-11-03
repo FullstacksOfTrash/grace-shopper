@@ -4,11 +4,6 @@ import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
 
 import ProductCard from './ProductCard'
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-
-// import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
@@ -51,36 +46,45 @@ class Products extends Component {
             </select>
           </form>
           <br />
-          </div>
+        </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
           {
-            category ?
-              <Grid container>
-                <Grid item xs={12}>
-                  <Grid container justify="center" spacing={40}>
-                    {products.filter(product => product.categoryId === category * 1).map(product => (
+            // category ?
+            <Grid container>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={40}>
+
+                  {category ?
+                    products.filter(product => product.categoryId === category * 1).map(product => (
                       <Grid key={product.id} item>
                         <Paper height={100} width={140} />
                         <ProductCard key={product.id} id={product.id} />
-                      </Grid>
-                    ))}
-                  </Grid>
+                      </Grid>))
+                    :
+                      products.map(product => (
+                        <Grid key={product.id} item>
+                          <Paper height={100} width={140} />
+                          <ProductCard key={product.id} id={product.id} />
+                        </Grid>
+                      ))
+                    }
                 </Grid>
               </Grid>
-              :
-              <Grid container>
-                <Grid item xs={12}>
-                  <Grid container justify="center" spacing={40}>
-                    {products.map(product => (
-                      <Grid key={product.id} item>
-                        <Paper height={100} width={140} />
-                        <ProductCard key={product.id} id={product.id} />
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-              </Grid>
+            </Grid>
+            // :
+            // <Grid container>
+            //   <Grid item xs={12}>
+            //     <Grid container justify="center" spacing={40}>
+            //       {products.map(product => (
+            //         <Grid key={product.id} item>
+            //           <Paper height={100} width={140} />
+            //           <ProductCard key={product.id} id={product.id} />
+            //         </Grid>
+            //       ))}
+            //     </Grid>
+            //   </Grid>
+            // </Grid>
           }
         </div>
       </div>
