@@ -20,8 +20,9 @@ import Home from './Home'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './App.styles';
-import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider } from '@material-ui/core'
+import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider, InputBase } from '@material-ui/core'
 import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
+import { Search } from '@material-ui/icons'
 
 class App extends Component {
 
@@ -35,11 +36,22 @@ class App extends Component {
     const { classes } = this.props; // material-ui
     return (
       <div className={classes.root}>
+
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               Fullstacks of Trash
             </Typography>
+            
+            <div className={classes.grow} />
+              <div className={classes.search}>
+              <div className={classes.searchIcon}><Search /></div>
+              <InputBase
+                placeholder="Search…"
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              />
+            </div>
+
           </Toolbar>
         </AppBar>
         

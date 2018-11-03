@@ -6,7 +6,7 @@ import SearchBar from './SearchBar'
 
 import { Drawer, Divider, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail'
+import { Home, HotTub, Cake, ShoppingCart, Assignment } from '@material-ui/icons'
 
 class NavBar extends Component {
   render () {
@@ -18,25 +18,25 @@ class NavBar extends Component {
         <List>
             <Link to='/'>
               <ListItem button>
-                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemIcon><Home /></ListItemIcon>
                 <ListItemText primary='Home'/>
               </ListItem>
             </Link>
             <Link to='/products'>
               <ListItem button>
-                <ListItemIcon><MailIcon /></ListItemIcon>
-                <ListItemText primary='Products'/>
+                <ListItemIcon><HotTub /></ListItemIcon>
+                <ListItemText primary='Dumpster'/>
               </ListItem>
             </Link>
             <Link to='/cart'>
               <ListItem button>
-                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemIcon><ShoppingCart /></ListItemIcon>
                 <ListItemText primary='Cart'/>
               </ListItem>
             </Link>
             <Link to='/order-history'>
               <ListItem button>
-                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemIcon><Assignment /></ListItemIcon>
                 <ListItemText primary='Order History'/>
               </ListItem>
             </Link>
@@ -44,11 +44,11 @@ class NavBar extends Component {
             {
               user.id
                 ? <ListItem>
-                    <Button onClick={()=> loggingOut(history)}>Log out</Button>
+                    <Button onClick={()=> loggingOut(history)} variant="contained" color="primary">Log out</Button>
                   </ListItem>
                 : <Link to='/login'>
                     <ListItem>
-                      <Button>Log in</Button>
+                      <Button variant="contained" color="secondary">Log in</Button>
                     </ListItem>
                   </Link>
             }
