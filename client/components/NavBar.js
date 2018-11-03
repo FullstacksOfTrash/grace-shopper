@@ -73,10 +73,10 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = ({ auth, cart }) => {
-  let total;
-  if(cart.lineItems){
-    total = cart.lineItems.reduce((total, lineItem) => total + lineItems, 0)
-  }
+  // let total;
+  // if(cart.lineItems){
+    // total = cart.lineItems.reduce((total, lineItem) => total + lineItems, 0)
+  // }
   return {
     user: auth.user
   }
