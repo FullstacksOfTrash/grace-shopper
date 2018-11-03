@@ -62,9 +62,14 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-    grow: {
+  grow: {
     flexGrow: 1,
   },
+  progress: {
+    color: 'primary',
+    value: 0,
+    variant: 'determinate'
+  }
 });
 
 export default styles;
