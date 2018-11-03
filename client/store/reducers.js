@@ -19,9 +19,7 @@ export const searchReducer = (state = '', action) => {
 export const productReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
-      return action.products.sort(function (a, b) {
-        return a.name - b.name
-      });
+      return action.products
     case CREATE_PRODUCT:
       return Object.assign(state, action.product)
     case DELETE_PRODUCT:
