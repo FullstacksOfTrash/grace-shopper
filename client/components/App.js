@@ -20,7 +20,7 @@ import Home from './Home'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './App.styles';
-import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider, InputBase } from '@material-ui/core'
+import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider, InputBase, CircularProgress } from '@material-ui/core'
 import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 
@@ -69,6 +69,7 @@ class App extends Component {
             </Drawer>
             
             <main className={classes.content}>
+              <CircularProgress className={classes.progress} />
               <Route exact path='/' render={(props) => <Home user={user}/>} />
               <Route exact path='/products' component={Products} />
               <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
