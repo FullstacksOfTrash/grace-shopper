@@ -36,21 +36,21 @@ class ProductModal extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, imageUrl, productName } = this.props;
 
     return (
       <div>
 
         <Button onClick={this.handleOpen}>
           <img
-            src="https://d29mh04qrg9hzh.cloudfront.net/bmxbike_small.jpg"
-            alt="an old red bmx bike"
+            src={imageUrl}
+            alt={productName}
             width="128"
           />
         </Button>
         <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby="product-modal"
+          aria-describedby="product-image-modal"
           open={this.state.open}
           onClose={this.handleClose}
         >
@@ -58,9 +58,9 @@ class ProductModal extends Component {
             className={classes.paper}
           >
             <img
-              src="https://d29mh04qrg9hzh.cloudfront.net/bmxbike_small.jpg"
-              alt="an old red bmx bike"
-              width="640"
+              src={imageUrl}
+              alt={productName}
+              width="896"
             />
           </div>
         </Modal>
@@ -73,5 +73,8 @@ ProductModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state, {imageUrl, productName}) => ({
+  state, imageUrl, productName
+})
 
-export default connect()(withStyles(styles)(ProductModal));
+export default connect(mapStateToProps)(withStyles(styles)(ProductModal));

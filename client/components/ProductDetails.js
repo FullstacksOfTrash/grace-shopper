@@ -72,7 +72,7 @@ class ProductDetails extends Component {
         }
         <ul>
           <li>
-            <ProductModal imageUrl = { imageUrl } />
+            <ProductModal imageUrl = { imageUrl } productName = { product.name } />
           </li>
           <li>Price: $ {price} </li>
           <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
