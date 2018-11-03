@@ -50,11 +50,9 @@ class Products extends Component {
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
           {
-            // category ?
             <Grid container>
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={40}>
-
                   {category ?
                     products.filter(product => product.categoryId === category * 1).map(product => (
                       <Grid key={product.id} item>
@@ -72,19 +70,6 @@ class Products extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            // :
-            // <Grid container>
-            //   <Grid item xs={12}>
-            //     <Grid container justify="center" spacing={40}>
-            //       {products.map(product => (
-            //         <Grid key={product.id} item>
-            //           <Paper height={100} width={140} />
-            //           <ProductCard key={product.id} id={product.id} />
-            //         </Grid>
-            //       ))}
-            //     </Grid>
-            //   </Grid>
-            // </Grid>
           }
         </div>
       </div>
