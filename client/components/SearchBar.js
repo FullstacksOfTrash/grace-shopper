@@ -1,7 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom'
-import { _resetQuery, _query } from '../store/actionCreators'
+//import { withRouter } from 'react-router-dom'
+import { _query } from '../store/actionCreators'
+
+import { withStyles } from '@material-ui/core/styles'
+import { InputBase } from '@material-ui/core'
+import styles from './SearchBar.styles'
 
 class SearchBar extends React.Component{
   constructor(){
@@ -19,10 +23,11 @@ class SearchBar extends React.Component{
     })
   }
   handleQuery(event){
-    event.preventDefault()
     const { location, history, query } = this.props
-    query(this.state.query)
-    if(location.pathname !== '/products') history.push('/products')
+    if(event.key === 'Enter'){
+      query(this.state.query)
+      if(location.pathname !== '/products') history.push('/products')
+    }
   }
   reset(event){
     event.preventDefault()
@@ -31,17 +36,15 @@ class SearchBar extends React.Component{
   }
   render(){ 
     const { query } = this.state
-    const { handleChange, handleQuery, reset } = this
-    const { location, history } = this.props
+    const { handleChange, handleQuery } = this
+    const { classes } = this.props
 
     return (
       <div>
-        <form onSubmit={handleQuery}>
-          <label htmlFor='query'>Search: </label>
-          <input name='query' value={query} onChange={handleChange}></input>
-          <button type='submit'>Submit</button>
-        </form>
-        <button onClick={reset}>Reset</button>
+          <div className={classes.search}>
+          <div className={classes.searchIcon}></div>
+          <InputBase placeholder="Search…" classes={{ root: classes.inputRoot, input: classes.inputInput }} onChange={handleChange} onKeyPress={handleQuery} value={query} name='query' />
+          </div>
       </div>
     )
   }
@@ -49,10 +52,9 @@ class SearchBar extends React.Component{
 
 const mapDispatchToProps = dispatch => {
   return {
-    query : (string) => dispatch(_query(string)),
-    reset : () => dispatch(_resetQuery())
+    query : (string) => dispatch(_query(string))
   }
 }
 
 
-export default withRouter(connect(null, mapDispatchToProps)(SearchBar))
+export default connect(null, mapDispatchToProps)(withStyles(styles)(SearchBar))

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
+import { _resetQuery } from '../store/actionCreators'
 
 import ProductCard from './ProductCard'
 import Grid from "@material-ui/core/Grid";
@@ -26,14 +27,14 @@ class Products extends Component {
 
   render() {
 
-    const { products, categories, admin, classes } = this.props
+    const { products, categories, admin, classes, found, query, reset } = this.props
     const { category } = this.state
     const { handleChange } = this
     if (!products) { return null }
 
     return (
       <div>
-        <h3>Our Products</h3>
+        <h3 onClick={reset}>Our Products</h3>
         <hr />
         <div>
           <form>
@@ -48,6 +49,7 @@ class Products extends Component {
           <br />
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
+        <h3 className={found? 'hidden' : ''}>{`We did not find any products for the search of "${query}"`}</h3>
         <div>
           {
             <Grid container>
@@ -78,17 +80,25 @@ class Products extends Component {
 }
 
 const mapStateToProps = ({ products, categories, auth, query }) => {
-  console.log(products)
-  let filteredProducts;
+  let filteredProducts
+  let found = true
   if (query) {
     filteredProducts = queryFilter(query, products)
+    found = filteredProducts.length > 0? true : false
   }
   console.log(filteredProducts)
   return {
+    query, 
+    found,
     products: query ? filteredProducts : products,
     categories,
     admin: auth.user.admin
   }
 }
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = dispatch => {
+  return {
+    reset : () => dispatch(_resetQuery())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

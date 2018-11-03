@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getProducts, getCategories, getOrders } from '../store/thunks'
 // import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
 
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
 import { exchangeTokenForAuth } from '../store/thunks'
 
 import NavBar from './NavBar'
@@ -17,6 +17,7 @@ import SignUp from './SignUp'
 import CheckOut from './Checkout'
 import ProductForm from './ProductForm'
 import Home from './Home'
+import SearchBar from './SearchBar'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './App.styles';
@@ -36,28 +37,20 @@ class App extends Component {
     const { classes } = this.props; // material-ui
     return (
       <div className={classes.root}>
-
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              Fullstacks of Trash
-            </Typography>
-
-            <div className={classes.grow} />
-              <div className={classes.search}>
-              <div className={classes.searchIcon}><Search /></div>
-              <InputBase
-                placeholder="Search…"
-                classes={{ root: classes.inputRoot, input: classes.inputInput }}
-              />
-            </div>
-
-          </Toolbar>
-        </AppBar>
-
         <Router>
           <Fragment>
+            <AppBar position="fixed" className={classes.appBar}>
+              <Toolbar>
+                <Typography variant="h6" color="inherit" noWrap>
+                  Fullstacks of Trash
+                </Typography>
+                
+                <div className={classes.grow} />
+                <Route path='/' component={SearchBar} />
+          
 
+              </Toolbar>
+            </AppBar>
             <Drawer
               className={classes.drawer}
               variant="permanent"

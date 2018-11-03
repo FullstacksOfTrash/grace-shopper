@@ -54,7 +54,7 @@ class NavBar extends Component {
             }
             
         </List>
-          <SearchBar />
+        {/* <SearchBar /> */}
       </Fragment>
     )
   }
