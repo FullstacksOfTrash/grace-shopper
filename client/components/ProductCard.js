@@ -24,7 +24,9 @@ const styles = {
 
 function ProductCard({ classes, product }) {
   // const { classes } = props;
+
   const { name, imageUrl, price } = product
+
   return (
     <Card className={classes.card}>
       <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
