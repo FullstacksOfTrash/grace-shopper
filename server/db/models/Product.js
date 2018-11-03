@@ -2,6 +2,11 @@ const conn = require('../conn');
 const defaultProductImage = require('../../../public/images/defaultProductImage')
 
 const Product = conn.define('product', {
+  // id: {
+  //   type: conn.Sequelize.UUID,
+  //   defaultValue: conn.Sequelize.UUIDV4,
+  //   primaryKey: true
+  // },
   name: {
     type: conn.Sequelize.STRING,
     allowNull: false,

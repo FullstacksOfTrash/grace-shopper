@@ -48,26 +48,22 @@ class Products extends Component {
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
-          {category ?
-            // <ul>
-            //   {
-            //     products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
-            //       <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
-            //         {product.name}
-            //       </Link>
-            //     </li>
-            //     ))
-            //   }
-            // </ul>
-            <GridList >
-              {products.filter(product => product.categoryId === category * 1).map(product => (
-                <ProductCard key={product.id} id={product.id} />
-              ))}
-            </GridList>
+          {category
+            ? <ul>
+              {
+                products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
+                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+                    {product.name}
+                  </Link>
+                </li>
+                ))
+              }
+            </ul>
             :
-            <GridList >
+            <GridList cols={3} spacing={100}>
               {products.map(product => (
-                <ProductCard key={product.id} id={product.id} />
+                  <ProductCard key={product.id} id={product.id} />
+
               ))}
             </GridList>
           }

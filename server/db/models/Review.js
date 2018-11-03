@@ -1,6 +1,11 @@
 const conn = require('../conn');
 
 const Review = conn.define('review', {
+  // id: {
+  //   type: conn.Sequelize.UUID,
+  //   defaultValue: conn.Sequelize.UUIDV4,
+  //   primaryKey: true
+  // },
   rating: {
     type: conn.Sequelize.INTEGER,
     allowNull: false,
