@@ -60,7 +60,7 @@ class Products extends Component {
               }
             </ul>
             :
-            <GridList cols={3} spacing={100}>
+            <GridList cols={3} >
               {products.map(product => (
                   <ProductCard key={product.id} id={product.id} />
               ))}
