@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
 
+import ProductCard from './ProductCard'
+import { withStyles } from '@material-ui/core/styles';
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+
 class Products extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       category: ''
@@ -18,7 +23,6 @@ class Products extends Component {
       category: event.target.value
     })
   }
-
 
   render() {
 
@@ -37,35 +41,30 @@ class Products extends Component {
             <select onChange={handleChange}>
               <option name='category' value='' >All</option>
               {
-                categories.map(category => <option key={category.id}name='category' value={category.id}>{category.name}</option>)
+                categories.map(category => <option key={category.id} name='category' value={category.id}>{category.name}</option>)
               }
             </select>
           </form>
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
         <div>
-          { category
-          ? <ul>
+          {category
+            ? <ul>
               {
-                products.filter(product => product.categoryId === category*1).map(product => (<li key = { product.id }>
-                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none'}}>
-                  { product.name }
+                products.filter(product => product.categoryId === category * 1).map(product => (<li key={product.id}>
+                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+                    {product.name}
                   </Link>
-                  </li>
-                  ))
+                </li>
+                ))
               }
             </ul>
-          : <ul>
-            {
-
-              products.map(product => (<li key = { product.id }>
-              <Link to={`/products/${product.id}`} style={{ textDecoration: 'none'}}>
-              { product.name }
-              </Link>
-              </li>
-              ))
-            }
-          </ul>
+            :
+            <GridList cols={3} spacing={100}>
+              {products.map(product => (
+                  <ProductCard key={product.id} id={product.id} />
+              ))}
+            </GridList>
           }
         </div>
       </div>
@@ -73,17 +72,19 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = ({ products, categories, auth, query }) =>{
+const mapStateToProps = ({ products, categories, auth, query }) => {
   console.log(products)
   let filteredProducts;
-  if(query){
+  if (query) {
     filteredProducts = queryFilter(query, products)
   }
   console.log(filteredProducts)
   return {
-   products: query? filteredProducts : products,
-   categories,
-   admin: auth.user.admin
+    products: query ? filteredProducts : products,
+    categories,
+    admin: auth.user.admin
   }
 }
+
 export default connect(mapStateToProps)(Products);
+// export default connect(mapStateToProps)(withStyles(styles)(Products));

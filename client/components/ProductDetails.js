@@ -50,7 +50,7 @@ class ProductDetails extends Component {
 
   render() {
     if (!this.props.product) { return null }
-    const { name, imageUrl, price, stock, description, id } = this.props.product
+    const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin } = this.props
     const { handleAdd, handleSubtract, handleDelete } = this;
     console.log('state ', this.state)
@@ -71,7 +71,7 @@ class ProductDetails extends Component {
         }
         <ul>
           <li>
-            <a href={imageUrl}> <img src={imageUrl} height="112" /> </a>
+            <a href={imageUrl}> <img src={smallImageUrl} height="112" /> </a>
           </li>
           <li>Price: $ {price} </li>
           <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
@@ -102,8 +102,8 @@ const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
   return {
     cart,
     lineItem,
-    product: getProduct(id, products),
     reviews,
+    product: getProduct(id, products),
     admin: auth.user.admin
   }
 }
