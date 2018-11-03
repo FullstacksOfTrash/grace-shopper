@@ -46,7 +46,7 @@ class App extends Component {
                 </Typography>
                 
                 <div className={classes.grow} />
-                <Route path='/' component={SearchBar} />
+                <Route path='/' component={SearchBar} />code 
           
 
               </Toolbar>
