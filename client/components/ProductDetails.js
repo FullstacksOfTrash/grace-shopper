@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom'
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      lineItem: {},
+      error: ''
+    }
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubtract = this.handleSubtract.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -18,13 +22,26 @@ class ProductDetails extends Component {
     const { init } = this.props;
     init();
   }
+
   componentDidUpdate(prevProps){
     console.log('current:', this.props)
     console.log('prev:', prevProps)
   }
   handleAdd() {
-    const { cart, product, lineItem, createLineItem, incrementLineItem } = this.props;
-    lineItem ? incrementLineItem(cart, lineItem) : createLineItem(cart, product);
+    const { cart, product, lineItem, createLineItem, incrementLineItem, id } = this.props;
+    if(lineItem){
+      incrementLineItem(cart, lineItem)
+    } else {
+      createLineItem(cart, product)
+        .then(response => {
+          console.log('line items ', response.lineItems)
+          const lineItems = response.lineItems
+          const lineItem = lineItems.find(lineItem => lineItem.productId === id*1)
+          console.log(lineItem)
+          this.setState({lineItem})
+        })
+        .catch(err => this.setState({error: err.message}))
+    }
   }
 
   handleSubtract() {
@@ -39,10 +56,10 @@ class ProductDetails extends Component {
 
   render() {
     if (!this.props.product) { return null }
-
     const { name, imageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin } = this.props
     const { handleAdd, handleSubtract, handleDelete } = this;
+    console.log('state ', this.state)
 
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
     const noQuantity = !lineItem || !lineItem.quantity;
@@ -59,17 +76,19 @@ class ProductDetails extends Component {
         : <div></div>
         }
         <ul>
-          <img src = {imageUrl} height="112"/>
-          <li>Price: $ { price } </li>
-          <li>Stock: { stock? 'In stock' : 'Out of stock' } </li>
-          <li>Description: { description } </li>
+          <li>
+            <a href={imageUrl}> <img src={imageUrl} height="112" /> </a>
+          </li>
+          <li>Price: $ {price} </li>
+          <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
+          <li>Description: {description} </li>
         </ul>
         <hr />
 
         <button onClick={handleAdd} disabled={outOfStock}>+</button>
         <button onClick={handleSubtract} disabled={noQuantity}>-</button>
 
-        <p>Quantity in cart: {lineItem ? lineItem.quantity : 0}</p>
+        <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
         <hr />
         <Reviews />
         <ReviewWriter id = { id } />
@@ -99,26 +118,15 @@ const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
 const mapDispatchToProps = (dispatch, { id })=> {
   console.log(id)
   return {
-    init: () => {
-      dispatch(getProductReviews( id ));
-    },
-    createLineItem: (cart, product)=> {
-      dispatch(createLineItem(cart, product));
-    },
-    incrementLineItem: (cart, lineItem)=> {
-      dispatch(incrementLineItem(cart, lineItem));
-    },
-    deleteLineItem: (cart, lineItem)=> {
-      dispatch(deleteLineItem(cart, lineItem));
-    },
-    decrementLineItem: (cart, lineItem)=> {
-      dispatch(decrementLineItem(cart, lineItem));
-    },
-    deleteProduct: (product) => {
-      dispatch(deleteProduct(product))
-    }
+    init: () => dispatch(getProductReviews( id )),
+    createLineItem: (cart, product)=> dispatch(createLineItem(cart, product)),
+    incrementLineItem: (cart, lineItem)=> dispatch(incrementLineItem(cart, lineItem)),
+    deleteLineItem: (cart, lineItem)=> dispatch(deleteLineItem(cart, lineItem)),
+    decrementLineItem: (cart, lineItem)=> dispatch(decrementLineItem(cart, lineItem)),
+    deleteProduct: (product) => dispatch(deleteProduct(product))
   }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails)
 

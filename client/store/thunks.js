@@ -95,13 +95,14 @@ export const createLineItem = (cart, product) => {
     return (dispatch) => {
       return axios.post('/api/lineItems', { productId: product.id })
         // catch the created lineitem
-        .then(lineItem => {
+        .then(response => {
           // create new array with line item
-          const lineItems = [lineItem]
+          const lineItems = [response.data]
           // set the new object on localStorage as 'cart'
           window.localStorage.setItem('lineItems', JSON.stringify({lineItems}))
           const cart = JSON.parse(window.localStorage.getItem('lineItems'))
-          console.log(cart)
+          console.log('cart ', cart)
+          return cart
         })
     }
     //  upon logging in/signing up -  aka token is found
@@ -123,7 +124,7 @@ export const incrementLineItem = (cart, lineItem) => {
         })
     }
   } else {
-
+    return
   }
 }
 
