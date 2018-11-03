@@ -2,11 +2,21 @@ import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../store/thunks'
-import SearchBar from './SearchBar'
 
 import { Drawer, Divider, Button } from '@material-ui/core';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Badge, withStyles } from '@material-ui/core';
 import { Home, HotTub, Cake, ShoppingCart, Assignment } from '@material-ui/icons'
+
+const styles = theme => ({
+  badge: {
+    top: 1,
+    right: -15,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`,
+  },
+});
 
 class NavBar extends Component {
   render () {
@@ -30,8 +40,10 @@ class NavBar extends Component {
             </Link>
             <Link to='/cart'>
               <ListItem button>
-                <ListItemIcon><ShoppingCart /></ListItemIcon>
-                <ListItemText primary='Cart'/>
+                <Badge badgeContent={4} color='primary' classes={{badge: classes.badge}}>
+                  <ListItemIcon><ShoppingCart /></ListItemIcon>
+                  <ListItemText primary='Cart'/>
+                </Badge>
               </ListItem>
             </Link>
             <Link to='/order-history'>
@@ -60,7 +72,11 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, cart }) => {
+  let total;
+  if(cart.lineItems){
+    total = cart.lineItems.reduce((total, lineItem) => total + lineItems, 0)
+  }
   return {
     user: auth.user
   }
@@ -72,4 +88,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar))
