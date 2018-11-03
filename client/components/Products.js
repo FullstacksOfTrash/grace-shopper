@@ -26,7 +26,7 @@ class Products extends Component {
 
   render() {
 
-    const { products, categories, admin, classes } = this.props
+    const { products, categories, admin, classes, found, query } = this.props
     const { category } = this.state
     const { handleChange } = this
     if (!products) { return null }
@@ -48,11 +48,12 @@ class Products extends Component {
           <br />
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}
+        <h3 className={found? 'hidden' : ''}>{`We did not find any products for the search of "${query}"`}</h3>
         <div>
           {
             <Grid container>
               <Grid item xs={12}>
-                <Grid container justify="center" spacing={40}>
+                <Grid container spacing={40}>
                   {category ?
                     products.filter(product => product.categoryId === category * 1).map(product => (
                       <Grid key={product.id} item>
@@ -78,13 +79,16 @@ class Products extends Component {
 }
 
 const mapStateToProps = ({ products, categories, auth, query }) => {
-  console.log(products)
-  let filteredProducts;
+  let filteredProducts
+  let found = true
   if (query) {
     filteredProducts = queryFilter(query, products)
+    found = filteredProducts.length > 0? true : false
   }
   console.log(filteredProducts)
   return {
+    query, 
+    found,
     products: query ? filteredProducts : products,
     categories,
     admin: auth.user.admin

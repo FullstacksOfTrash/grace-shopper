@@ -2,6 +2,8 @@ const router = require('express').Router()
 module.exports = router
 const LineItem = require('../db/models/LineItem')
 
+// mounted on /api/lineItems
+
 router.post('/', (req, res, next) => {
   //route will be sent a productId in req.body to determine waht product a lineItem is related to
 	LineItem.create({ productId: req.body.productId})
@@ -14,5 +16,12 @@ router.put('/:id', (req, res, next) => {
 	LineItem.findById(req.params.id)
 		.then(lineItem => lineItem.update(req.body))
 		.then(lineItem => res.send(lineItem))
+		.catch(next)
+})
+
+router.delete('/:id', (req, res, next) => {
+  LineItem.findById(req.params.id)
+		.then(lineItem => lineItem.destroy())
+		.then(() => res.sendStatus(204))
 		.catch(next)
 })

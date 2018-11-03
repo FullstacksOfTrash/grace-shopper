@@ -51,10 +51,6 @@ class App extends Component {
 
               </Toolbar>
             </AppBar>
-        
-        
-          
-
             <Drawer
               className={classes.drawer}
               variant="permanent"
@@ -64,7 +60,7 @@ class App extends Component {
               <div className={classes.toolbar} />
               <Route render={(props) => <NavBar {...props}/>} />
             </Drawer>
-            
+
             <main className={classes.content}>
               <CircularProgress className={classes.progress} />
               <Route exact path='/' render={(props) => <Home user={user}/>} />
@@ -81,8 +77,8 @@ class App extends Component {
 
           </Fragment>
         </Router>
-     
-        
+
+
       </div>
     )
   }
@@ -102,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(getProductReviews());
     dispatch(getCategories());
     dispatch(getOrders())
+    window.localStorage.removeItem('lineItems')
   }
 })
 

@@ -23,10 +23,11 @@ class SearchBar extends React.Component{
     })
   }
   handleQuery(event){
-    event.preventDefault()
     const { location, history, query } = this.props
-    query(this.state.query)
-    if(location.pathname !== '/products') history.push('/products')
+    if(event.key === 'Enter'){
+      query(this.state.query)
+      if(location.pathname !== '/products') history.push('/products')
+    }
   }
   reset(event){
     event.preventDefault()
@@ -35,18 +36,15 @@ class SearchBar extends React.Component{
   }
   render(){ 
     const { query } = this.state
-    const { handleChange, handleQuery, reset } = this
+    const { handleChange, handleQuery } = this
     const { classes } = this.props
+
     return (
       <div>
-        <form onSubmit={handleQuery}>
           <div className={classes.search}>
           <div className={classes.searchIcon}></div>
-          <InputBase placeholder="Search…" classes={{ root: classes.inputRoot, input: classes.inputInput }} onChange={handleChange} name='query' value={query}/>
+          <InputBase placeholder="Search…" classes={{ root: classes.inputRoot, input: classes.inputInput }} onChange={handleChange} onKeyPress={handleQuery} value={query} name='query' />
           </div>
-          <button type='submit'>Submit</button>
-        </form>
-        <button onClick={reset}>Reset</button>
       </div>
     )
   }
