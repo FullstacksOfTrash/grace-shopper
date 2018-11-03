@@ -8,7 +8,10 @@ import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import { Paper } from '@material-ui/core'
+import { Paper, Typography, Tooltip } from '@material-ui/core'
+import { Card, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core'
+import { Eject, MoreVertIcon, Edit, Delete } from '@material-ui/icons';
+
 
 
 const styles = theme => ({
@@ -21,6 +24,19 @@ const styles = theme => ({
     padding: 50,
     marginTop: 10,
     marginBottom: 10
+  },
+    card: {
+    maxWidth: 1000,
+    minWidth: 400,
+  },
+  cardMedia: {
+    height: 300,
+  },
+  cardContent: {
+    margin: '20 30 0 30'
+  },
+  cardActions: {
+    margin: '0 30 20 30'  
   },
 });
 
@@ -92,6 +108,47 @@ class ProductDetails extends Component {
     return (
       <Fragment>
       <div>
+        <Card className={classes.card}>
+
+            <CardHeader
+              avatar={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
+              // action={editButton}
+              title={<Typography variant='display1' className={classes.title}>{name}</Typography>}
+            />
+
+
+            <CardMedia 
+              image={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
+              className={cardMedia}
+            />
+
+
+            <CardContent className={cardContent}>
+              <Typography variant='subheading'>
+                Address
+              </Typography>
+              <Typography>
+                {'address'}
+              </Typography>
+              <Typography variant='subheading'>
+                Description
+              </Typography>
+              <Typography>
+                {'description'}
+              </Typography>
+            </CardContent>
+
+            <CardActions className={cardActions}>
+              <Fragment>
+                <Tooltip title='Delete'>
+                  <IconButton onClick={toggleDeleteDialog}>
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
+              </Fragment>
+            </CardActions>
+
+          </Card>
         <Paper className={classes.paper} elevation={1}>
         <h3> Introducing the { name }! </h3>
         <hr />
