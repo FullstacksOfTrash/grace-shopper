@@ -7,35 +7,6 @@ import SearchBar from './SearchBar'
 import { Drawer, Divider, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MailIcon from '@material-ui/icons/Mail'
-import { withStyles } from '@material-ui/core/styles'
-
-
-
-const drawerWidth = 240;
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
-});
-
 
 class NavBar extends Component {
   render () {
@@ -101,4 +72,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NavBar))
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
