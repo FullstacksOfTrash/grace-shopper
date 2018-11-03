@@ -18,16 +18,10 @@ import CheckOut from './Checkout'
 import ProductForm from './ProductForm'
 import Home from './Home'
 
-
 import { withStyles } from '@material-ui/core/styles'
+import styles from './App.styles';
 import { Typography, Toolbar, IconButton, AppBar, Drawer, Divider } from '@material-ui/core'
 import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
-
-
-
-import styles from './App.styles';
-
-
 
 class App extends Component {
 
@@ -42,42 +36,40 @@ class App extends Component {
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Fullstacks of Trash
-          </Typography>
-        </Toolbar>
-      </AppBar>
-        <Typography>Test</Typography>
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap>
+              Fullstacks of Trash
+            </Typography>
+          </Toolbar>
+        </AppBar>
         
         <Router>
           <Fragment>
+
+            <div className={classes.toolbar} />
             <Drawer
               className={classes.drawer}
               variant="permanent"
-              classes={{
-                paper: classes.drawerPaper,
-              }}
+              classes={{ paper: classes.drawerPaper }}
               anchor="left"
             >
-            <div className={classes.toolbar} />
-
-            <Route component={NavBar}/>
-
+              <div className={classes.toolbar} />
+              <Route component={NavBar}/>
             </Drawer>
+            
             <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Route exact path='/' render={(props) => <Home user={user}/>} />
-            <Route exact path='/products' component={Products} />
-            <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
-            <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/login' component={LogIn}/>
-            <Route exact path='/cart' render={({history}) => <Cart history={history}/>} />
-            <Route exact path='/order-history' component={OrderHistory} />
-            <Route exact path='/addProduct' component={ProductForm} />
-            <Route exact path='/product/:id/edit' component={ProductForm} />
-            <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
-             </main>
+              <Route exact path='/' render={(props) => <Home user={user}/>} />
+              <Route exact path='/products' component={Products} />
+              <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
+              <Route exact path='/signup' component={SignUp} />
+              <Route exact path='/login' component={LogIn}/>
+              <Route exact path='/cart' render={({history}) => <Cart history={history}/>} />
+              <Route exact path='/order-history' component={OrderHistory} />
+              <Route exact path='/addProduct' component={ProductForm} />
+              <Route exact path='/product/:id/edit' component={ProductForm} />
+              <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
+            </main>
+
           </Fragment>
         </Router>
      

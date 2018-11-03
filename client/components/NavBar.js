@@ -15,7 +15,6 @@ class NavBar extends Component {
     return (
       <Fragment>
         <Divider />
-        <Divider />
         <List>
             <Link to='/'>
               <ListItem button>
@@ -41,6 +40,7 @@ class NavBar extends Component {
                 <ListItemText primary='Order History'/>
               </ListItem>
             </Link>
+            <Divider />
             {
               user.id
                 ? <ListItem>
