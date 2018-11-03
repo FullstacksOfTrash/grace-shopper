@@ -1,29 +1,69 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getProduct, lineItemsTotalQuant } from '../store/utils'
+import { getProduct, lineItemsTotalQuant, getLocalCart, findLocalLineItem, guestIncrementLineItem, guestDecrementLineItem } from '../store/utils'
 import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
 
 class Cart extends Component {
   constructor() {
     super();
+    this.state = {
+      reload: false
+    }
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubtract = this.handleSubtract.bind(this);
   }
 
-  handleAdd(cart,lineItem) {
-    const { incrementLineItem } = this.props;
-    return incrementLineItem(cart, lineItem)
+  handleAdd(item) {
+    const { cart, createLineItem, incrementLineItem, id } = this.props;
+    const token = window.localStorage.getItem('token')
+
+    if(token){
+      if(cart){
+        incrementLineItem(cart, item)
+        console.log('incrementing')
+      } else {
+        createLineItem(cart, item)
+        console.log('created')
+      }
+    } else {
+      guestIncrementLineItem({...item, id: item.productId})
+      this.setState({reload: !this.state.reload})
+    }
   }
 
-  handleSubtract(cart, lineItem) {
-    const { deleteLineItem, decrementLineItem } = this.props;
-    lineItem.quantity === 1 ? deleteLineItem(cart, lineItem) : decrementLineItem(cart, lineItem);
+  handleSubtract(item) {
+    console.log('item', item)
+    const { cart, deleteLineItem, decrementLineItem } = this.props;
+    const token = window.localStorage.getItem('token')
+    if(token){
+      if(item.quantity === 1){
+        deleteLineItem(cart, item)
+        console.log('deleted')
+      } else {
+        decrementLineItem(cart, item)
+        console.log('decrementing')
+      }
+    } else {
+      guestDecrementLineItem({...item, id: item.productId})
+      this.setState({reload: !this.state.reload})
+    }
   }
+
   render() {
     const { cart, products, totalCost, lineItems } = this.props
     const { handleAdd, handleSubtract } = this
-    if(!lineItems.length){
+    if(!products.length){ return null }
+    const token = window.localStorage.getItem('token')
+    let allLineItems;
+    if(!token){
+      allLineItems = getLocalCart().lineItems
+      console.log('local cart ', getLocalCart())
+    } else {
+      allLineItems = cart.lineItems
+    }
+
+    if(!allLineItems.length){
       return <h4>Your cart is current empty. Browse through our wonder array of trash!</h4>
     }
     return (
@@ -31,14 +71,15 @@ class Cart extends Component {
         Review your order:
         <ul>
           {
-            lineItems.map(item => (
-              <div key={item.id}> 
+            allLineItems.map(item => (
+              <div key={item.productId}>
                 <Link to={`/products/${item.productId}`}>
+
                   {getProduct(item.productId, products).name}
                 </Link>
                 <li>Quantity: {item.quantity}
-                  <button onClick={() => handleAdd(cart, item)}>+</button>
-                  <button onClick={() => handleSubtract(cart, item)}>-</button>
+                  <button onClick={() => handleAdd(item)}>+</button>
+                  <button onClick={() => handleSubtract(item)}>-</button>
                 </li>
                 <li>Price: ${getProduct(item.productId, products).price}</li>
                 <li>Subtotal: ${item.quantity * getProduct(item.productId, products).price}</li>

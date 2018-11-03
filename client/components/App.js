@@ -97,7 +97,6 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(getProductReviews());
     dispatch(getCategories());
     dispatch(getOrders())
-    window.localStorage.removeItem('lineItems')
   }
 })
 
