@@ -1,5 +1,5 @@
-const { key2 } = require('../../apiKeys')
-const stripe = require('stripe')(key2)
+const { stripeKey2 } = require('../../config')
+const stripe = require('stripe')(stripeKey2)
 const router = require('express').Router()
 
 
