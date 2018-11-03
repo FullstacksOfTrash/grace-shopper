@@ -1,12 +1,12 @@
 const drawerWidth = 240;
 
+
 const styles = theme => ({
   root: {
     display: 'flex',
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
     width: drawerWidth,
@@ -15,12 +15,11 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
+  toolbar: theme.mixins.toolbar,
 });
 
 export default styles;

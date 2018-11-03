@@ -46,7 +46,6 @@ class App extends Component {
         <Router>
           <Fragment>
 
-            <div className={classes.toolbar} />
             <Drawer
               className={classes.drawer}
               variant="permanent"
