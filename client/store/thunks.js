@@ -80,60 +80,53 @@ export const submitOrder = (order, transactionData) => {
 //LINE ITEMS
 export const createLineItem = (cart, product) => {
   const token = window.localStorage.getItem('token')
-  if(token){
-    return (dispatch, getState) => {
-      const { user } = getState().auth;
-      return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
-        .then(() => {
-          axios.get(`/api/users/${user.id}/orders`, authHeader())
-            .then(response => response.data)
-            .then(orders => dispatch(_getOrders(orders)))
-        })
-    }
-  } else {
-    // create the line item
-    return (dispatch) => {
-      const local = getLocalCart()
-      let cart;
-      if(local){
-        cart = {...local, lineItems: [...local.lineItems, {quantity: 1, productId: product.id}]}
-      } else {
-        cart = {lineItems:[{quantity: 1, productId: product.id}]}
-      }
-      // set the new object on localStorage as 'cart'
-      window.localStorage.removeItem('lineItems')
-      window.localStorage.setItem('lineItems', JSON.stringify(cart))
-    }
-    //  upon logging in/signing up -  aka token is found
-    // transfer lineItems from the localStorage cart to the "CART" object of that user
-    // destroy cart on localStorage
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.post(`/api/users/${user.id}/orders/${cart.id}/lineitems`, { productId: product.id, quantity: 1 }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+      })
   }
+}
+
+
+export const createLocalLineItem = (product)=> {
+  const local = getLocalCart()
+  let cart;
+  if(local){
+    cart = {...local, lineItems: [...local.lineItems, {quantity: 1, productId: product.id}]}
+  } else {
+    cart = {lineItems:[{quantity: 1, productId: product.id}]}
+  }
+  // set the new object on localStorage as 'cart'
+  window.localStorage.removeItem('lineItems')
+  window.localStorage.setItem('lineItems', JSON.stringify(cart))
 }
 
 export const incrementLineItem = (cart, lineItem) => {
   const token = window.localStorage.getItem('token')
-  if(token){
-    return (dispatch, getState) => {
-      const { user } = getState().auth;
-      return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
-        .then(() => {
-          axios.get(`/api/users/${user.id}/orders`, authHeader())
-            .then(response => response.data)
-            .then(orders => dispatch(_getOrders(orders)))
-        })
-    }
-  } else {
-    return (dispatch) => {
-      const cart = getLocalCart()
-      const item = findLocalLineItem(lineItem.productId)
-      const filtered = cart.lineItems.filter(item => item.productId !== lineItem.productId )
-      const updatedLineItem = {...item, quantity: item.quantity+1}
-      const updatedCart = {...cart, lineItems: [...filtered, updatedLineItem]}
-      console.log(updatedCart)
-      window.localStorage.removeItem('lineItems')
-      window.localStorage.setItem('lineItems', JSON.stringify(updatedCart))
-    }
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
+    return axios.put(`/api/users/${user.id}/orders/${cart.id}/lineitems/${lineItem.id}`, { quantity: ++lineItem.quantity }, authHeader())
+      .then(() => {
+        axios.get(`/api/users/${user.id}/orders`, authHeader())
+          .then(response => response.data)
+          .then(orders => dispatch(_getOrders(orders)))
+      })
   }
+}
+
+export const incrementLocalLineItem = (lineItem)=> {
+  const cart = getLocalCart()
+  const item = findLocalLineItem(lineItem.productId)
+  const filtered = cart.lineItems.filter(item => item.productId !== lineItem.productId )
+  const updatedLineItem = {...item, quantity: item.quantity+1}
+  const updatedCart = {...cart, lineItems: [...filtered, updatedLineItem]}
+  console.log(updatedCart)
+  window.localStorage.removeItem('lineItems')
+  window.localStorage.setItem('lineItems', JSON.stringify(updatedCart))
 }
 
 export const deleteLineItem = (cart, lineItem) => {
@@ -151,15 +144,19 @@ export const deleteLineItem = (cart, lineItem) => {
     }
   } else {
       return (dispatch) => {
-        const cart = getLocalCart()
-        const item = findLocalLineItem(lineItem.productId)
-        const filtered = cart.lineItems.filter(item => item.productId !== item.productId )
-        const updatedCart = {...cart, lineItems: filtered}
-        console.log(updatedCart)
-        window.localStorage.removeItem('lineItems')
-        window.localStorage.setItem('lineItems', JSON.stringify(updatedCart))
+        
       }
   }
+}
+
+export const deleteLocalLineItem = (lineItem)=> {
+  const cart = getLocalCart()
+  const item = findLocalLineItem(lineItem.productId)
+  const filtered = cart.lineItems.filter(item => item.productId !== item.productId )
+  const updatedCart = {...cart, lineItems: filtered}
+  console.log(updatedCart)
+  window.localStorage.removeItem('lineItems')
+  window.localStorage.setItem('lineItems', JSON.stringify(updatedCart))
 }
 
 export const decrementLineItem = (cart, lineItem) => {
