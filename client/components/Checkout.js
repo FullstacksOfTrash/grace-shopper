@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import { Redirect } from 'react-router-dom'
 
-import { key1 } from '../../apiKeys'
+import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant } from '../store/utils'
 import Payment from './Payment'
 import CurrentOrder from './CurrentOrder'
@@ -20,7 +20,7 @@ class CheckoutPage extends Component {
       <div className={!cart.lineItems? 'hidden' : ''}>
         <h4>Total: {`$${sum}`}</h4>
         <CurrentOrder products={products} cart={cart}/>
-        <StripeProvider apiKey={key1}>
+        <StripeProvider apiKey={stripeKey1}>
           <Elements>
             <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>

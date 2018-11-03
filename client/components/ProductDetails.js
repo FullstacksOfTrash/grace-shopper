@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker, getLocalCart, findLocalLineItem } from '../store/utils'
 import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem, deleteProduct } from '../store/thunks'
+import ProductModal from './ProductModal'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
@@ -83,8 +84,10 @@ class ProductDetails extends Component {
 
   render() {
     if (!this.props.product) { return null }
+
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
+
     const { handleAdd, handleSubtract, handleDelete } = this;
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
     let noQuantity = this.state.lineItem ? !this.state.lineItem.quantity : !lineItem || !lineItem.quantity
@@ -102,7 +105,7 @@ class ProductDetails extends Component {
         }
         <ul>
           <li>
-            <a href={imageUrl}> <img src={smallImageUrl} height="112" /> </a>
+            <ProductModal imageUrl = { imageUrl } productName = { product.name } />
           </li>
           <li>Price: $ {price} </li>
           <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
