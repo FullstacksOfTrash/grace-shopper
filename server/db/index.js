@@ -105,36 +105,42 @@ const syncAndSeed = async () => {
   const [macbook, macbookPro, ipad, ipadPro, iphone] = await Promise.all([
     Product.create({
       name: 'Macbook',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/bmxbike.jpg',
       price: 100,
       stock: 200,
       description: 'description placeholder',
     }),
     Product.create({
       name: 'Macbook Pro',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/crutches.jpg',
       price: 25,
       stock: 300,
       description: 'description placeholder',
     }),
     Product.create({
       name: 'iPad',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/doll.jpg',
       price: 50,
       stock: 200,
       description: 'description placeholder',
     }),
     Product.create({
       name: 'iPad Pro',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/protestsign.jpg',
       price: 100,
       stock: 200,
       description: 'description placeholder',
     }),
     Product.create({
       name: 'iPhone',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/sodacan.jpg',
       price: 300,
       stock: 200,
       description: 'description placeholder',
     }),
     Product.create({
       name: 'Placeholder Product',
+      imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/whiskeybottle.jpg',
       price: 300,
       stock: 0,
       description: 'description placeholder',
