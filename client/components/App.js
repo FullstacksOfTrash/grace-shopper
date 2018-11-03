@@ -42,7 +42,7 @@ class App extends Component {
             <Typography variant="h6" color="inherit" noWrap>
               Fullstacks of Trash
             </Typography>
-            
+
             <div className={classes.grow} />
               <div className={classes.search}>
               <div className={classes.searchIcon}><Search /></div>
@@ -54,7 +54,7 @@ class App extends Component {
 
           </Toolbar>
         </AppBar>
-        
+
         <Router>
           <Fragment>
 
@@ -67,7 +67,7 @@ class App extends Component {
               <div className={classes.toolbar} />
               <Route render={(props) => <NavBar {...props}/>} />
             </Drawer>
-            
+
             <main className={classes.content}>
               <CircularProgress className={classes.progress} />
               <Route exact path='/' render={(props) => <Home user={user}/>} />
@@ -84,8 +84,8 @@ class App extends Component {
 
           </Fragment>
         </Router>
-     
-        
+
+
       </div>
     )
   }
@@ -105,6 +105,7 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(getProductReviews());
     dispatch(getCategories());
     dispatch(getOrders())
+    window.localStorage.removeItem('lineItems')
   }
 })
 
