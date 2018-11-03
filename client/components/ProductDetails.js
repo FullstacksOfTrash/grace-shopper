@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker, getLocalCart, findLocalLineItem } from '../store/utils'
 import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem, deleteProduct } from '../store/thunks'
@@ -6,6 +6,9 @@ import ProductModal from './ProductModal'
 import Reviews from './Reviews'
 import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
+
+import { withStyles } from '@material-ui/core/styles'
+import { Paper } from '@material-ui/core'
 
 class ProductDetails extends Component {
 
@@ -71,7 +74,9 @@ class ProductDetails extends Component {
     const noQuantity = !lineItem || !lineItem.quantity
     console.log('state ', this.state)
     return (
+      <Fragment>
       <div>
+        <Paper>
         <h3> Introducing the { name }! </h3>
         <hr />
         { admin ?
@@ -101,7 +106,9 @@ class ProductDetails extends Component {
         <hr />
         <Reviews />
         <ReviewWriter id = { id } />
+        </Paper>
       </div>
+      </Fragment>
     )
   }
 }
