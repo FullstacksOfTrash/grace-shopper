@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { getProduct, getCart, lineItemFinder, tracker } from '../store/utils'
 import { Link } from 'react-router-dom'
 
-
-
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -24,33 +22,35 @@ const styles = {
   },
 };
 
-function ProductCard({classes, product}) {
+function ProductCard({ classes, product }) {
   // const { classes } = props;
-  const { name, imageUrl, price, smallImageUrl} = product
+  const { name, imageUrl, price, smallImageUrl } = product
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={smallImageUrl}
-          title={name}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {name}
+      <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+        <CardActionArea >
+          <CardMedia
+            className={classes.media}
+            image={smallImageUrl}
+            title={name}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {name}
+            </Typography>
+            <Typography component="p">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget arcu dictum varius duis at.
           </Typography>
-          <Typography component="p">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget arcu dictum varius duis at.
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+          </CardContent>
+        </CardActionArea>
+      </Link>
       <CardActions>
         <Button size="small" color="primary" onClick={() => alert('Thanks for sharing our trash!')}>
           Share
         </Button>
         <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
-        <Button size="small" color="primary">
-        Learn More
+          <Button size="small" color="primary">
+            Learn More
         </Button>
         </Link>
       </CardActions>
@@ -62,7 +62,7 @@ ProductCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({products}, {id}) => ({
+const mapStateToProps = ({ products }, { id }) => ({
   products,
   product: getProduct(id, products)
 })
