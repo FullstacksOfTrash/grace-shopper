@@ -46,7 +46,7 @@ class App extends Component {
                 </Typography>
                 
                 <div className={classes.grow} />
-                <Route path='/' component={SearchBar} />code 
+                <Route path='/' component={SearchBar} /> 
           
 
               </Toolbar>
@@ -64,7 +64,7 @@ class App extends Component {
               <div className={classes.toolbar} />
               <Route render={(props) => <NavBar {...props}/>} />
             </Drawer>
-            
+
             <main className={classes.content}>
               <CircularProgress className={classes.progress} />
               <Route exact path='/' render={(props) => <Home user={user}/>} />
@@ -81,8 +81,8 @@ class App extends Component {
 
           </Fragment>
         </Router>
-     
-        
+
+
       </div>
     )
   }
@@ -102,6 +102,7 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(getProductReviews());
     dispatch(getCategories());
     dispatch(getOrders())
+    window.localStorage.removeItem('lineItems')
   }
 })
 
