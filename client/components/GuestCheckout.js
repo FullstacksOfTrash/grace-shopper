@@ -7,6 +7,7 @@ import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant, getLocalCart } from '../store/utils'
 import GuestPayment from './GuestPayment'
 import CurrentOrder from './CurrentOrder'
+import Cart from './Cart'
 import { guestSubmit } from '../store/thunks'
 
 
@@ -33,9 +34,10 @@ class CheckoutPage extends Component {
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
         <h4>Total: {`$${sum}`}</h4>
-        <CurrentOrder products={products} cart={cart}/>
-        <label htmlFor='address'>Address:</label>
-        <input onChange={this.handleChange} value={this.state.address}></input>
+        <Cart />
+        {/* <CurrentOrder products={products} cart={cart}/> */}
+        {/* <label htmlFor='address'>Address:</label>
+        <input onChange={this.handleChange} name='address' value={this.state.address}></input> */}
         <StripeProvider apiKey={stripeKey1}>
           <Elements>
             <GuestPayment sum={sum} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>

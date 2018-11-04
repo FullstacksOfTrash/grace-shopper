@@ -7,6 +7,7 @@ import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant } from '../store/utils'
 import Payment from './Payment'
 import CurrentOrder from './CurrentOrder'
+import Cart from './Cart'
 import { submitOrder, updateOrder } from '../store/thunks'
 
 
@@ -39,9 +40,9 @@ class CheckoutPage extends Component {
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
         <h4>Total: {`$${sum}`}</h4>
-        <CurrentOrder products={products} cart={cart}/>
-        <label htmlFor='address'>Address:</label>
-        <input onChange={this.handleChange} value={this.state.address}></input>
+        <Cart />
+        {/* <label htmlFor='address'>Address:</label>
+        <input onChange={this.handleChange} name='address' value={this.state.address}></input> */}
         <StripeProvider apiKey={stripeKey1}>
           <Elements>
             <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>

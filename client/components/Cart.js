@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { getProduct, lineItemsTotalQuant, getLocalCart, findLocalLineItem, guestIncrementLineItem, guestDecrementLineItem } from '../store/utils'
 import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
 import CartLineItem from './CartLineItem'
@@ -65,7 +65,7 @@ class Cart extends Component {
 
     const { classes } = this.props;
 
-    const { cart, products, lineItems, user } = this.props
+    const { cart, products, lineItems, user, location } = this.props
     let { totalCost } = this.props
     const { handleAdd, handleSubtract } = this
     if (!products.length) { return null }
@@ -82,6 +82,7 @@ class Cart extends Component {
     if (!allLineItems.length) {
       return <h4>Your cart is current empty. Browse through our wonder array of trash!</h4>
     }
+    console.log(this.props)
     return (
       <div>
         Review your order:
@@ -108,8 +109,8 @@ class Cart extends Component {
                     <TableCell >$+{price}</TableCell>
                     <TableCell >
                       {quantity}{' '}
-                      <button onClick={() => handleAdd(item)}>+</button>{' '}
-                      <button onClick={() => handleSubtract(item)}>-</button>
+                      <button onClick={() => handleAdd(item)} className={location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>+</button>{' '}
+                      <button onClick={() => handleSubtract(item)} className={location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>-</button>
                     </TableCell>
                   </TableRow>
                 );
@@ -121,8 +122,8 @@ class Cart extends Component {
           Total Cost: ${totalCost}
         </div>
         <div>
-          <Link to='/checkout' className={user.id ? '' : 'hidden'}>Checkout</Link>
-          <Link to='/guestcheckout' className={user.id ? 'hidden' : ''}>Guest Checkout</Link>
+          <Link to='/checkout' className={!user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>Checkout</Link>
+          <Link to='/guestcheckout' className={user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>Guest Checkout</Link>
         </div>
       </div>
     )
@@ -160,4 +161,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
