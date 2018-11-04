@@ -13,26 +13,28 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+// import styles from './App.styles' 
+
 const styles = {
-  card: {
+  productCard: {
     maxWidth: 300,
   },
-  media: {
+  productMedia: {
     height: 140,
   },
-};
+}
+
 
 function ProductCard({ classes, product }) {
-  // const { classes } = props;
 
   const { name, imageUrl, price } = product
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.productCard}>
       <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
         <CardActionArea >
           <CardMedia
-            className={classes.media}
+            className={classes.productMedia}
             image={imageUrl}
             title={name}
           />
