@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProduct, lineItemsTotalQuant, getLocalCart, findLocalLineItem, guestIncrementLineItem, guestDecrementLineItem } from '../store/utils'
 import { incrementLineItem, decrementLineItem, deleteLineItem, updateOrder } from '../store/thunks'
+import CartLineItem from './CartLineItem'
 
 class Cart extends Component {
   constructor() {
@@ -71,7 +72,13 @@ class Cart extends Component {
     return (
       <div>
         Review your order:
-        <ul>
+        {
+          allLineItems.map(item => (
+            <CartLineItem key={ item.productId } item = { item }/>
+          ))
+        }
+
+        {/* <ul>
           {
             allLineItems.map(item => (
               <div key={item.productId}>
@@ -88,7 +95,8 @@ class Cart extends Component {
               </div>
           ))
           }
-        </ul>
+        </ul> */}
+
         <div>
           Total Cost: ${totalCost}
         </div>
