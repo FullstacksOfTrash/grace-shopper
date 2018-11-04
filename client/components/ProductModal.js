@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: 1000,
+    width: 640,
     boxShadow: theme.shadows[5],
     top: `50%`,
     left: `50%`,
@@ -45,7 +45,7 @@ class ProductModal extends Component {
           <img
             src={imageUrl}
             alt={productName}
-            width='100%'
+            width='100px'
           />
         </Button>
         <Modal
