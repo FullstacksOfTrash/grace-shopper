@@ -123,7 +123,9 @@ class ProductDetails extends Component {
     const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
-    const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
+
+    const outOfStock = (!stock || lineItem && stock <= lineItem.quantity) || 0;
+
     let noQuantity;
     if(token){
       noQuantity = !lineItem || !lineItem.quantity
@@ -131,7 +133,8 @@ class ProductDetails extends Component {
       noQuantity = !this.state.lineItem || !this.state.lineItem.quantity
     }
 
-    console.log('state ', this.state)
+    // console.log('state ', this.state)
+    console.log('render, stock:', stock)
     return (
       <Fragment>
       <div>
