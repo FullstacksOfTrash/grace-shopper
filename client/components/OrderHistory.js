@@ -22,26 +22,26 @@ class OrderHistory extends Component {
         <hr />
         <div>
           <Grid container>
-          <Paper width={100}>
-          {
-            <Typography>
+          <Paper>
+
+
               {
               orders.map(order => (
-                <ul key={order.id}>Order# {order.id}
+                <div key={order.id}>
+                <Typography >Order# {order.id}
                 <li>Total: ${lineItemsTotalQuant(order.lineItems,products)}</li>
                 <li>Order Placed: {order.createdAt}</li>
                 {
                   order.lineItems.map(item => (
-                  <ul key={item.id}>
-                    <li><Link to={`/products/${item.productId}`}>{getProduct(item.productId,products).name}</Link> <span> {item.quantity} </span></li>
-                  </ul>
+                    <li key={item.id}><Link to={`/products/${item.productId}`}>{getProduct(item.productId,products).name}</Link> <span> {item.quantity} </span></li>
                   ))
                 }
-                </ul>
+                </Typography>
+                </div>
               ))
               }
-            </Typography>
-          }
+
+
           </Paper>
           </Grid>
         </div>
