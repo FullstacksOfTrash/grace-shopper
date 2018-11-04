@@ -145,50 +145,6 @@ class ProductDetails extends Component {
     return (
       <Fragment>
       <div>
-        <Card className={classes.card}>
-
-            <CardHeader
-              avatar={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              // action={editButton}
-              title={<Typography variant='display1' className={classes.title}>{name}</Typography>}
-            />
-
-
-            <CardMedia 
-              image={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              className={CardMedia}
-            />
-
-
-            <CardContent className={CardContent}>
-              <Typography variant='subheading'>
-                Address
-              </Typography>
-              <Typography>
-                {'address'}
-              </Typography>
-              <Typography variant='subheading'>
-                Description
-              </Typography>
-              <Typography>
-                {'description'}
-              </Typography>
-            </CardContent>
-
-            <CardActions className={CardActions}>
-              <Fragment>
-                <Tooltip title='Delete'>
-                  {/* <IconButton onClick={toggleDeleteDialog}> */}
-                  <IconButton >
-
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </Fragment>
-            </CardActions>
-
-          </Card>
-        <Paper className={classes.paper} elevation={1}>
         <h3> Introducing the { name }! </h3>
         <hr />
         { admin ?
@@ -215,7 +171,6 @@ class ProductDetails extends Component {
           ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
           : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
         }
-        </Paper>
         <Reviews />
         <ReviewWriter id = { id } />
         
