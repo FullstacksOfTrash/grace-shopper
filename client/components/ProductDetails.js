@@ -16,11 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 const styles = theme => ({
-  // root: {
-  //   ...theme.mixins.gutters(),
-  //   paddingTop: theme.spacing.unit * 2,
-  //   paddingBottom: theme.spacing.unit * 2,
-  // },
   paper: {
     padding: 50,
     marginTop: 10,
@@ -37,7 +32,7 @@ const styles = theme => ({
     margin: '20 30 0 30'
   },
   CardActions: {
-    margin: '0 30 20 30'  
+    margin: '0 30 20 30'
   },
 });
 
@@ -94,30 +89,25 @@ class ProductDetails extends Component {
   }
 
   handleSubtract() {
-// <<<<<<< styleproduct
+
     const { cart, lineItem, deleteLineItem, decrementLineItem, id, product } = this.props;
-    
-    if(lineItem ? lineItem.quantity === 1 : null){
-      deleteLineItem(cart, lineItem)
-      console.log('deleted')
-// =======
-//     const { cart, lineItem, deleteLineItem, decrementLineItem, product, id } = this.props;
-//     const token = window.localStorage.getItem('token')
-//     if(token){
-//       if(lineItem ? lineItem.quantity === 1 : null){
-//         deleteLineItem(cart, lineItem)
-//         console.log('deleted')
-//       } else {
-//         decrementLineItem(cart, lineItem)
-//         console.log('decrementing')
-//       }
-// >>>>>>> master
+
+    const token = window.localStorage.getItem('token')
+    if(token){
+      if(lineItem ? lineItem.quantity === 1 : null){
+        deleteLineItem(cart, lineItem)
+        console.log('deleted')
+      } else {
+        decrementLineItem(cart, lineItem)
+        console.log('decrementing')
+      }
     } else {
       guestDecrementLineItem(product)
       this.setState({
         lineItem: findLocalLineItem(id)
       })
     }
+
   }
 
   handleDelete(){
@@ -145,50 +135,6 @@ class ProductDetails extends Component {
     return (
       <Fragment>
       <div>
-        <Card className={classes.card}>
-
-            <CardHeader
-              avatar={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              // action={editButton}
-              title={<Typography variant='display1' className={classes.title}>{name}</Typography>}
-            />
-
-
-            <CardMedia 
-              image={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              className={CardMedia}
-            />
-
-
-            <CardContent className={CardContent}>
-              <Typography variant='subheading'>
-                Address
-              </Typography>
-              <Typography>
-                {'address'}
-              </Typography>
-              <Typography variant='subheading'>
-                Description
-              </Typography>
-              <Typography>
-                {'description'}
-              </Typography>
-            </CardContent>
-
-            <CardActions className={CardActions}>
-              <Fragment>
-                <Tooltip title='Delete'>
-                  {/* <IconButton onClick={toggleDeleteDialog}> */}
-                  <IconButton >
-
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </Fragment>
-            </CardActions>
-
-          </Card>
-        <Paper className={classes.paper} elevation={1}>
         <h3> Introducing the { name }! </h3>
         <hr />
         { admin ?
@@ -215,10 +161,9 @@ class ProductDetails extends Component {
           ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
           : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
         }
-        </Paper>
         <Reviews />
         <ReviewWriter id = { id } />
-        
+
       </div>
       </Fragment>
     )

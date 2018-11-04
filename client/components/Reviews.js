@@ -33,7 +33,6 @@ class Reviews extends React.Component {
       !reviews.length
         ? <div />
         : <div>
-            <Paper className={classes.paper}>
               <h4>Reviews</h4>
               <ul>
                 {
@@ -42,7 +41,6 @@ class Reviews extends React.Component {
                   ))
                 }
               </ul>
-            </Paper>
           </div>
     )
   }

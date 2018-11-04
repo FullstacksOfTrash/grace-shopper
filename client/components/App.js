@@ -38,8 +38,10 @@ class App extends Component {
     const { classes } = this.props; // material-ui
     return (
       <div className={classes.root}>
+
         <Router>
           <Fragment>
+          
             <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
                 <Typography variant="h6" color="inherit" noWrap>
@@ -52,6 +54,7 @@ class App extends Component {
 
               </Toolbar>
             </AppBar>
+
             <Drawer
               className={classes.drawer}
               variant="permanent"

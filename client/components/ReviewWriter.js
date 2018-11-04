@@ -54,7 +54,6 @@ class ReviewWriter extends React.Component {
 		const { classes } = this.props
 		return (
 			<div>
-				<Paper className={classes.paper}>
 				<h4>Write a review for this product</h4>
 				<form onSubmit={handleSubmit}>
 					<label htmlFor='rating'>Rating:</label>{' '}
@@ -63,7 +62,6 @@ class ReviewWriter extends React.Component {
 					<input name='text' onChange={handleChange} value={text}></input>{' '}
 					<button type='submit'>Submit</button>
 				</form>
-				</Paper>
 			</div>
 		)
 	}
