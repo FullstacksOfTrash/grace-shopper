@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 import { Paper, Typography, Tooltip } from '@material-ui/core'
-import { Card, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core'
+import { Card, CardHeader, CardMedia, CardContent, CardActions} from '@material-ui/core'
 import { Eject, MoreVertIcon, Edit, Delete } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
 
 
 
@@ -29,13 +30,13 @@ const styles = theme => ({
     maxWidth: 1000,
     minWidth: 400,
   },
-  cardMedia: {
+  CardMedia: {
     height: 300,
   },
-  cardContent: {
+  CardContent: {
     margin: '20 30 0 30'
   },
-  cardActions: {
+  CardActions: {
     margin: '0 30 20 30'  
   },
 });
@@ -155,11 +156,11 @@ class ProductDetails extends Component {
 
             <CardMedia 
               image={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              className={cardMedia}
+              className={CardMedia}
             />
 
 
-            <CardContent className={cardContent}>
+            <CardContent className={CardContent}>
               <Typography variant='subheading'>
                 Address
               </Typography>
@@ -174,10 +175,12 @@ class ProductDetails extends Component {
               </Typography>
             </CardContent>
 
-            <CardActions className={cardActions}>
+            <CardActions className={CardActions}>
               <Fragment>
                 <Tooltip title='Delete'>
-                  <IconButton onClick={toggleDeleteDialog}>
+                  {/* <IconButton onClick={toggleDeleteDialog}> */}
+                  <IconButton >
+
                     <Delete />
                   </IconButton>
                 </Tooltip>
