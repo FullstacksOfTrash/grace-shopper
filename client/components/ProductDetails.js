@@ -16,11 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 const styles = theme => ({
-  // root: {
-  //   ...theme.mixins.gutters(),
-  //   paddingTop: theme.spacing.unit * 2,
-  //   paddingBottom: theme.spacing.unit * 2,
-  // },
   paper: {
     padding: 50,
     marginTop: 10,
