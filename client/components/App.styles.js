@@ -19,6 +19,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    paddingTop: '100px'
   },
   toolbar: theme.mixins.toolbar,
   inputRoot: {
