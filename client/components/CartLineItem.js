@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 import { getProduct } from '../store/utils';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: '90%',
-    backgroundColor: theme.palette.background.paper,
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
   },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
+  table: {
+    minWidth: 700,
   },
 });
+
 
 class CartLineItem extends Component {
 
@@ -33,34 +32,37 @@ class CartLineItem extends Component {
     const { classes } = this.props;
     const { item, product } = this.props;
     const { quantity } = item
-    const { name, price } = product
-
-    const itemDisplay = `Your Item: ${name}`
-    const priceDisplay = `Item Price: ${price}`
-    const quantityDisplay = `Quantity Ordered: ${quantity}`
-
+    const { name, price, id } = product
 
     return (
-      <div className={classes.root}>
-        <List component="nav">
-          <ListItem>      
-            <ListItemText primary={itemDisplay} />
-            <ListItemText primary={priceDisplay} />
-            <ListItemText primary={quantityDisplay} />
-          </ListItem>
-        </List>
-        <Divider />
-      </div>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Product Name</TableCell>
+              <TableCell >Single Item Price</TableCell>
+              <TableCell >Quantity Ordered</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow key={id}>
+              <TableCell component="th" scope="row">{name}</TableCell>
+              <TableCell >{price}</TableCell>
+              <TableCell >{quantity}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
-}
+};
 
 CartLineItem.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-const mapStateToProps = ({ products }, { item }) => ({
-  product: getProduct(item.productId, products)
-})
+  const mapStateToProps = ({ products }, { item }) => ({
+    product: getProduct(item.productId, products)
+  })
 
 export default connect(mapStateToProps)(withStyles(styles)(CartLineItem));
