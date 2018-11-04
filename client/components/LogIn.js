@@ -88,9 +88,9 @@ class LogIn extends React.Component {
             onChange={handleChange}
           /> */}
           {' '}
-          <Button variant="contained" color="primary" type="submit" >Log in</Button>
-        </form>
-        <Link to="/signup">Sign Up!</Link>
+        </form>{' '}{' '}
+        <Button variant="contained" color="primary" type="submit" >Log in</Button>{' '}{' '}{' '}
+        <Link to="/signup"><Button variant="contained" color="primary">Sign Up!</Button></Link>
       </div>
     );
   }
