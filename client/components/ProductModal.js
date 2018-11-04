@@ -45,7 +45,7 @@ class ProductModal extends Component {
           <img
             src={imageUrl}
             alt={productName}
-            width='100px'
+            width='300px'
           />
         </Button>
         <Modal

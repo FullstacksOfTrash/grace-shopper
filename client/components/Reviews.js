@@ -37,10 +37,11 @@ class Reviews extends React.Component {
               <ul>
                 {
                   reviews.map(review => (
-                    <SingleReview key={review.id} reviewId={review.id} />
+                    <SingleReview key={review.id} reviewId={review.id} className={classes.paper}/>
                   ))
                 }
               </ul>
+
           </div>
     )
   }

@@ -8,8 +8,10 @@ import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Typography, Tooltip } from '@material-ui/core'
+import { Paper, Typography, Tooltip, Button } from '@material-ui/core'
 import { Card, CardHeader, CardMedia, CardContent, CardActions} from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+
 import { Eject, MoreVertIcon, Edit, Delete } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -133,12 +135,19 @@ class ProductDetails extends Component {
       noQuantity = !this.state.lineItem || !this.state.lineItem.quantity
     }
 
+    if (noQuantity) {
+      noQuantity = true; //force boolean for <Button>
+    }
+
     // console.log('state ', this.state)
     console.log('render, stock:', stock)
     return (
       <Fragment>
       <div>
-        <h3> Introducing the { name }! </h3>
+      <Paper className={classes.paper}>
+        <Typography variant='display1'>
+          { name }
+        </Typography>
         <hr />
         { admin ?
         <div>
@@ -147,27 +156,31 @@ class ProductDetails extends Component {
         </div>
         : <div></div>
         }
-        <ul>
-          <li>
+        <List>
+          <ListItem>
             <ProductModal imageUrl = { imageUrl } productName = { product.name } />
-          </li>
-          <li>Price: $ {price} </li>
-          <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
-          <li>Description: {description} </li>
-        </ul>
+          </ListItem>
+          <ListItem>Price: $ {price} </ListItem>
+          <ListItem>Stock: {stock ? 'In stock' : 'Out of stock'} </ListItem>
+          <ListItem>Description: {description} </ListItem>
+        </List>
         <hr />
 
-        <button onClick={handleAdd} disabled={outOfStock}>+</button>
-        <button onClick={handleSubtract} disabled={noQuantity}>-</button>
+        
+        <Button onClick={handleSubtract} disabled={noQuantity} variant="contained" color="primary">-</Button>
+        <Button onClick={handleAdd} disabled={outOfStock} variant="contained" color="primary">+</Button>
         {
           lineItem
           ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
           : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
         }
-        <Reviews />
-        <ReviewWriter id = { id } />
-
+        </Paper>
+        <Paper className={classes.paper}>
+          <Reviews />
+          <ReviewWriter id = { id } />
+        </Paper>
       </div>
+      
       </Fragment>
     )
   }
