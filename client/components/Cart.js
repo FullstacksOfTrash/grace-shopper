@@ -61,7 +61,7 @@ class Cart extends Component {
   }
 
   render() {
-    
+
 
     const { classes } = this.props;
 
@@ -105,8 +105,12 @@ class Cart extends Component {
                 return (
                   <TableRow key={productId}>
                     <TableCell component="th" scope="row">{name}</TableCell>
-                    <TableCell >{price}</TableCell>
-                    <TableCell >{quantity}</TableCell>
+                    <TableCell >$+{price}</TableCell>
+                    <TableCell >
+                      {quantity}{' '}
+                      <button onClick={() => handleAdd(item)}>+</button>{' '}
+                      <button onClick={() => handleSubtract(item)}>-</button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
