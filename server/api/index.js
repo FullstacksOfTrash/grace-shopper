@@ -8,5 +8,6 @@ router.use('/orders', require('./orders'))
 router.use('/reviews', require('./reviews'))
 router.use('/payment', require('./payment'))
 router.use('/lineItems', require('./lineItems'))
+router.use('/guest', require('./guest'))
 
 module.exports = router

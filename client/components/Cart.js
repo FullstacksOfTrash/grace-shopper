@@ -51,13 +51,15 @@ class Cart extends Component {
   }
 
   render() {
-    const { cart, products, totalCost, lineItems } = this.props
+    const { cart, products, lineItems, user } = this.props
+    let { totalCost } = this.props
     const { handleAdd, handleSubtract } = this
     if(!products.length){ return null }
     const token = window.localStorage.getItem('token')
     let allLineItems;
     if(!token){
-      allLineItems = getLocalCart().lineItems
+      allLineItems = getLocalCart().lineItems.sort((a,b) => a.productId - b.productId)
+      totalCost = totalCost = lineItemsTotalQuant(allLineItems,products)
       console.log('local cart ', getLocalCart())
     } else {
       allLineItems = cart.lineItems
@@ -91,20 +93,22 @@ class Cart extends Component {
           Total Cost: ${totalCost}
         </div>
         <div>
-          <Link to='/checkout'>Checkout</Link>
+          <Link to='/checkout' className={user.id? '' : 'hidden'}>Checkout</Link>
+          <Link to='/guestcheckout' className={user.id? 'hidden': ''}>Guest Checkout</Link>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({orders, products}) => {
+const mapStateToProps = ({orders, products, auth}) => {
   const cart = orders.find(order => order.status === 'CART') || { lineItems: []}
   let totalCost = 0
   if(cart.id) {
     totalCost = lineItemsTotalQuant(cart.lineItems,products)
   }
   return {
+    user: auth.user || {},
     cart,
     lineItems: cart.lineItems.sort((a, b) => a.id - b.id),
     products,
