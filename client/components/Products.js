@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { queryFilter } from '../store/utils'
 import { _resetQuery } from '../store/actionCreators'
+import Category from './Category'
 
 import ProductCard from './ProductCard'
-import Grid from "@material-ui/core/Grid";
+import { Grid, ButtonBase, Typography, Fade } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
 
@@ -34,10 +35,19 @@ class Products extends Component {
 
     return (
       <div>
-        <h3 onClick={reset}>Our Products</h3>
+        <Grid container>
+        <Fade in>
+          <ButtonBase onClick={reset}>
+            <Typography variant='display1'>
+              Our Products
+            </Typography>
+          </ButtonBase>
+        </Fade>
+        </Grid>
         <hr />
         <div>
-          <form>
+          <Category handleChange={handleChange} value={category} categories={categories}/>
+          {/* <form>
             <label>Filter by Category: </label>
             <select onChange={handleChange}>
               <option name='category' value=''>All</option>
@@ -45,7 +55,7 @@ class Products extends Component {
                 categories.map(category => <option key={category.id} name='category' value={category.id}>{category.name}</option>)
               }
             </select>
-          </form>
+          </form> */}
           <br />
         </div>
         {admin ? <Link to='/addProduct'><button>Add Product</button></Link> : null}

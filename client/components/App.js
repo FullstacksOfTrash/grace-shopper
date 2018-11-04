@@ -62,7 +62,6 @@ class App extends Component {
             </Drawer>
 
             <main className={classes.content}>
-              <CircularProgress className={classes.progress} variant='determinate'/>
               <Route exact path='/' render={(props) => <Home user={user}/>} />
               <Route exact path='/products' component={Products} />
               <Route exact path='/products/:id' render={({ match, history }) => <ProductDetails id={match.params.id} history={history}/>} />
@@ -98,7 +97,6 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(getProductReviews());
     dispatch(getCategories());
     dispatch(getOrders())
-    window.localStorage.removeItem('lineItems')
   }
 })
 

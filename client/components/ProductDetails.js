@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
-import { getProduct, getCart, lineItemFinder, tracker, getLocalCart, findLocalLineItem } from '../store/utils'
+import { getProduct, getCart, lineItemFinder, tracker, findLocalLineItem, guestIncrementLineItem, guestDecrementLineItem} from '../store/utils'
 import { addToCart, removeFromCart, getProductReviews, createLineItem, incrementLineItem, deleteLineItem, decrementLineItem, deleteProduct } from '../store/thunks'
 import ProductModal from './ProductModal'
 import Reviews from './Reviews'
@@ -56,6 +56,12 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const { init } = this.props;
+    const token = window.localStorage.getItem('token')
+    if(!token){
+      this.setState({
+        lineItem: findLocalLineItem(this.props.id)
+      })
+    }
     init();
   }
 
@@ -67,25 +73,49 @@ class ProductDetails extends Component {
   }
 
   handleAdd() {
-    const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart } = this.props;
-    if(lineItem){
-      incrementLineItem(cart, lineItem)
-      console.log('incrementing')
+    const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart, auth } = this.props;
+    const token = window.localStorage.getItem('token')
+
+    if(token){
+      if(lineItem){
+        incrementLineItem(cart, lineItem)
+        console.log('incrementing')
+      } else {
+        createLineItem(cart, product)
+        console.log('created')
+      }
     } else {
-      createLineItem(cart, product)
-      console.log('created')
+      guestIncrementLineItem(product)
+      this.setState({
+        lineItem: findLocalLineItem(id)
+      })
     }
   }
 
   handleSubtract() {
+// <<<<<<< styleproduct
     const { cart, lineItem, deleteLineItem, decrementLineItem } = this.props;
     
     if(lineItem ? lineItem.quantity === 1 : null){
       deleteLineItem(cart, lineItem)
       console.log('deleted')
+// =======
+//     const { cart, lineItem, deleteLineItem, decrementLineItem, product, id } = this.props;
+//     const token = window.localStorage.getItem('token')
+//     if(token){
+//       if(lineItem ? lineItem.quantity === 1 : null){
+//         deleteLineItem(cart, lineItem)
+//         console.log('deleted')
+//       } else {
+//         decrementLineItem(cart, lineItem)
+//         console.log('decrementing')
+//       }
+// >>>>>>> master
     } else {
-      decrementLineItem(cart, lineItem)
-      console.log('decrementing')
+      guestDecrementLineItem(product)
+      this.setState({
+        lineItem: findLocalLineItem(id)
+      })
     }
   }
 
@@ -96,14 +126,20 @@ class ProductDetails extends Component {
 
   render() {
     if (!this.props.product) { return null }
-
+    const token = window.localStorage.getItem('token')
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
     const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
     const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
     const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
-    const noQuantity = !lineItem || !lineItem.quantity
+    let noQuantity;
+    if(token){
+      noQuantity = !lineItem || !lineItem.quantity
+    } else {
+      noQuantity = !this.state.lineItem || !this.state.lineItem.quantity
+    }
+
     console.log('state ', this.state)
     return (
       <Fragment>
