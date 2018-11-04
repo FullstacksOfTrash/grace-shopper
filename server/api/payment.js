@@ -3,6 +3,8 @@ const stripe = require('stripe')(stripeKey2)
 const router = require('express').Router()
 
 
+
+
 router.post('/charge', async (req, res, next) => {
     const { tokenId, sum, cartId } = req.body
     console.log(tokenId, sum, cartId)

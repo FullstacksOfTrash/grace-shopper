@@ -8,19 +8,16 @@ import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Typography, Tooltip } from '@material-ui/core'
+import { Paper, Typography, Tooltip, Button } from '@material-ui/core'
 import { Card, CardHeader, CardMedia, CardContent, CardActions} from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+
 import { Eject, MoreVertIcon, Edit, Delete } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 
 
 
 const styles = theme => ({
-  // root: {
-  //   ...theme.mixins.gutters(),
-  //   paddingTop: theme.spacing.unit * 2,
-  //   paddingBottom: theme.spacing.unit * 2,
-  // },
   paper: {
     padding: 50,
     marginTop: 10,
@@ -37,7 +34,7 @@ const styles = theme => ({
     margin: '20 30 0 30'
   },
   CardActions: {
-    margin: '0 30 20 30'  
+    margin: '0 30 20 30'
   },
 });
 
@@ -94,30 +91,25 @@ class ProductDetails extends Component {
   }
 
   handleSubtract() {
-// <<<<<<< styleproduct
+
     const { cart, lineItem, deleteLineItem, decrementLineItem, id, product } = this.props;
-    
-    if(lineItem ? lineItem.quantity === 1 : null){
-      deleteLineItem(cart, lineItem)
-      console.log('deleted')
-// =======
-//     const { cart, lineItem, deleteLineItem, decrementLineItem, product, id } = this.props;
-//     const token = window.localStorage.getItem('token')
-//     if(token){
-//       if(lineItem ? lineItem.quantity === 1 : null){
-//         deleteLineItem(cart, lineItem)
-//         console.log('deleted')
-//       } else {
-//         decrementLineItem(cart, lineItem)
-//         console.log('decrementing')
-//       }
-// >>>>>>> master
+
+    const token = window.localStorage.getItem('token')
+    if(token){
+      if(lineItem ? lineItem.quantity === 1 : null){
+        deleteLineItem(cart, lineItem)
+        console.log('deleted')
+      } else {
+        decrementLineItem(cart, lineItem)
+        console.log('decrementing')
+      }
     } else {
       guestDecrementLineItem(product)
       this.setState({
         lineItem: findLocalLineItem(id)
       })
     }
+
   }
 
   handleDelete(){
@@ -133,7 +125,9 @@ class ProductDetails extends Component {
     const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
-    const outOfStock = (lineItem && stock <= lineItem.quantity) || 0;
+
+    const outOfStock = (!stock || lineItem && stock <= lineItem.quantity) || 0;
+
     let noQuantity;
     if(token){
       noQuantity = !lineItem || !lineItem.quantity
@@ -141,55 +135,19 @@ class ProductDetails extends Component {
       noQuantity = !this.state.lineItem || !this.state.lineItem.quantity
     }
 
-    console.log('state ', this.state)
+    if (noQuantity) {
+      noQuantity = true; //force boolean for <Button>
+    }
+
+    // console.log('state ', this.state)
+    console.log('render, stock:', stock)
     return (
       <Fragment>
       <div>
-        <Card className={classes.card}>
-
-            <CardHeader
-              avatar={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              // action={editButton}
-              title={<Typography variant='display1' className={classes.title}>{name}</Typography>}
-            />
-
-
-            <CardMedia 
-              image={'https://images.unsplash.com/photo-1528190336454-13cd56b45b5a'}
-              className={CardMedia}
-            />
-
-
-            <CardContent className={CardContent}>
-              <Typography variant='subheading'>
-                Address
-              </Typography>
-              <Typography>
-                {'address'}
-              </Typography>
-              <Typography variant='subheading'>
-                Description
-              </Typography>
-              <Typography>
-                {'description'}
-              </Typography>
-            </CardContent>
-
-            <CardActions className={CardActions}>
-              <Fragment>
-                <Tooltip title='Delete'>
-                  {/* <IconButton onClick={toggleDeleteDialog}> */}
-                  <IconButton >
-
-                    <Delete />
-                  </IconButton>
-                </Tooltip>
-              </Fragment>
-            </CardActions>
-
-          </Card>
-        <Paper className={classes.paper} elevation={1}>
-        <h3> Introducing the { name }! </h3>
+      <Paper className={classes.paper}>
+        <Typography variant='display1'>
+          { name }
+        </Typography>
         <hr />
         { admin ?
         <div>
@@ -198,28 +156,31 @@ class ProductDetails extends Component {
         </div>
         : <div></div>
         }
-        <ul>
-          <li>
+        <List>
+          <ListItem>
             <ProductModal imageUrl = { imageUrl } productName = { product.name } />
-          </li>
-          <li>Price: $ {price} </li>
-          <li>Stock: {stock ? 'In stock' : 'Out of stock'} </li>
-          <li>Description: {description} </li>
-        </ul>
+          </ListItem>
+          <ListItem>Price: $ {price} </ListItem>
+          <ListItem>Stock: {stock ? 'In stock' : 'Out of stock'} </ListItem>
+          <ListItem>Description: {description} </ListItem>
+        </List>
         <hr />
 
-        <button onClick={handleAdd} disabled={outOfStock}>+</button>
-        <button onClick={handleSubtract} disabled={noQuantity}>-</button>
+        
+        <Button onClick={handleSubtract} disabled={noQuantity} variant="contained" color="primary">-</Button>
+        <Button onClick={handleAdd} disabled={outOfStock} variant="contained" color="primary">+</Button>
         {
           lineItem
           ? <p>Quantity in cart: {lineItem ? lineItem.quantity : 0 }</p>
           : <p>Quantity in cart: {this.state.lineItem ? this.state.lineItem.quantity : 0 }</p>
         }
         </Paper>
-        <Reviews />
-        <ReviewWriter id = { id } />
-        
+        <Paper className={classes.paper}>
+          <Reviews />
+          <ReviewWriter id = { id } />
+        </Paper>
       </div>
+      
       </Fragment>
     )
   }
