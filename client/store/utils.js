@@ -16,7 +16,7 @@ export const lineItemFinder = (lineItems, productId) => {
 }
 
 export const lineItemsTotalQuant = (lineItems, products) => {
-  console.log(lineItems)
+  // console.log(lineItems)
   return lineItems.reduce( (acc, item) => {
     const product = getProduct(item.productId, products) || {}
     return acc + item.quantity * product.price

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../store/thunks'
+import { getCartQuantity } from '../store/utils'
 
 import { Drawer, Divider, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText, Badge, withStyles } from '@material-ui/core';
@@ -20,7 +21,7 @@ const styles = theme => ({
 
 class NavBar extends Component {
   render () {
-    const { user, loggingOut, history } = this.props
+    const { user, loggingOut, history, quantity } = this.props
     const { classes } = this.props // from material-ui withStyles
     return (
       <Fragment>
@@ -40,10 +41,8 @@ class NavBar extends Component {
             </Link>
             <Link to='/cart'>
               <ListItem button>
-                <Badge badgeContent={4} color='primary' classes={{badge: classes.badge}}>
                   <ListItemIcon><ShoppingCart /></ListItemIcon>
                   <ListItemText primary='Cart'/>
-                </Badge>
               </ListItem>
             </Link>
             <Link to='/order-history'>
@@ -73,12 +72,8 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = ({ auth, cart }) => {
-  // let total;
-  // if(cart.lineItems){
-    // total = cart.lineItems.reduce((total, lineItem) => total + lineItems, 0)
-  // }
   return {
-    user: auth.user
+    user: auth.user,
   }
 }
 
