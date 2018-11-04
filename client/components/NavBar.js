@@ -45,12 +45,16 @@ class NavBar extends Component {
                   <ListItemText primary='Cart'/>
               </ListItem>
             </Link>
-            <Link to='/order-history'>
-              <ListItem button>
-                <ListItemIcon><Assignment /></ListItemIcon>
-                <ListItemText primary='Order History'/>
-              </ListItem>
-            </Link>
+            {
+              user.password
+                ? <Link to='/order-history'>
+                    <ListItem button>
+                      <ListItemIcon><Assignment /></ListItemIcon>
+                      <ListItemText primary='Order History'/>
+                    </ListItem>
+                  </Link>
+                : null
+            }
             <Divider />
             {
               user.id
