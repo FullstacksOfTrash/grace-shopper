@@ -75,6 +75,17 @@ export const submitOrder = (order, transactionData) => {
   }
 }
 
+export const guestSubmit = (cart, transactionData) => {
+  return async dispatch => {
+    try {
+      const order = await axios.post('/api/guest/lineItems', cart)
+      const response = await axios.post('/api/payment/charge', {...transactionData, cartId: order.data.id})
+      return { status: response.data.status, order: order.data }
+    } catch(err){
+      console.log(err)
+    }
+  } 
+}
 
 
 //LINE ITEMS

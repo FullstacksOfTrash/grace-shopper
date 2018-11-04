@@ -95,7 +95,7 @@ class ProductDetails extends Component {
 
   handleSubtract() {
 // <<<<<<< styleproduct
-    const { cart, lineItem, deleteLineItem, decrementLineItem } = this.props;
+    const { cart, lineItem, deleteLineItem, decrementLineItem, id, product } = this.props;
     
     if(lineItem ? lineItem.quantity === 1 : null){
       deleteLineItem(cart, lineItem)

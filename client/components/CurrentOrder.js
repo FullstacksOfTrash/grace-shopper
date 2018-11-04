@@ -12,7 +12,7 @@ class CurrentOrder extends React.Component{
           {cart.lineItems.map(lineItem => {
             const { id, name } = getProduct(lineItem.productId, products)
             return (
-              <li key={lineItem.id}>
+              <li key={id}>
                 <Link to={`/products/${id}`}>{name}</Link>
                 <div>Quantity in cart: {lineItem.quantity}</div>
               </li>

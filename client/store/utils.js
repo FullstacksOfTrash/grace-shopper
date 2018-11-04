@@ -1,4 +1,4 @@
-export const getProduct = (id, products) => products.find(prd => prd.id === id*1)
+export const getProduct = (id, products) => products.find(prd => prd.id === id*1) || {}
 export const getReview = (id, reviews) => reviews.find(rvw => rvw.id === id*1)
 
 // export const getProductReviews = (id, reviews) => reviews.filter(rvw => rvw.productId === parseInt(id))
@@ -16,8 +16,10 @@ export const lineItemFinder = (lineItems, productId) => {
 }
 
 export const lineItemsTotalQuant = (lineItems, products) => {
+  console.log(lineItems)
   return lineItems.reduce( (acc, item) => {
-    return acc + item.quantity * getProduct(item.productId, products).price
+    const product = getProduct(item.productId, products) || {}
+    return acc + item.quantity * product.price
   },0)
 }
 
@@ -30,17 +32,18 @@ export const getLocalCart = () => {
   let cart = JSON.parse(window.localStorage.getItem('lineItems'))
 
   if(cart){
+    console.log(cart)
     return cart
   } else {
-    cart = { lineItems: []}
+    cart = { lineItems: [] }
     window.localStorage.setItem('lineItems', JSON.stringify(cart))
-
+    console.log(JSON.parse(window.localStorage.getItem('lineItems')))
     return JSON.parse(window.localStorage.getItem('lineItems'))
   }
 }
 
 export const findLocalLineItem = (productId) => {
-  const localCart = JSON.parse(window.localStorage.getItem('lineItems'))
+  const localCart = JSON.parse(window.localStorage.getItem('lineItems')) || { lineItems: [] }
   console.log('finding local cart', localCart)
   return localCart.lineItems.find(item => item.productId === productId*1)
 }
@@ -84,4 +87,8 @@ export const guestDecrementLineItem = (product) => {
   console.log('decrement cart ', cart)
   window.localStorage.removeItem('lineItems')
   window.localStorage.setItem('lineItems', JSON.stringify(cart))
+}
+
+export const removeLocalCart = () => {
+  window.localStorage.removeItem('lineItems')
 }

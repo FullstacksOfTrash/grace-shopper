@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 
 import { getProducts, getCategories, getOrders } from '../store/thunks'
-// import { getProducts, getAllReviews, getCategories, getOrders } from '../store/thunks'
+import { getLocalCart } from '../store/utils'
 
-import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import { exchangeTokenForAuth } from '../store/thunks'
 
 import NavBar from './NavBar'
@@ -15,6 +15,7 @@ import Cart from './Cart'
 import OrderHistory from './OrderHistory'
 import SignUp from './SignUp'
 import CheckOut from './Checkout'
+import GuestCheckout from './GuestCheckout'
 import ProductForm from './ProductForm'
 import Home from './Home'
 import SearchBar from './SearchBar'
@@ -72,6 +73,7 @@ class App extends Component {
               <Route exact path='/addProduct' component={ProductForm} />
               <Route exact path='/product/:id/edit' component={ProductForm} />
               <Route exact path='/checkout' render={(props) => <CheckOut {...props} />} />
+              <Route exact path='/guestcheckout' component={GuestCheckout} />
             </main>
 
           </Fragment>
@@ -90,14 +92,17 @@ const mapStateToProps = ({ auth }) => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  init: () => {
-    dispatch(exchangeTokenForAuth())
-    dispatch(getProducts());
-    // dispatch(getProductReviews());
-    dispatch(getCategories());
-    dispatch(getOrders())
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const user = ownProps.user || {}
+  return {
+    init: () => {
+      dispatch(exchangeTokenForAuth())
+      dispatch(getProducts());
+      dispatch(getCategories());
+      dispatch(getOrders())
+      if(!user.id) getLocalCart()
+    }
   }
-})
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));

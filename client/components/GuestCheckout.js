@@ -4,10 +4,10 @@ import { StripeProvider, Elements } from 'react-stripe-elements'
 import { Redirect } from 'react-router-dom'
 
 import { stripeKey1 } from '../../config'
-import { lineItemsTotalQuant } from '../store/utils'
-import Payment from './Payment'
+import { lineItemsTotalQuant, getLocalCart } from '../store/utils'
+import GuestPayment from './GuestPayment'
 import CurrentOrder from './CurrentOrder'
-import { submitOrder, updateOrder } from '../store/thunks'
+import { guestSubmit } from '../store/thunks'
 
 
 class CheckoutPage extends Component {
@@ -18,24 +18,18 @@ class CheckoutPage extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
-  componentDidMount(){
-    const { user } = this.props
-    if(user.id){
-      this.setState({
-        address: user.address
-      })
-    }
-  }
   handleChange(event){
     this.setState = {
       [event.target.name] : event.target.value
     }
   }
   render(){ 
-    const { cart, sum, products, user, submitOrder, updateOrder } = this.props
+    const { cart, sum, products, submitOrder, updateOrder } = this.props
+    console.log(cart)
+    console.log(sum)
     if(!cart.lineItems.length){
       return <Redirect to='/cart'/>
-    }
+    } 
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
         <h4>Total: {`$${sum}`}</h4>
@@ -44,7 +38,7 @@ class CheckoutPage extends Component {
         <input onChange={this.handleChange} value={this.state.address}></input>
         <StripeProvider apiKey={stripeKey1}>
           <Elements>
-            <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
+            <GuestPayment sum={sum} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>
         </StripeProvider>
       </div>
@@ -53,20 +47,20 @@ class CheckoutPage extends Component {
 }
 
 const mapStateToProps = state => {
-  const { orders, products, auth } = state
-  const cart = orders.find(order => order.status === 'CART') || { lineItems: []}
-  const sum = lineItemsTotalQuant(cart.lineItems, products)
+  const { products } = state
+  const cart = { lineItems: getLocalCart().lineItems.sort((a, b) => a.productId - b.productId) }
+  const sum = lineItemsTotalQuant(cart.lineItems , products)
+  
   return {
     products,
     cart,
     sum,
-    user: auth.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitOrder: (order, data) => dispatch(submitOrder(order, data)),
+    submitOrder: (order, data) => dispatch(guestSubmit(order, data)),
     updateOrder: order => dispatch(updateOrder(order))
   }
 }
