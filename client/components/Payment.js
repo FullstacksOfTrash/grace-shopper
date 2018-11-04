@@ -8,6 +8,7 @@ class PaymentForm extends React.Component{
         super()
         this.state = { complete: false, error: '' }
         this.submit = this.submit.bind(this)
+        this.confirm = false;
     }
     async submit(event){
         event.preventDefault()
@@ -15,20 +16,34 @@ class PaymentForm extends React.Component{
         const { token } = await stripe.createToken({name: `${user.firstName} ${user.lastName}`})       
         const response = await submitOrder(cart, { tokenId: token.id, sum, cartId: cart.id})       
         if(response.status === 'succeeded'){
-            this.setState({complete: true})
-            setTimeout(() => updateOrder(cart), 5000)
+            this.setState({complete: true, confirm: true })
+            // setTimeout(() => updateOrder(cart), 5000)
+            // updateOrder(cart)
+            console.log(this.state);
         }
     }
     render(){ 
-        const { cart } = this.props
+        const { confirm } = this.state
+        const { cart, updateOrder } = this.props
         if(this.state.complete){
-            return <h4>Purchase has been completed. Besure to look out for an email regarding order#{cart.id}!</h4>
+            return (
+                <div>
+                <h4>Purchase has been completed. Besure to look out for an email regarding order#{cart.id}!</h4>
+                {
+                    confirm
+                        ? <button onClick={()=> updateOrder(cart)}>Confirm</button>
+                        : null
+                }
+                </div>
+            )
         }
         return (
             <div>
                 <p>Would you like to complete your purchase?</p>
                 <CardElement/>
                 <button onClick={this.submit}>Send</button>
+                
+                
             </div>
         )
     }
