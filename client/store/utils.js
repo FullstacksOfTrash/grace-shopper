@@ -32,7 +32,6 @@ export const getLocalCart = () => {
   let cart = JSON.parse(window.localStorage.getItem('lineItems'))
 
   if(cart){
-    console.log(cart)
     return cart
   } else {
     cart = { lineItems: [] }

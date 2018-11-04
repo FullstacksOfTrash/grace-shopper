@@ -32,7 +32,7 @@ const styles = theme => ({
     margin: '20 30 0 30'
   },
   CardActions: {
-    margin: '0 30 20 30'  
+    margin: '0 30 20 30'
   },
 });
 
@@ -89,30 +89,25 @@ class ProductDetails extends Component {
   }
 
   handleSubtract() {
-// <<<<<<< styleproduct
+
     const { cart, lineItem, deleteLineItem, decrementLineItem, id, product } = this.props;
-    
-    if(lineItem ? lineItem.quantity === 1 : null){
-      deleteLineItem(cart, lineItem)
-      console.log('deleted')
-// =======
-//     const { cart, lineItem, deleteLineItem, decrementLineItem, product, id } = this.props;
-//     const token = window.localStorage.getItem('token')
-//     if(token){
-//       if(lineItem ? lineItem.quantity === 1 : null){
-//         deleteLineItem(cart, lineItem)
-//         console.log('deleted')
-//       } else {
-//         decrementLineItem(cart, lineItem)
-//         console.log('decrementing')
-//       }
-// >>>>>>> master
+
+    const token = window.localStorage.getItem('token')
+    if(token){
+      if(lineItem ? lineItem.quantity === 1 : null){
+        deleteLineItem(cart, lineItem)
+        console.log('deleted')
+      } else {
+        decrementLineItem(cart, lineItem)
+        console.log('decrementing')
+      }
     } else {
       guestDecrementLineItem(product)
       this.setState({
         lineItem: findLocalLineItem(id)
       })
     }
+
   }
 
   handleDelete(){
@@ -168,7 +163,7 @@ class ProductDetails extends Component {
         }
         <Reviews />
         <ReviewWriter id = { id } />
-        
+
       </div>
       </Fragment>
     )
