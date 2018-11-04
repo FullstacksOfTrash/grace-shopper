@@ -32,7 +32,7 @@ export const getLocalCart = () => {
   let cart = JSON.parse(window.localStorage.getItem('lineItems'))
 
   if(cart){
-    console.log(cart)
+    //console.log(cart)
     return cart
   } else {
     cart = { lineItems: [] }
@@ -40,6 +40,30 @@ export const getLocalCart = () => {
     console.log(JSON.parse(window.localStorage.getItem('lineItems')))
     return JSON.parse(window.localStorage.getItem('lineItems'))
   }
+}
+
+export const mergeCart = (orders, localCart) => {
+  const cart = getCart(orders)
+  //console.log(cart)
+  //console.log(localCart)
+  const results = localCart.lineItems.reduce((finalCart, item) => {
+    for(let i = 0; i < cart.lineItems.length; i++){
+      console.log(item)
+      console.log(cart.lineItems[i])
+      if(item.productId === cart.lineItems[i].productId){
+        console.log(item)
+        console.log(cart.lineItems[i])
+        finalCart.push({ ...cart.lineItem[i], quantity: item.quantity + cart.lineItems[i].quantity })
+        return finalCart
+      } else {
+        finalCart.push()
+      }
+      finalCart.push(item)
+      return finalCart
+    }
+
+  }, [])
+  console.log(results)
 }
 
 export const findLocalLineItem = (productId) => {

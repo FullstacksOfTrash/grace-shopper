@@ -6,7 +6,7 @@ import { _createReview, _deleteReview, _getProductReviews, _editReview } from '.
 import { _setAuth, _logOut } from './actionCreators';
 import { _getCategories } from './actionCreators';
 
-import { authHeader, getLocalCart, findLocalLineItem } from './utils';
+import { authHeader, getLocalCart, findLocalLineItem, getCart, mergeCart } from './utils';
 
 
 //PRODUCTS
@@ -41,7 +41,16 @@ export const getOrders = () => {
     const { user } = getState().auth;
     axios.get(`/api/users/${user.id}/orders`, authHeader())
       .then(response => response.data)
-      .then(orders => dispatch(_getOrders(orders)))
+      .then(orders => {
+        dispatch(_getOrders(orders))
+        // const localCart = getLocalCart()
+        // if(localCart.lineItems.length){
+        //   mergeCart(orders, localCart)
+        // } else {
+        //   dispatch(_getOrders(orders))
+        // }
+      
+      })
       .catch(err => console.log(err.message))
   }
 }
@@ -179,7 +188,7 @@ export const editReview = (id, review) => {
 
 //AUTH
 export const exchangeTokenForAuth = history => {
-  return dispatch => {
+  return (dispatch, getState) => {
     const token = window.localStorage.getItem('token')
     if (!token) {
       return;
@@ -194,10 +203,10 @@ export const exchangeTokenForAuth = history => {
         dispatch(_setAuth(auth))
       })
       .then(() => {
-        dispatch(getOrders())
-        if (history) {
-          history.push('/products');
-        }
+          dispatch(getOrders())
+          if (history) {
+            history.push('/products');
+          }        
       })
       .catch(ex => {
         console.log(ex);
@@ -210,7 +219,7 @@ export const logIn = (credentials, history) => {
     //console.log(credentials)
     const response = await axios.post('/api/auth/', credentials)
     window.localStorage.setItem('token', response.data.token)
-    return dispatch(exchangeTokenForAuth(history))
+    await dispatch(exchangeTokenForAuth(history))
   }
 }
 export const logOut = history => {
