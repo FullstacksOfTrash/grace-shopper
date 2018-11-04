@@ -4,6 +4,8 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-image: url('https://images.unsplash.com/photo-1528190336454-13cd56b45b5a');
+  background-size: cover;
 }
 
 a {
