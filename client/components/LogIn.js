@@ -87,10 +87,11 @@ class LogIn extends React.Component {
             value={password}
             onChange={handleChange}
           /> */}
+          <br />
+          <Button variant="contained" color="primary" type="submit" >Log in</Button>
           {' '}
-        </form>{' '}{' '}
-        <Button variant="contained" color="primary" type="submit" >Log in</Button>{' '}{' '}{' '}
-        <Link to="/signup"><Button variant="contained" color="primary">Sign Up!</Button></Link>
+          <Link to="/signup"><Button variant="contained" color="primary">Sign Up!</Button></Link>
+        </form>
       </div>
     );
   }
