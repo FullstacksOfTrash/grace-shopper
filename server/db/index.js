@@ -104,46 +104,46 @@ const syncAndSeed = async () => {
   ]);
   const [macbook, macbookPro, ipad, ipadPro, iphone] = await Promise.all([
     Product.create({
-      name: 'Macbook',
+      name: "Bike Once Ridden by Steve Jobs",
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/bmxbike_small.jpg',
       price: 100,
       stock: 200,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'Macbook Pro',
+      name: "Mid-Sized Giant's Chopsticks",
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/crutches_small.jpg',
       price: 25,
       stock: 300,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'iPad',
+      name: 'Doll Pooped On By Pigeon (Only Once)',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/doll_small.jpg',
       price: 50,
       stock: 200,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'iPad Pro',
+      name: "19th Century Duchess's Bedpan",
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/protestsign_small.jpg',
       price: 100,
       stock: 200,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'iPhone',
+      name: 'Coke Soda with Traces of Cocaine',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/sodacan_small.jpg',
       price: 300,
       stock: 200,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'Placeholder Product',
+      name: 'Sandcastle From Backyard',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/whiskeybottle_small.jpg',
       price: 300,
       stock: 0,
-      description: 'description placeholder',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
   ]);
 
@@ -167,7 +167,7 @@ const syncAndSeed = async () => {
       author: "Moe Howard",
       userId: moe.id,
       rating: 5,
-      text: 'review placeholder23213wdsadsdsdsad2e2',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       // verfiedBuyer: true, // not sure this should be hardcoded here... may make sense to set this with a sequelize hook
     }),
     Review.create({
@@ -175,7 +175,7 @@ const syncAndSeed = async () => {
       author: "Harry Chen",
       userId: harry.id,
       rating: 6,
-      text: 'review placeholdersdasdwewqdsadsadsadw3423',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     }),
   ]);
 };
