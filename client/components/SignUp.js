@@ -1,6 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signUp } from '../store/thunks';
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core'
+
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  dense: {
+    marginTop: 16,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
 
 class SignUp extends React.Component {
   constructor() {
@@ -27,43 +48,63 @@ class SignUp extends React.Component {
   }
   render() {
     const { handleChange, handleSubmit } = this;
+    const { classes } = this.props
     const { firstName, lastName, email, password, address } = this.state;
+    console.log(this.state)
     return (
       <div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="firstName">First name: </label>
-          <input
-            type="text"
-            name="firstName"
+          <TextField
+            label='First Name'
+            name='firstName'
+            type='text'
             value={firstName}
+            margin='normal'
+            variant='outlined'
             onChange={handleChange}
           />
-          <label htmlFor="lastName">Last name: </label>
-          <input
-            type="text"
-            name="lastName"
+          <TextField
+            label='Last Name'
+            className={classes.textField}
+            type='text'
+            name='lastName'
             value={lastName}
             onChange={handleChange}
+            margin='normal'
+            variant='outlined'
           />
-          <label htmlFor="email">Email: </label>
-          <input
+          <TextField
+            id="outlined-email-input"
+            label="Email"
+            className={classes.textField}
             type="email"
-            name="email"
             value={email}
+            name="email"
+            autoComplete="email"
+            margin="normal"
+            variant="outlined"
             onChange={handleChange}
-          />
-          <label htmlFor="password">Password: </label>
-          <input
+        />
+         <TextField
+            id="outlined-password-input"
+            label="Password"
+            className={classes.textField}
             type="password"
-            name="password"
+            name='password'
             value={password}
+            autoComplete="current-password"
+            margin="normal"
+            variant="outlined"
             onChange={handleChange}
-          />
-          <label htmlFor="address">Address: </label>
-          <input
+         />
+         <TextField
+            label="Address"
+            className={classes.textField}
             type="text"
-            name="address"
+            name='address'
             value={address}
+            margin="normal"
+            variant="outlined"
             onChange={handleChange}
           />
           <button type="submit">Create account</button>
@@ -79,7 +120,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignUp);
+export default connect(null,mapDispatchToProps)(withStyles(styles)(SignUp));

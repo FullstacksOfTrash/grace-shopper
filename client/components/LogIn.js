@@ -45,16 +45,18 @@ class LogIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { history, loggingIn } = this.props;
+    console.log( loggingIn )
+    console.log( this.state )
     loggingIn(this.state, history);
   }
   render() {
     const { email, password } = this.state;
     const { handleChange, handleSubmit } = this;
     const { classes } = this.props;
+    console.log(this.state)
     return (
       <div>
         <form onSubmit={handleSubmit}>
-          {/* <label htmlFor="email">Email: </label> */}
           <TextField
           id="outlined-email-input"
           label="Email"
@@ -64,33 +66,26 @@ class LogIn extends React.Component {
           autoComplete="email"
           margin="normal"
           variant="outlined"
+          value={email}
+          onChange={handleChange}
         />
-          {/* <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-          /> */}
-          {/* <label htmlFor="password">Password: </label> */}
           <TextField
           id="outlined-password-input"
           label="Password"
           className={classes.textField}
           type="password"
+          name='password'
           autoComplete="current-password"
           margin="normal"
           variant="outlined"
-        />
-          {/* <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-          /> */}
-          {' '}
-        </form>{' '}{' '}
-        <Button variant="contained" color="primary" type="submit" >Log in</Button>{' '}{' '}{' '}
-        <Link to="/signup"><Button variant="contained" color="primary">Sign Up!</Button></Link>
+          value={password}
+          onChange={handleChange}
+        />  
+          <div></div>
+           <Button variant="contained" color="primary" type="submit" >Log in</Button>
+            {' '}{' '}{' '}
+           <Link to="/signup"><Button variant="contained" color="primary">Sign Up!</Button></Link>
+        </form>
       </div>
     );
   }

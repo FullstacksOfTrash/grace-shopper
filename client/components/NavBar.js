@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../store/thunks'
-import { getCartQuantity } from '../store/utils'
+import { getCartQuantity, totalCart } from '../store/utils'
 
 import { Drawer, Divider, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText, Badge, withStyles } from '@material-ui/core';
@@ -13,16 +13,16 @@ const styles = theme => ({
     top: 1,
     right: -15,
     // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
+    // border: `2px solid ${
+    //   theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    // }`,
   },
 });
 
 class NavBar extends Component {
   render () {
-    const { user, loggingOut, history, quantity } = this.props
-    const { classes } = this.props // from material-ui withStyles
+    const { user, loggingOut, history, quantity, location, classes, totalItems} = this.props
+    console.log(this.props)
     return (
       <Fragment>
         <Divider />
@@ -41,8 +41,12 @@ class NavBar extends Component {
             </Link>
             <Link to='/cart'>
               <ListItem button>
-                  <ListItemIcon><ShoppingCart /></ListItemIcon>
-                  <ListItemText primary='Cart'/>
+                <ListItemIcon>
+                  { totalItems? <Badge className={classes.badge} badgeContent={totalItems} color='secondary' className={totalItems? '' : ''}>
+                    <ShoppingCart />
+                  </Badge> : <ShoppingCart />}
+                </ListItemIcon>
+                <ListItemText primary='Cart'/>
               </ListItem>
             </Link>
             {
@@ -61,7 +65,8 @@ class NavBar extends Component {
                 ? <ListItem>
                     <Button onClick={()=> loggingOut(history)} variant="contained" color="primary">Log out</Button>
                   </ListItem>
-                : <Link to='/login'>
+                : location.pathname === '/login'? null :
+                 <Link to='/login'>
                     <ListItem>
                       <Button variant="contained" color="secondary">Log in</Button>
                     </ListItem>
@@ -75,11 +80,18 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, cart }) => {
+const mapStateToProps = ({ auth, orders }) => {
+  const cart = orders.find(order => order.status === 'CART') || { lineItems: [] }
+  let lineItems
+  if(cart.id){
+    lineItems = totalCart(cart.lineItems)
+  }
   return {
     user: auth.user,
+    totalItems : lineItems
   }
 }
+
 
 const mapDispatchToProps = dispatch => {
   return {

@@ -132,7 +132,7 @@ const syncAndSeed = async () => {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }),
     Product.create({
-      name: 'Coke Soda with Traces of Cocaine',
+      name: 'Coke Soda with Traces of Dog Poop',
       imageUrl: 'https://d29mh04qrg9hzh.cloudfront.net/sodacan_small.jpg',
       price: 300,
       stock: 200,

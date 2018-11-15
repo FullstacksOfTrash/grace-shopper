@@ -33,7 +33,6 @@ class CheckoutPage extends Component {
     } 
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
-        <h4>Total: {`$${sum}`}</h4>
         <Cart />
         {/* <CurrentOrder products={products} cart={cart}/> */}
         {/* <label htmlFor='address'>Address:</label>
