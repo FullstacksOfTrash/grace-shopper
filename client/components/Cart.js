@@ -13,6 +13,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button'
 
 class Cart extends Component {
   constructor() {
@@ -63,9 +65,7 @@ class Cart extends Component {
   render() {
 
 
-    const { classes } = this.props;
-
-    const { cart, products, lineItems, user, location } = this.props
+    const { cart, products, lineItems, user, location, classes } = this.props
     let { totalCost } = this.props
     const { handleAdd, handleSubtract } = this
     if (!products.length) { return null }
@@ -85,7 +85,9 @@ class Cart extends Component {
     console.log(this.props)
     return (
       <div>
-        Review your order:
+        <h4>
+          Review your order:
+        </h4>
 
           <Paper >
           <Table >
@@ -106,7 +108,7 @@ class Cart extends Component {
                 return (
                   <TableRow key={productId}>
                     <TableCell component="th" scope="row">{name}</TableCell>
-                    <TableCell >$+{price}</TableCell>
+                    <TableCell >${price * quantity}</TableCell>
                     <TableCell >
                       {quantity}{' '}
                       <button onClick={() => handleAdd(item)} className={location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>+</button>{' '}
@@ -118,17 +120,38 @@ class Cart extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div>
+        <div className='totalCost'>
           Total Cost: ${totalCost}
-        </div>
-        <div>
-          <Link to='/checkout' className={!user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>Checkout</Link>
-          <Link to='/guestcheckout' className={user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>Guest Checkout</Link>
+          <Link style={{paddingLeft: 10}}to='/checkout' className={!user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Checkout
+            </Button>
+          </Link>
+          <Link to='/guestcheckout' className={user.id || location.pathname === '/guestcheckout' || location.pathname === '/checkout'? 'hidden' : ''}>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Guest Checkout
+            </Button>
+          </Link>
         </div>
       </div>
     )
   }
 }
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+});
 
 const mapStateToProps = ({ orders, products, auth }) => {
   const cart = orders.find(order => order.status === 'CART') || { lineItems: [] }
@@ -161,4 +184,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Cart)))

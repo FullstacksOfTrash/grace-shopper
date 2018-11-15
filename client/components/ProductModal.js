@@ -40,7 +40,6 @@ class ProductModal extends Component {
 
     return (
       <div>
-
         <Button onClick={this.handleOpen}>
           <img
             src={imageUrl}

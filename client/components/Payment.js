@@ -42,8 +42,6 @@ class PaymentForm extends React.Component{
                 <p>Would you like to complete your purchase?</p>
                 <CardElement/>
                 <button onClick={this.submit}>Send</button>
-                
-                
             </div>
         )
     }

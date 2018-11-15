@@ -15,6 +15,12 @@ export const lineItemFinder = (lineItems, productId) => {
   return lineItems.find(lineItem => lineItem.productId === +productId)
 }
 
+export const totalCart = (lineItems) => {
+  return lineItems.reduce((total, lineItem) => {
+    return total + lineItem.quantity
+  }, 0)
+}
+
 export const lineItemsTotalQuant = (lineItems, products) => {
   // console.log(lineItems)
   return lineItems.reduce( (acc, item) => {

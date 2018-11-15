@@ -126,7 +126,7 @@ class ProductDetails extends Component {
 
     const { handleAdd, handleSubtract, handleDelete } = this;
 
-    const outOfStock = (!stock || lineItem && stock <= lineItem.quantity) || 0;
+    const outOfStock = (!stock || lineItem && stock <= lineItem.quantity) || false
 
     let noQuantity;
     if(token){
