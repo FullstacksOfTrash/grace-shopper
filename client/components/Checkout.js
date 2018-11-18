@@ -13,9 +13,6 @@ import { submitOrder, updateOrder } from '../store/thunks'
 class CheckoutPage extends Component {
   constructor(){
     super()
-    this.state = {
-      stripeKey: null
-    }
     this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount(){
@@ -29,15 +26,14 @@ class CheckoutPage extends Component {
     }
   }
   render(){ 
-    const { cart, sum, products, user, submitOrder, updateOrder } = this.props
-    const { stripeKey } = this.state
+    const { cart, sum, user, submitOrder, updateOrder } = this.props
     if(!cart.lineItems.length){
       return <Redirect to='/cart'/>
     }
     return (
-      <div className={!cart.lineItems? 'hidden' : ''}>
+      <div>
         <Cart />
-        <StripeProvider apiKey={stripeKey}>
+        <StripeProvider apiKey='pk_test_g6vVJLVkeKQ0eryAlysmiylc'>
           <Elements>
             <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>

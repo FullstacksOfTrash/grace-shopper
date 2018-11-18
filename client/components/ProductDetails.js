@@ -63,12 +63,12 @@ class ProductDetails extends Component {
     init();
   }
 
-  componentDidUpdate(prevProps){
+  // componentDidUpdate(prevProps){
 
-    if(prevProps !== this.props) {
-      console.log('should updated')
-    }
-  }
+  //   if(prevProps !== this.props) {
+  //     console.log('should updated')
+  //   }
+  // }
 
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart, auth } = this.props;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import { Redirect } from 'react-router-dom'
 
-import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant, getLocalCart } from '../store/utils'
 import GuestPayment from './GuestPayment'
 import Cart from './Cart'
@@ -13,9 +12,6 @@ import { guestSubmit } from '../store/thunks'
 class CheckoutPage extends Component {
   constructor(){
     super()
-    this.state = {
-      stripeKey: null
-    }
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(event){
@@ -25,14 +21,13 @@ class CheckoutPage extends Component {
   }
   render(){ 
     const { cart, sum, submitOrder, updateOrder } = this.props
-    const { stripeKey } = this.state
     if(!cart.lineItems.length){
       return <Redirect to='/cart'/>
     } 
     return (
-      <div className={!cart.lineItems? 'hidden' : ''}>
+      <div>
         <Cart />
-        <StripeProvider apiKey={stripeKey}>
+        <StripeProvider apiKey={'pk_test_g6vVJLVkeKQ0eryAlysmiylc'}>
           <Elements>
             <GuestPayment sum={sum} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>
