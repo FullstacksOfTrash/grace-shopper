@@ -11,13 +11,11 @@ class PaymentForm extends React.Component{
     }
     async submit(event){
         event.preventDefault()
-        const { stripe , sum, user, cart, submitOrder, updateOrder} = this.props //assuming order will be passed down here
+        const { stripe , sum, user, cart, submitOrder } = this.props 
         const { token } = await stripe.createToken({name: `${user.firstName} ${user.lastName}`})       
         const response = await submitOrder(cart, { tokenId: token.id, sum, cartId: cart.id})       
         if(response.status === 'succeeded'){
             this.setState({complete: true, confirm: true })
-            // setTimeout(() => updateOrder(cart), 5000)
-            // updateOrder(cart)
             console.log(this.state);
         }
     }

@@ -1,7 +1,6 @@
-const { stripeKey2 } = require('../../config')
-const stripe = require('stripe')(stripeKey2 || process.env.STRIPE_KEY2)
+// const { stripeKey2 } = require('../../config')
+const stripe = require('stripe')(process.env.STRIPE_KEY2)
 const router = require('express').Router()
-
 
 
 

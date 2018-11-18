@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom'
 import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant, getLocalCart } from '../store/utils'
 import GuestPayment from './GuestPayment'
-import CurrentOrder from './CurrentOrder'
 import Cart from './Cart'
 import { guestSubmit } from '../store/thunks'
 
@@ -25,16 +24,16 @@ class CheckoutPage extends Component {
     }
   }
   render(){ 
-    const { cart, sum, products, submitOrder, updateOrder } = this.props
-    console.log(cart)
-    console.log(sum)
+    const { cart, sum, submitOrder, updateOrder } = this.props
+    console.log(process.env.STRIPE_KEY1)
+    console.log(process.env.STRIPE_KEY2)
     if(!cart.lineItems.length){
       return <Redirect to='/cart'/>
     } 
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
         <Cart />
-        <StripeProvider apiKey={stripeKey1 || process.env.STRIPE_KEY1}>
+        <StripeProvider apiKey={process.env.STRIPE_KEY1}>
           <Elements>
             <GuestPayment sum={sum} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>
