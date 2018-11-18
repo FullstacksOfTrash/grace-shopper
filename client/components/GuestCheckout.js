@@ -14,7 +14,7 @@ class CheckoutPage extends Component {
   constructor(){
     super()
     this.state = {
-      stripeKey = null
+      stripeKey: null
     }
     this.handleChange = this.handleChange.bind(this)
   }

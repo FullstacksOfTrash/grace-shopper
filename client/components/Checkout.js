@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom'
 import { stripeKey1 } from '../../config'
 import { lineItemsTotalQuant } from '../store/utils'
 import Payment from './Payment'
-import CurrentOrder from './CurrentOrder'
 import Cart from './Cart'
 import { submitOrder, updateOrder } from '../store/thunks'
 
@@ -15,7 +14,7 @@ class CheckoutPage extends Component {
   constructor(){
     super()
     this.state = {
-      stripeKey = null
+      stripeKey: null
     }
     this.handleChange = this.handleChange.bind(this)
   }
