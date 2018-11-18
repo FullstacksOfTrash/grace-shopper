@@ -14,7 +14,7 @@ class CheckoutPage extends Component {
   constructor(){
     super()
     this.state = {
-      address: '',
+      stripeKey = null
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -25,15 +25,14 @@ class CheckoutPage extends Component {
   }
   render(){ 
     const { cart, sum, submitOrder, updateOrder } = this.props
-    console.log(process.env.STRIPE_KEY1)
-    console.log(process.env.STRIPE_KEY2)
+    const { stripeKey } = this.state
     if(!cart.lineItems.length){
       return <Redirect to='/cart'/>
     } 
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
         <Cart />
-        <StripeProvider apiKey={process.env.STRIPE_KEY1}>
+        <StripeProvider apiKey={stripeKey}>
           <Elements>
             <GuestPayment sum={sum} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>
