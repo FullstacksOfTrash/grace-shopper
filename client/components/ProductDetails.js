@@ -121,7 +121,7 @@ class ProductDetails extends Component {
     if (!this.props.product) { return null }
     const token = window.localStorage.getItem('token')
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
-    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
+    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart, user } = this.props
     const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
@@ -138,9 +138,6 @@ class ProductDetails extends Component {
     if (noQuantity) {
       noQuantity = true; //force boolean for <Button>
     }
-
-    // console.log('state ', this.state)
-    console.log('render, stock:', stock)
     return (
       <Fragment>
       <div>
@@ -177,7 +174,7 @@ class ProductDetails extends Component {
         </Paper>
         <Paper className={classes.paper}>
           <Reviews />
-          <ReviewWriter id = { id } />
+            <ReviewWriter id = { id } /> 
         </Paper>
       </div>
       
@@ -200,13 +197,13 @@ const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
     lineItem,
     reviews,
     product: getProduct(id, products),
+    user: auth.user,
     admin: auth.user.admin
   }
 }
 
 
 const mapDispatchToProps = (dispatch, { id })=> {
-  console.log(id)
   return {
     init: () => dispatch(getProductReviews( id )),
     createLineItem: (cart, product)=> dispatch(createLineItem(cart, product)),

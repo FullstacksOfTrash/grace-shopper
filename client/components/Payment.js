@@ -1,7 +1,6 @@
 import React from 'react'
 import { injectStripe, CardElement } from 'react-stripe-elements'
-import { Redirect } from 'react-router-dom'
-
+import Button from '@material-ui/core/Button';
 
 class PaymentForm extends React.Component{
     constructor(){
@@ -41,7 +40,8 @@ class PaymentForm extends React.Component{
             <div>
                 <p>Would you like to complete your purchase?</p>
                 <CardElement/>
-                <button onClick={this.submit}>Send</button>
+                <div style={{paddingBottom: 20}}></div>
+                <Button variant="contained" color="primary" onClick={this.submit}>Send</Button>
             </div>
         )
     }

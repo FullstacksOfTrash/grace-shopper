@@ -39,11 +39,8 @@ class CheckoutPage extends Component {
     }
     return (
       <div className={!cart.lineItems? 'hidden' : ''}>
-        <h4>Total: {`$${sum}`}</h4>
         <Cart />
-        {/* <label htmlFor='address'>Address:</label>
-        <input onChange={this.handleChange} name='address' value={this.state.address}></input> */}
-        <StripeProvider apiKey={stripeKey1}>
+        <StripeProvider apiKey={stripeKey1 || process.env.STRIPE_KEY1}>
           <Elements>
             <Payment sum={sum} user={user} cart={cart} submitOrder={submitOrder} updateOrder={updateOrder}/>
           </Elements>
