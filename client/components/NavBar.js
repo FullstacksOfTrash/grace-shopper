@@ -65,7 +65,7 @@ class NavBar extends Component {
                 ? <ListItem>
                     <Button onClick={()=> loggingOut(history)} variant="contained" color="primary">Log out</Button>
                   </ListItem>
-                : location.pathname === '/login'? null :
+                : location.pathname === '/login' || location.pathname === 'signup'? null :
                  <Link to='/login'>
                     <ListItem>
                       <Button variant="contained" color="secondary">Log in</Button>

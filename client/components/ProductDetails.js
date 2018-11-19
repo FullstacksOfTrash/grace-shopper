@@ -8,7 +8,7 @@ import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Typography, Tooltip, Button } from '@material-ui/core'
+import { Paper, Typography, Button } from '@material-ui/core'
 import { Card, CardHeader, CardMedia, CardContent, CardActions} from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
@@ -98,10 +98,10 @@ class ProductDetails extends Component {
     if(token){
       if(lineItem ? lineItem.quantity === 1 : null){
         deleteLineItem(cart, lineItem)
-        console.log('deleted')
+        // console.log('deleted')
       } else {
         decrementLineItem(cart, lineItem)
-        console.log('decrementing')
+        // console.log('decrementing')
       }
     } else {
       guestDecrementLineItem(product)
