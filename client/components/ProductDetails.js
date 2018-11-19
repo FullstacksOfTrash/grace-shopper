@@ -77,10 +77,10 @@ class ProductDetails extends Component {
     if(token){
       if(lineItem){
         incrementLineItem(cart, lineItem)
-        console.log('incrementing')
+        // console.log('incrementing')
       } else {
         createLineItem(cart, product)
-        console.log('created')
+        // console.log('created')
       }
     } else {
       guestIncrementLineItem(product)
