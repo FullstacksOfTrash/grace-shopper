@@ -16,7 +16,7 @@ class PaymentForm extends React.Component{
         const response = await submitOrder(cart, { tokenId: token.id, sum, cartId: cart.id})       
         if(response.status === 'succeeded'){
             this.setState({complete: true, confirm: true })
-            console.log(this.state);
+            // console.log(this.state);
         }
     }
     render(){ 

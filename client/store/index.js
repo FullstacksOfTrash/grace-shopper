@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-// import { productReducer, authReducer, reviewReducer, categoryReducer, orderReducer } from './reducers';
 import { productReducer, authReducer, categoryReducer, orderReducer, reviewReducer, countReducer, searchReducer } from './reducers';
 
 

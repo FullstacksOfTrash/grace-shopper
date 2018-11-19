@@ -25,10 +25,10 @@ class ProductForm extends Component {
   }
 
   componentDidUpdate(prevProps){
-    console.log('componentDidUpdate')
+    // console.log('componentDidUpdate')
     const { editProduct, product } = this.props
     if(prevProps !== this.props){
-      console.log(product)
+      // console.log(product)
       this.setState(product)
     }
   }
@@ -46,7 +46,7 @@ class ProductForm extends Component {
   }
 
   render(){
-    console.log('initial render ', this.props.product)
+    // console.log('initial render ', this.props.product)
     const { name, price, stock, description, imageUrl}  = this.state
     const { handleChange, handleSubmit } = this
     const { editProduct, product } = this.props

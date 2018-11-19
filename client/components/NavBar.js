@@ -22,7 +22,7 @@ const styles = theme => ({
 class NavBar extends Component {
   render () {
     const { user, loggingOut, history, quantity, location, classes, totalItems} = this.props
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <Fragment>
         <Divider />

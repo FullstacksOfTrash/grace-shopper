@@ -50,7 +50,7 @@ class SignUp extends React.Component {
     const { handleChange, handleSubmit } = this;
     const { classes } = this.props
     const { firstName, lastName, email, password, address } = this.state;
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div>
         <form onSubmit={handleSubmit}>
