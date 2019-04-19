@@ -38,7 +38,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^4.41.0",
+    "sequelize": "^5.7.0",
     "stripe": "^6.13.0"
   },
   "babel": {
