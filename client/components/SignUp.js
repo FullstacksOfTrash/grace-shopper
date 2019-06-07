@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { signUp } from '../store/thunks';
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
 
 const styles = theme => ({
@@ -50,7 +51,7 @@ class SignUp extends React.Component {
     const { handleChange, handleSubmit } = this;
     const { classes } = this.props
     const { firstName, lastName, email, password, address } = this.state;
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div>
         <form onSubmit={handleSubmit}>
@@ -107,7 +108,7 @@ class SignUp extends React.Component {
             variant="outlined"
             onChange={handleChange}
           />
-          <button type="submit">Create account</button>
+          <Button type="submit" variant="contained" color="primary">Create account</Button>
         </form>
       </div>
     );

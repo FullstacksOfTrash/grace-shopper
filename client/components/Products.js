@@ -96,7 +96,7 @@ const mapStateToProps = ({ products, categories, auth, query }) => {
     filteredProducts = queryFilter(query, products)
     found = filteredProducts.length > 0? true : false
   }
-  console.log(filteredProducts)
+  // console.log(filteredProducts)
   return {
     query, 
     found,
