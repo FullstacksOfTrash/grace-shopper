@@ -26,18 +26,18 @@ class SingleReview extends Component {
     return (
       <div>
         <Paper>
-        <p>Review by: {review.author}</p>
-        <p>Rating: {review.rating}</p>
-        <p>{review.text}</p>{' '}
-        {
-          user.id === review.userId || user.admin === true ?
-            <div>
-              <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
-              <UpdateReview reviewId={review.id} productId={review.productId} />
-            </div>
-            :
-            null
-        }
+          <p>Review by: {review.author}</p>
+          <p>Rating: {review.rating}</p>
+          <p>{review.text}</p>{' '}
+          {
+            user.id === review.userId || user.admin === true ?
+              <div>
+                <button onClick={() => onDelete(review.productId, review.id)}>Delete Review</button>
+                <UpdateReview reviewId={review.id} productId={review.productId} />
+              </div>
+              :
+              null
+          }
         </Paper>
       </div>
     )

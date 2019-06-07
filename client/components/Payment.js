@@ -1,7 +1,6 @@
 import React from 'react'
 import { injectStripe, CardElement } from 'react-stripe-elements'
-import { Redirect } from 'react-router-dom'
-
+import Button from '@material-ui/core/Button';
 
 class PaymentForm extends React.Component{
     constructor(){
@@ -12,14 +11,12 @@ class PaymentForm extends React.Component{
     }
     async submit(event){
         event.preventDefault()
-        const { stripe , sum, user, cart, submitOrder, updateOrder} = this.props //assuming order will be passed down here
+        const { stripe , sum, user, cart, submitOrder } = this.props 
         const { token } = await stripe.createToken({name: `${user.firstName} ${user.lastName}`})       
         const response = await submitOrder(cart, { tokenId: token.id, sum, cartId: cart.id})       
         if(response.status === 'succeeded'){
             this.setState({complete: true, confirm: true })
-            // setTimeout(() => updateOrder(cart), 5000)
-            // updateOrder(cart)
-            console.log(this.state);
+            // console.log(this.state);
         }
     }
     render(){ 
@@ -41,7 +38,8 @@ class PaymentForm extends React.Component{
             <div>
                 <p>Would you like to complete your purchase?</p>
                 <CardElement/>
-                <button onClick={this.submit}>Send</button>
+                <div style={{paddingBottom: 20}}></div>
+                <Button variant="contained" color="primary" onClick={this.submit}>Send</Button>
             </div>
         )
     }

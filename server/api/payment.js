@@ -1,7 +1,6 @@
 const { stripeKey2 } = require('../../config')
-const stripe = require('stripe')(stripeKey2)
+const stripe = require('stripe')(stripeKey2 || process.env.STRIPE_KEY2)
 const router = require('express').Router()
-
 
 
 
@@ -15,10 +14,8 @@ router.post('/charge', async (req, res, next) => {
             description: cartId,
             source: tokenId
         })
-        // console.log(status)
         res.send({status})
     } catch(err){
-        // console.log(err)
         res.status(500).end()
     }
 

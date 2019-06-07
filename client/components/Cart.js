@@ -33,10 +33,10 @@ class Cart extends Component {
     if (token) {
       if (cart) {
         incrementLineItem(cart, item)
-        console.log('incrementing')
+        // console.log('incrementing')
       } else {
         createLineItem(cart, item)
-        console.log('created')
+        // console.log('created')
       }
     } else {
       guestIncrementLineItem({ ...item, id: item.productId })
@@ -45,16 +45,16 @@ class Cart extends Component {
   }
 
   handleSubtract(item) {
-    console.log('item', item)
+    // console.log('item', item)
     const { cart, deleteLineItem, decrementLineItem } = this.props;
     const token = window.localStorage.getItem('token')
     if (token) {
       if (item.quantity === 1) {
         deleteLineItem(cart, item)
-        console.log('deleted')
+        // console.log('deleted')
       } else {
         decrementLineItem(cart, item)
-        console.log('decrementing')
+        // console.log('decrementing')
       }
     } else {
       guestDecrementLineItem({ ...item, id: item.productId })
@@ -74,7 +74,7 @@ class Cart extends Component {
     if (!token) {
       allLineItems = getLocalCart().lineItems.sort((a, b) => a.productId - b.productId)
       totalCost = totalCost = lineItemsTotalQuant(allLineItems, products)
-      console.log('local cart ', getLocalCart())
+      // console.log('local cart ', getLocalCart())
     } else {
       allLineItems = cart.lineItems
     }
@@ -82,7 +82,7 @@ class Cart extends Component {
     if (!allLineItems.length) {
       return <h4>Your cart is current empty. Browse through our wonder array of trash!</h4>
     }
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div>
         <h4>

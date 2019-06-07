@@ -45,15 +45,15 @@ class LogIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { history, loggingIn } = this.props;
-    console.log( loggingIn )
-    console.log( this.state )
+    // console.log( loggingIn )
+    // console.log( this.state )
     loggingIn(this.state, history);
   }
   render() {
     const { email, password } = this.state;
     const { handleChange, handleSubmit } = this;
     const { classes } = this.props;
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div>
         <form onSubmit={handleSubmit}>

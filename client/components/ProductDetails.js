@@ -8,7 +8,7 @@ import ReviewWriter from './ReviewWriter'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Typography, Tooltip, Button } from '@material-ui/core'
+import { Paper, Typography, Button } from '@material-ui/core'
 import { Card, CardHeader, CardMedia, CardContent, CardActions} from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
@@ -63,12 +63,12 @@ class ProductDetails extends Component {
     init();
   }
 
-  componentDidUpdate(prevProps){
+  // componentDidUpdate(prevProps){
 
-    if(prevProps !== this.props) {
-      console.log('should updated')
-    }
-  }
+  //   if(prevProps !== this.props) {
+  //     console.log('should updated')
+  //   }
+  // }
 
   handleAdd() {
     const { cart, product, lineItem, createLineItem, incrementLineItem, id, localCart, auth } = this.props;
@@ -77,10 +77,10 @@ class ProductDetails extends Component {
     if(token){
       if(lineItem){
         incrementLineItem(cart, lineItem)
-        console.log('incrementing')
+        // console.log('incrementing')
       } else {
         createLineItem(cart, product)
-        console.log('created')
+        // console.log('created')
       }
     } else {
       guestIncrementLineItem(product)
@@ -98,10 +98,10 @@ class ProductDetails extends Component {
     if(token){
       if(lineItem ? lineItem.quantity === 1 : null){
         deleteLineItem(cart, lineItem)
-        console.log('deleted')
+        // console.log('deleted')
       } else {
         decrementLineItem(cart, lineItem)
-        console.log('decrementing')
+        // console.log('decrementing')
       }
     } else {
       guestDecrementLineItem(product)
@@ -121,7 +121,7 @@ class ProductDetails extends Component {
     if (!this.props.product) { return null }
     const token = window.localStorage.getItem('token')
     const { name, imageUrl, smallImageUrl, price, stock, description, id } = this.props.product
-    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart } = this.props
+    const { addToCart, removeFromCart, lineItem, cart, product, reviews, admin, localCart, user } = this.props
     const { classes } = this.props;
 
     const { handleAdd, handleSubtract, handleDelete } = this;
@@ -138,9 +138,6 @@ class ProductDetails extends Component {
     if (noQuantity) {
       noQuantity = true; //force boolean for <Button>
     }
-
-    // console.log('state ', this.state)
-    console.log('render, stock:', stock)
     return (
       <Fragment>
       <div>
@@ -177,7 +174,7 @@ class ProductDetails extends Component {
         </Paper>
         <Paper className={classes.paper}>
           <Reviews />
-          <ReviewWriter id = { id } />
+            <ReviewWriter id = { id } /> 
         </Paper>
       </div>
       
@@ -200,13 +197,13 @@ const mapStateToProps = ({ products, orders, reviews, auth }, { id }) => {
     lineItem,
     reviews,
     product: getProduct(id, products),
+    user: auth.user,
     admin: auth.user.admin
   }
 }
 
 
 const mapDispatchToProps = (dispatch, { id })=> {
-  console.log(id)
   return {
     init: () => dispatch(getProductReviews( id )),
     createLineItem: (cart, product)=> dispatch(createLineItem(cart, product)),

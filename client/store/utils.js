@@ -42,14 +42,14 @@ export const getLocalCart = () => {
   } else {
     cart = { lineItems: [] }
     window.localStorage.setItem('lineItems', JSON.stringify(cart))
-    console.log(JSON.parse(window.localStorage.getItem('lineItems')))
+    // console.log(JSON.parse(window.localStorage.getItem('lineItems')))
     return JSON.parse(window.localStorage.getItem('lineItems'))
   }
 }
 
 export const findLocalLineItem = (productId) => {
   const localCart = JSON.parse(window.localStorage.getItem('lineItems')) || { lineItems: [] }
-  console.log('finding local cart', localCart)
+  // console.log('finding local cart', localCart)
   return localCart.lineItems.find(item => item.productId === productId*1)
 }
 
@@ -68,7 +68,7 @@ export const guestIncrementLineItem = (product) => {
     cart = {...localCart, lineItems: [...localCart.lineItems, {quantity: 1, productId: product.id}]}
   }
   // set the new object on localStorage
-  console.log('add cart ', cart)
+  // console.log('add cart ', cart)
   window.localStorage.removeItem('lineItems')
   window.localStorage.setItem('lineItems', JSON.stringify(cart))
 }
@@ -76,20 +76,20 @@ export const guestIncrementLineItem = (product) => {
 export const guestDecrementLineItem = (product) => {
   const localCart = getLocalCart()
   const item = findLocalLineItem(product.id)
-  console.log('item ', item)
+  // console.log('item ', item)
   let cart = {}
   if(item.quantity === 1){ // deleting the line item
-    console.log('deleting line item')
+    // console.log('deleting line item')
     const filtered = localCart.lineItems.filter(item => item.productId !== product.id*1 )
     cart = {...localCart, lineItems: filtered}
   } else { // decrementing line item quantity
-    console.log('decrementing line item')
+    // console.log('decrementing line item')
     const filtered = localCart.lineItems.filter(item => item.productId !== product.id*1 )
     const updatedLineItem = {...item, quantity: item.quantity-1}
     cart = {...localCart, lineItems: [...filtered, updatedLineItem]}
   }
   // set the new object on localStorage
-  console.log('decrement cart ', cart)
+  // console.log('decrement cart ', cart)
   window.localStorage.removeItem('lineItems')
   window.localStorage.setItem('lineItems', JSON.stringify(cart))
 }

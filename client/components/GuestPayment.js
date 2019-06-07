@@ -1,11 +1,12 @@
 import React from 'react'
 import { injectStripe, CardElement } from 'react-stripe-elements'
 import { removeLocalCart, getLocalCart } from '../store/utils'
+import { Button } from '@material-ui/core'
 
 class PaymentForm extends React.Component{
     constructor(){
         super()
-        this.state = { complete: false, error: '', order: {} }
+        this.state = { complete: false, error: '', loading: false }
         this.submit = this.submit.bind(this)
     }
     async submit(event){
@@ -28,11 +29,11 @@ class PaymentForm extends React.Component{
             <div>
                 <p>Would you like to complete your purchase?</p>
                 <CardElement/>
-                <button onClick={this.submit}>Send</button>
+                <div style={{paddingBottom: 20}}></div>
+                <Button styles={{paddingTop: 50}} variant="contained" color="primary" onClick={this.submit}>Send</Button>
             </div>
         )
     }
 }
-
 
 export default injectStripe(PaymentForm)
