@@ -11,7 +11,7 @@ Backend: Postgres, Sequelize.js, Express.js, Stripe (Payment Processing)
 
 Designed and developed by:
 
-Jarret Rose
-Cang Truong
-Zijian Yan
+Jarret Rose,
+Cang Truong,
+Zijian Yan,
 Harry Chen
